@@ -1,0 +1,23 @@
+{
+    "status": "success",
+    "data": [
+        {
+            "id": "1",
+            "nombre": "Primer curso",
+            "descripcion": "Lorem ipsum dolor sit amet",
+            "path": "cursos/123123"
+        },
+        {
+            "id": "2",
+            "nombre": "Segundo curso",
+            "descripcion": "Segundo lotem ipsum dolor sit amet",
+            "path": "cursos/123123"
+        },
+        {
+            "id": "3",
+            "nombre": "Último cuasdasdadsrso",
+            "descripcion": "Ttres tres ipsum dolor sit amet",
+            "path": "cursos/123123"
+        }
+    ]
+}
