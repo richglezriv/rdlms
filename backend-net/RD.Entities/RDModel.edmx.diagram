@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="decfbabd58c14179b3c4be1bccef12c2" Name="Diagram1" ZoomLevel="97" >
+        <EntityTypeShape EntityType="RDModel.Course" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RDModel.User" Width="1.5" PointX="4.375" PointY="0.75" />
+        <EntityTypeShape EntityType="RDModel.UserCourse" Width="1.5" PointX="0.75" PointY="3.5" />
+        <AssociationConnector Association="RDModel.UserUserCourse" />
+        <AssociationConnector Association="RDModel.CourseUserCourse" />
+        <EntityTypeShape EntityType="RDModel.Scorm" Width="1.5" PointX="7.375" PointY="0.75" />
+        <AssociationConnector Association="RDModel.ScormUserCourse" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

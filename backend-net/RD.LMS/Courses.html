@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Courses TestDrive</title>
+    <script src="../../Scripts/jquery-1.11.2.min.js"></script>
+    <script>
+        function getCourses() {
+            var postback = $.post('/Courses/Get');
+            postback.done(function (data) {
+                $('#response').html(JSON.stringify(data));
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Courses Test Drive</h1>
+    <p>Test method&nbsp;<input type="button" onclick="getCourses();" value="Test Fetch" /></p>
+    <span id="response" name="respondes"></span>
+</body>
+</html>

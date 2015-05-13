@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>User stuff [@Session["USR_ID"]]</h2>
+<p>
+    @if (Session["USR_ID"] != null)
+    {
+        <a href="~/Player.html" target="_blank">go to course</a>
+    }
+    else
+    {
+        <h4>User not logged in</h4>
+    }
+    
+</p>
+
+
+
