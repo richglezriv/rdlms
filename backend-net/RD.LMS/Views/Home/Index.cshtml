@@ -1,20 +1,43 @@
 ﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    
 }
 
 <h2>User stuff [@Session["USR_ID"]]</h2>
-<p>
-    @if (Session["USR_ID"] != null)
-    {
-        <a href="~/Player.html" target="_blank">go to course</a>
+@using (Html.BeginForm("UploadThumbnail", "Courses", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <p>
+        @if (Session["USR_ID"] != null)
+        {
+            <a href="~/courses.html" target="_blank">go to courses</a><br/>
+            <a href="~/admin-courses.html" target="_blank">admin courses</a>
+        }
+        else
+        {
+            <h4>User not logged in</h4>
+        }
+        <!--<input type="text" name="txtDemo" id="txtDemo">
+        <input id="File1" type="file" name="File1"/>
+        <input id="Submit1" type="submit" value="submit" />-->
+    </p>
+}
+<script src="components/jquery/jquery.min.js"></script>
+<script>
+
+    function loadLMSSettings() {
+        var data = { "courseId": "123" };
+
+        $.ajax({
+            url: "/Courses/Delete",
+            data: {"idCourse":"123"}
+        })
+			.done(function () { alert("good"); })
+			.fail(function () { alert("fail"); })
+        
+        //.always()
+        ;
     }
-    else
-    {
-        <h4>User not logged in</h4>
-    }
-    
-</p>
 
-
-
+</script>

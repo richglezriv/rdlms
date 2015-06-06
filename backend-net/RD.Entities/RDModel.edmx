@@ -56,8 +56,6 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="StudentId" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="StudentName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LessonLocation" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Credit" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ScoreRaw" Type="nvarchar(max)" Nullable="false" />
@@ -67,13 +65,9 @@
     <Property Name="SessionTime" Type="nvarchar(max)" Nullable="false" />
     <Property Name="SuspendData" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LaunchData" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CommentsFromLms" Type="nvarchar(max)" Nullable="false" />
     <Property Name="DataMasteryScore" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="DataMaxTimeAllowed" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PreferenceAudio" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PreferenceLanguage" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PreferenceSpeed" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PreferenceText" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Entry" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Exit" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Version" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="UserUserCourse">
@@ -194,8 +188,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentId" Type="String" Nullable="false" />
-          <Property Name="StudentName" Type="String" Nullable="false" />
           <Property Name="LessonLocation" Type="String" Nullable="false" />
           <Property Name="Credit" Type="String" Nullable="false" />
           <Property Name="ScoreRaw" Type="String" Nullable="false" />
@@ -205,13 +197,9 @@
           <Property Name="SessionTime" Type="String" Nullable="false" />
           <Property Name="SuspendData" Type="String" Nullable="false" />
           <Property Name="LaunchData" Type="String" Nullable="false" />
-          <Property Name="CommentsFromLms" Type="String" Nullable="false" />
           <Property Name="DataMasteryScore" Type="String" Nullable="false" />
-          <Property Name="DataMaxTimeAllowed" Type="String" Nullable="false" />
-          <Property Name="PreferenceAudio" Type="String" Nullable="false" />
-          <Property Name="PreferenceLanguage" Type="String" Nullable="false" />
-          <Property Name="PreferenceSpeed" Type="String" Nullable="false" />
-          <Property Name="PreferenceText" Type="String" Nullable="false" />
+          <Property Name="Entry" Type="String" Nullable="false" />
+          <Property Name="Exit" Type="String" Nullable="false" />
           <Property Name="Version" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="ScormUserCourse">
@@ -267,8 +255,6 @@
       <EntityTypeMapping TypeName="IsTypeOf(RDModel.Scorm)">
         <MappingFragment StoreEntitySet="Scorms">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-          <ScalarProperty Name="StudentName" ColumnName="StudentName" />
           <ScalarProperty Name="LessonLocation" ColumnName="LessonLocation" />
           <ScalarProperty Name="Credit" ColumnName="Credit" />
           <ScalarProperty Name="ScoreRaw" ColumnName="ScoreRaw" />
@@ -278,13 +264,9 @@
           <ScalarProperty Name="SessionTime" ColumnName="SessionTime" />
           <ScalarProperty Name="SuspendData" ColumnName="SuspendData" />
           <ScalarProperty Name="LaunchData" ColumnName="LaunchData" />
-          <ScalarProperty Name="CommentsFromLms" ColumnName="CommentsFromLms" />
           <ScalarProperty Name="DataMasteryScore" ColumnName="DataMasteryScore" />
-          <ScalarProperty Name="DataMaxTimeAllowed" ColumnName="DataMaxTimeAllowed" />
-          <ScalarProperty Name="PreferenceAudio" ColumnName="PreferenceAudio" />
-          <ScalarProperty Name="PreferenceLanguage" ColumnName="PreferenceLanguage" />
-          <ScalarProperty Name="PreferenceSpeed" ColumnName="PreferenceSpeed" />
-          <ScalarProperty Name="PreferenceText" ColumnName="PreferenceText" />
+          <ScalarProperty Name="Entry" ColumnName="Entry" />
+          <ScalarProperty Name="Exit" ColumnName="Exit" />
           <ScalarProperty Name="Version" ColumnName="Version" />
         </MappingFragment>
       </EntityTypeMapping>

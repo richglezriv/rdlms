@@ -10,12 +10,12 @@ namespace RD.LMS.Models
     /// </summary>
     public class JSonModel
     {
-        public String message { get; set; }
+        public String status { get; set; }
         public IDataModel data { get; set; }
 
         public JSonModel()
         {
-
+            status = "success";
         }
 
     }

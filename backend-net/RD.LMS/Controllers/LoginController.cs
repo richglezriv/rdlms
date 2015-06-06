@@ -16,8 +16,9 @@ namespace RD.LMS.Controllers
             return View();
         }
 
-        public ActionResult Login()
+        public ActionResult Login(string jsonModel)
         {
+            Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(jsonModel);
             string test = "{scorm_model: {status: success, data: {actionRequested:, params:}";
 
             return Json(test);

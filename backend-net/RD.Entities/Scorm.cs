@@ -15,8 +15,6 @@ namespace RD.Entities
     public partial class Scorm
     {
         public int Id { get; set; }
-        public string StudentId { get; set; }
-        public string StudentName { get; set; }
         public string LessonLocation { get; set; }
         public string Credit { get; set; }
         public string ScoreRaw { get; set; }
@@ -26,13 +24,9 @@ namespace RD.Entities
         public string SessionTime { get; set; }
         public string SuspendData { get; set; }
         public string LaunchData { get; set; }
-        public string CommentsFromLms { get; set; }
         public string DataMasteryScore { get; set; }
-        public string DataMaxTimeAllowed { get; set; }
-        public string PreferenceAudio { get; set; }
-        public string PreferenceLanguage { get; set; }
-        public string PreferenceSpeed { get; set; }
-        public string PreferenceText { get; set; }
+        public string Entry { get; set; }
+        public string Exit { get; set; }
         public string Version { get; set; }
     }
 }

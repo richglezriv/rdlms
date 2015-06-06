@@ -1,20 +1,72 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Courses TestDrive</title>
-    <script src="../../Scripts/jquery-1.11.2.min.js"></script>
-    <script>
-        function getCourses() {
-            var postback = $.post('/Courses/Get');
-            postback.done(function (data) {
-                $('#response').html(JSON.stringify(data));
-            });
-        }
-    </script>
+	<meta charset="UTF-8">
+	<title>Cursos - LMS</title>
+	<link rel="stylesheet" href="components/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/frontend.css">
 </head>
 <body>
-    <h1>Courses Test Drive</h1>
-    <p>Test method&nbsp;<input type="button" onclick="getCourses();" value="Test Fetch" /></p>
-    <span id="response" name="respondes"></span>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">RD LMS</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="username"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="profile.html">Editar perfil</a></li>
+							<li><a href="login.html">Cerrar sesión</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</nav>
+
+
+
+
+
+
+
+	<div class="container">
+
+		<div class="page-header">
+			<h1>Cursos</h1>
+		</div>
+
+
+		<div class="list courses">
+			<!--
+
+			<div class="media">
+				<div class="media-left">
+					<img class="media-object" src="">
+				</div>
+				<div class="media-body">
+					<h3 class="media-heading">Osty Diagnostic</h3>
+					<span class="status label label-warning">Incompleto</span>
+					<span class="time">01:10:05</span>
+					<div class="description">SCO más avanzado para probar la comunicación entre el SCO y el LMS.</div>
+				</div>
+			</div>
+
+			-->
+		</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="components/jquery/jquery.min.js"></script>
+	<script src="components/bootstrap/js/bootstrap.min.js"></script>
+	<!-- <script src="components/dot/dot.min.js"></script> -->
+	<script src="js/rdlms.js"></script>
+	<script src="js/courses.js"></script>
 </body>
 </html>

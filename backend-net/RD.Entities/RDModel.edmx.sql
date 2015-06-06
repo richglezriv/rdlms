@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/11/2015 22:52:04
--- Generated from EDMX file: C:\Users\rgonzalez\documents\visual studio 2013\Projects\RD.LMS\RD.Entities\RDModel.edmx
+-- Date Created: 05/20/2015 19:58:09
+-- Generated from EDMX file: C:\Users\rgonzalez\Documents\Visual Studio 2013\Projects\RD.LMS\backend-net\RD.Entities\RDModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -79,8 +79,6 @@ GO
 -- Creating table 'Scorms'
 CREATE TABLE [dbo].[Scorms] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [StudentId] nvarchar(max)  NOT NULL,
-    [StudentName] nvarchar(max)  NOT NULL,
     [LessonLocation] nvarchar(max)  NOT NULL,
     [Credit] nvarchar(max)  NOT NULL,
     [ScoreRaw] nvarchar(max)  NOT NULL,
@@ -90,13 +88,9 @@ CREATE TABLE [dbo].[Scorms] (
     [SessionTime] nvarchar(max)  NOT NULL,
     [SuspendData] nvarchar(max)  NOT NULL,
     [LaunchData] nvarchar(max)  NOT NULL,
-    [CommentsFromLms] nvarchar(max)  NOT NULL,
     [DataMasteryScore] nvarchar(max)  NOT NULL,
-    [DataMaxTimeAllowed] nvarchar(max)  NOT NULL,
-    [PreferenceAudio] nvarchar(max)  NOT NULL,
-    [PreferenceLanguage] nvarchar(max)  NOT NULL,
-    [PreferenceSpeed] nvarchar(max)  NOT NULL,
-    [PreferenceText] nvarchar(max)  NOT NULL,
+    [Entry] nvarchar(max)  NOT NULL,
+    [Exit] nvarchar(max)  NOT NULL,
     [Version] nvarchar(max)  NOT NULL
 );
 GO

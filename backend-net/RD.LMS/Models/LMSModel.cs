@@ -5,7 +5,7 @@ using System.Web;
 
 namespace RD.LMS.Models
 {
-    public class LMS
+    public class LMSModel
     {
         private Dictionary<String, String> myDictionary = new Dictionary<string, string>();
 
@@ -26,7 +26,7 @@ namespace RD.LMS.Models
         public String SessionTime { get; set; }
         public String SuspendData { get; set; }
         public String LaunchData { get; set; }
-
+        
         private String GetScormName(String propertyName)
         {
             return myDictionary.First(r => r.Key.Equals(propertyName)).Value;
@@ -61,7 +61,7 @@ namespace RD.LMS.Models
             return json;
         }
 
-        public LMS()
+        public LMSModel()
         {
             this.myDictionary.Add("Children", "cmi.core._children");
             this.myDictionary.Add("StudentId", "cmi.core.student_id");

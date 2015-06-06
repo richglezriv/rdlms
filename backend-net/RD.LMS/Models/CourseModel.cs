@@ -11,6 +11,8 @@ namespace RD.LMS.Models
 
         public String name { get; set; }
 
+        public String scorm { get; set; }
+
         public String scoPath { get; set; }
 
         public String scoIndex { get; set; }
@@ -23,6 +25,16 @@ namespace RD.LMS.Models
 
         public String description { get; set; }
 
+        public String conditions { get; set; }
+
+        public void LoadValues(Newtonsoft.Json.Linq.JObject json)
+        {
+            foreach (System.Reflection.PropertyInfo p in this.GetType().GetProperties())
+            {
+                this.GetType().GetProperty(p.Name).SetValue(this, json["data"][p.Name] != null ? json["data"][p.Name].ToString() : null);
+            }
+            
+        }
         
     }
 }
