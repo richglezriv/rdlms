@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    
+    Response.Redirect("~/login.html");
     
 }
 
@@ -26,18 +26,18 @@
 <script src="components/jquery/jquery.min.js"></script>
 <script>
 
+    var object = '{"data":{"courseId":"123"}}';
+    var json = JSON.parse(object);
+    
     function loadLMSSettings() {
-        var data = { "courseId": "123" };
-
         $.ajax({
-            url: "/Courses/Delete",
-            data: {"idCourse":"123"}
-        })
-			.done(function () { alert("good"); })
-			.fail(function () { alert("fail"); })
+            url: "User/Login",
+            dataType: "json", method: 'GET',
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        });
         
-        //.always()
-        ;
     }
 
 </script>

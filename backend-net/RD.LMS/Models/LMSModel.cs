@@ -32,14 +32,32 @@ namespace RD.LMS.Models
             return myDictionary.First(r => r.Key.Equals(propertyName)).Value;
         }
 
+        public void LoadCourse(Entities.UserCourse course)
+        {
+            this.Credit = course.Scorm.Credit;
+            this.Entry = course.Scorm.Entry;
+            this.Exit = course.Scorm.Exit;
+            this.LaunchData = course.Scorm.LaunchData;
+            this.LessonLocation = course.Scorm.LessonLocation;
+            this.LessonStatus = course.Status;
+            this.ScoreMax = course.Scorm.ScoreMax;
+            this.ScoreMin = course.Scorm.ScoreMin;
+            this.ScoreRaw = course.Scorm.ScoreRaw;
+            this.SessionTime = course.Scorm.SessionTime;
+            this.StudentId = course.UserId.ToString();
+            this.SuspendData = course.Scorm.SuspendData;
+            this.TotalTime = course.Scorm.TotalTime;
+            
+        }
+
         public void LoadValues(Newtonsoft.Json.Linq.JObject collection) {
 
             String value;
 
             foreach (System.Reflection.PropertyInfo p in this.GetType().GetProperties())
             {
-                value = collection["data"][GetScormName(p.Name)] != null ? 
-                    collection["data"][GetScormName(p.Name)].ToString() : String.Empty;
+                value = collection[GetScormName(p.Name)] != null ? 
+                    collection[GetScormName(p.Name)].ToString() : String.Empty;
                 p.SetValue(this, value);
             }
         }
@@ -80,6 +98,11 @@ namespace RD.LMS.Models
             this.myDictionary.Add("SessionTime", "cmi.core.session_time");
             this.myDictionary.Add("SuspendData", "cmi.suspend_data");
             this.myDictionary.Add("LaunchData", "cmi.launch_data");
+        }
+
+        internal void EvalCourse(Entities.UserCourse course)
+        {
+            
         }
     }
 }

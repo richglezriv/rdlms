@@ -21,5 +21,6 @@ namespace RD.Entities
         public string ScormPackage { get; set; }
         public string ParentCourses { get; set; }
         public string ScoIndex { get; set; }
+        public bool IsEnabled { get; set; }
     }
 }

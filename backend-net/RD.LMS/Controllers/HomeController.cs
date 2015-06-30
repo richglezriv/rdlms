@@ -12,20 +12,7 @@ namespace RD.LMS.Controllers
         //
         // GET: /Home/
 
-        public ActionResult Index(String Id)
-        {
-
-            
-                Session.Add("USR_ID", 1);
-                Models.LMSModel r = new Models.LMSModel();
-                r.StudentId = "1";
-            
-                
-            
-            return View();
-        }
-
-        public ActionResult Course()
+        public ActionResult Index()
         {
             return View();
         }

@@ -63,7 +63,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Context.cs" />
+    <Compile Include="CourseDAO.cs" />
+    <Compile Include="IContextDAO.cs" />
+    <Compile Include="ScormDAO.cs" />
+    <Compile Include="UserCourseDAO.cs" />
+    <Compile Include="UserDAO.cs" />
     <Compile Include="Course.cs">
       <DependentUpon>RDModel.tt</DependentUpon>
     </Compile>

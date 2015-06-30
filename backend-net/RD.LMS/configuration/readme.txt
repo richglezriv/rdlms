@@ -1,0 +1,1 @@
+﻿Set MIME type to be able to download .json file configuration extension [.json] mymeType [string or application/json]

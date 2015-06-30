@@ -11,11 +11,31 @@ namespace RD.LMS.Controllers
     {
         //
         // GET: /User/
+        private string USER_COURSE = "USER_COURSE";
 
-        public ActionResult Login()
+        public ActionResult Login(string data)
         {
             Models.JSonModel model = new Models.JSonModel();
-            model.status = "success";
+            Newtonsoft.Json.Linq.JObject json = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+
+            LMSUser user = new LMSUser()
+            {
+                login = json["username"].ToString(),
+                password = json["password"].ToString(),
+            };
+
+            model.status = user.Validate();
+
+            if (model.status.Equals(Utilities.SUCCESS))
+                Session.Add(Utilities.USER, user);
+
+            if (user.TryOuts > 3)
+            {
+                model.status = Utilities.FAIL;
+                user.SetReason();
+            }
+            
+            model.data = user;
 
             return Json(model);
         }
@@ -23,27 +43,27 @@ namespace RD.LMS.Controllers
         public ActionResult Logout()
         {
             Models.JSonModel model = new Models.JSonModel();
-            model.status = "success";
+            model.status = Utilities.SUCCESS;
 
+            try
+            {
+                if (Session[Utilities.USER] != null)
+                {
+                    LMSUser user = (LMSUser)Session[Utilities.USER];
+                    user.LogOut();
+                }
+            }
+            catch (Exception) { }
+
+            Session.Abandon();
+            
             return Json(model);
         }
 
         public ActionResult Get()
         {
             Models.JSonModelCollection model = new Models.JSonModelCollection();
-            List<Models.UserCourseModel> courses = new List<UserCourseModel>();
-
-            //loads courses
-            courses.Add(new UserCourseModel()
-            {
-                id = "123",
-                name = "Reaccion Digital",
-                status = "browsed",
-                active = true,
-                description = "RD Course Demo",
-                totalTime = "102",
-                thumbnail = "thumb1.png"
-            });
+            List<Models.UserCourseModel> courses = Models.UserCourseModel.Get(((Models.LMSUser)Session[Utilities.USER]).id);
 
             model.data = courses.ToList<IDataModel>();
 
@@ -66,48 +86,46 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        public ActionResult User() { throw new NotImplementedException(); }
+        public ActionResult GetUser() { throw new NotImplementedException(); }
 
         public ActionResult Fetch(string data)
         {
 
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             Models.LMSModel lms = new Models.LMSModel();
-            lms.LoadValues(toFetch);
-            lms.StudentId = Session["USR_ID"].ToString();
+            Entities.UserCourse course = Business.UserController.GetCourse(Convert.ToInt32(toFetch["courseId"].ToString()));
+            LMSUser user = Session[Utilities.USER] != null ? (LMSUser)Session[Utilities.USER] : null;
+            CourseModel toCourse = new CourseModel();
+
+            toCourse.LoadCourse(course);
+            lms.LoadCourse(course);
+            lms.StudentName = user.name;
+            toCourse.dataModel = lms.GenerateJSonString();
 
             JSonModel model = new JSonModel()
             {
-                data = new CourseModel()
-                {
-                    id = toFetch["data"]["courseId"].ToString(),
-                    name = String.Format("Name of course {0}", toFetch["data"]["courseId"].ToString()),
-                    scorm = "reacciondigital",
-                    scoIndex = "player.html",
-                    scoPath = "reacciondigital",
-                    status = "active",
-                    dataModel = lms.GenerateJSonString()
-                },
-
+                data = toCourse,
+                status = "success"
             };
+
+            Session.Add(USER_COURSE, course);
 
             return Json(model);
         }
 
-        public ActionResult Commit(string jsonModel)
+        public ActionResult Commit(string data)
         {
-
-            Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(jsonModel);
+            Entities.UserCourse course = (Entities.UserCourse)Session[USER_COURSE];
+            Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             Models.LMSModel lms = new Models.LMSModel();
             lms.LoadValues(toFetch);
-            lms.StudentId = Session["USR_ID"].ToString();
-
-            //toFetch["data"]["cmi.student_id"]
+            lms.EvalCourse(course);
+            LMSUser user = Session[Utilities.USER] != null ? (LMSUser)Session[Utilities.USER] : null;
+            
             JSonModel model = new JSonModel()
             {
                 data = new CourseModel()
                 {
-                    id = "123",
                     dataModel = lms.GenerateJSonString()
                 }
             };

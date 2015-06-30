@@ -33,13 +33,20 @@
     <Property Name="Thumbnail" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ScormPackage" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ParentCourses" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ScoIndex" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ScoIndex" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="IsEnabled" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="IsAdmin" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="IsLogged" Type="bit" Nullable="false" DefaultValue="false" />
   </EntityType>
   <EntityType Name="UserCourses">
     <Key>
@@ -56,19 +63,19 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="LessonLocation" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Credit" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LessonLocation" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Credit" Type="nvarchar(max)" Nullable="true" />
     <Property Name="ScoreRaw" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ScoreMin" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ScoreMax" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="TotalTime" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="SessionTime" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="SuspendData" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="LaunchData" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="DataMasteryScore" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Entry" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Exit" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Version" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ScoreMin" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ScoreMax" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="TotalTime" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SessionTime" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SuspendData" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="LaunchData" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="DataMasteryScore" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Entry" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Exit" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Version" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
   <Association Name="UserUserCourse">
     <End Role="User" Type="RDModel.Store.Users" Multiplicity="1" />
@@ -138,7 +145,8 @@
           <Property Name="Thumbnail" Type="String" Nullable="false" />
           <Property Name="ScormPackage" Type="String" Nullable="false" />
           <Property Name="ParentCourses" Type="String" Nullable="false" />
-          <Property Name="ScoIndex" Type="String" Nullable="false" />
+          <Property Name="ScoIndex" Type="String" Nullable="true" />
+          <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -146,6 +154,12 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="UserCourses" Relationship="RDModel.UserUserCourse" FromRole="User" ToRole="UserCourse" />
+          <Property Name="Login" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="true" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" DefaultValue="False" />
+          <Property Name="IsLogged" Type="Boolean" Nullable="false" DefaultValue="False" />
         </EntityType>
         <EntityType Name="UserCourse">
           <Key>
@@ -188,19 +202,19 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LessonLocation" Type="String" Nullable="false" />
-          <Property Name="Credit" Type="String" Nullable="false" />
+          <Property Name="LessonLocation" Type="String" Nullable="true" />
+          <Property Name="Credit" Type="String" Nullable="true" />
           <Property Name="ScoreRaw" Type="String" Nullable="false" />
-          <Property Name="ScoreMin" Type="String" Nullable="false" />
-          <Property Name="ScoreMax" Type="String" Nullable="false" />
-          <Property Name="TotalTime" Type="String" Nullable="false" />
-          <Property Name="SessionTime" Type="String" Nullable="false" />
-          <Property Name="SuspendData" Type="String" Nullable="false" />
-          <Property Name="LaunchData" Type="String" Nullable="false" />
-          <Property Name="DataMasteryScore" Type="String" Nullable="false" />
-          <Property Name="Entry" Type="String" Nullable="false" />
-          <Property Name="Exit" Type="String" Nullable="false" />
-          <Property Name="Version" Type="String" Nullable="false" />
+          <Property Name="ScoreMin" Type="String" Nullable="true" />
+          <Property Name="ScoreMax" Type="String" Nullable="true" />
+          <Property Name="TotalTime" Type="String" Nullable="true" />
+          <Property Name="SessionTime" Type="String" Nullable="true" />
+          <Property Name="SuspendData" Type="String" Nullable="true" />
+          <Property Name="LaunchData" Type="String" Nullable="true" />
+          <Property Name="DataMasteryScore" Type="String" Nullable="true" />
+          <Property Name="Entry" Type="String" Nullable="true" />
+          <Property Name="Exit" Type="String" Nullable="true" />
+          <Property Name="Version" Type="String" Nullable="true" />
         </EntityType>
         <Association Name="ScormUserCourse">
           <End Type="RDModel.Scorm" Role="Scorm" Multiplicity="1" />
@@ -230,6 +244,7 @@
           <ScalarProperty Name="ScormPackage" ColumnName="ScormPackage" />
           <ScalarProperty Name="ParentCourses" ColumnName="ParentCourses" />
           <ScalarProperty Name="ScoIndex" ColumnName="ScoIndex" />
+          <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -237,6 +252,12 @@
       <EntityTypeMapping TypeName="IsTypeOf(RDModel.User)">
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+          <ScalarProperty Name="IsLogged" ColumnName="IsLogged" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

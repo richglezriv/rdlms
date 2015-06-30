@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/20/2015 19:58:09
+-- Date Created: 06/18/2015 18:12:25
 -- Generated from EDMX file: C:\Users\rgonzalez\Documents\Visual Studio 2013\Projects\RD.LMS\backend-net\RD.Entities\RDModel.edmx
 -- --------------------------------------------------
 
@@ -56,13 +56,20 @@ CREATE TABLE [dbo].[Courses] (
     [Thumbnail] nvarchar(max)  NOT NULL,
     [ScormPackage] nvarchar(max)  NOT NULL,
     [ParentCourses] nvarchar(max)  NOT NULL,
-    [ScoIndex] nvarchar(max)  NOT NULL
+    [ScoIndex] nvarchar(max)  NULL,
+    [IsEnabled] bit  NOT NULL
 );
 GO
 
 -- Creating table 'Users'
 CREATE TABLE [dbo].[Users] (
-    [Id] int IDENTITY(1,1) NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Login] nvarchar(max)  NOT NULL,
+    [Password] nvarchar(max)  NOT NULL,
+    [FirstName] nvarchar(max)  NOT NULL,
+    [LastName] nvarchar(max)  NULL,
+    [IsAdmin] bit  NOT NULL,
+    [IsLogged] bit  NOT NULL
 );
 GO
 
@@ -79,19 +86,19 @@ GO
 -- Creating table 'Scorms'
 CREATE TABLE [dbo].[Scorms] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [LessonLocation] nvarchar(max)  NOT NULL,
-    [Credit] nvarchar(max)  NOT NULL,
+    [LessonLocation] nvarchar(max)  NULL,
+    [Credit] nvarchar(max)  NULL,
     [ScoreRaw] nvarchar(max)  NOT NULL,
-    [ScoreMin] nvarchar(max)  NOT NULL,
-    [ScoreMax] nvarchar(max)  NOT NULL,
-    [TotalTime] nvarchar(max)  NOT NULL,
-    [SessionTime] nvarchar(max)  NOT NULL,
-    [SuspendData] nvarchar(max)  NOT NULL,
-    [LaunchData] nvarchar(max)  NOT NULL,
-    [DataMasteryScore] nvarchar(max)  NOT NULL,
-    [Entry] nvarchar(max)  NOT NULL,
-    [Exit] nvarchar(max)  NOT NULL,
-    [Version] nvarchar(max)  NOT NULL
+    [ScoreMin] nvarchar(max)  NULL,
+    [ScoreMax] nvarchar(max)  NULL,
+    [TotalTime] nvarchar(max)  NULL,
+    [SessionTime] nvarchar(max)  NULL,
+    [SuspendData] nvarchar(max)  NULL,
+    [LaunchData] nvarchar(max)  NULL,
+    [DataMasteryScore] nvarchar(max)  NULL,
+    [Entry] nvarchar(max)  NULL,
+    [Exit] nvarchar(max)  NULL,
+    [Version] nvarchar(max)  NULL
 );
 GO
 
