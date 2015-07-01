@@ -105,5 +105,13 @@ namespace RD.Business
 
             return dao.Get(userCourseId);
         }
+
+        public static void UpdateUserCourse(Entities.UserCourse course)
+        {
+            Entities.IDAO dao = new Entities.UserCourseDAO(string.Empty, course);
+
+            dao.Update();
+            
+        }
     }
 }

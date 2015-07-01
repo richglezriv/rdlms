@@ -36,24 +36,23 @@ namespace RD.LMS.Controllers
             course.LoadValues(toFetch);
             //course thumbnail
             string source = Server.MapPath("/uploads/") + course.thumbnail;
-            string extension = course.thumbnail.Remove(0, course.thumbnail.Length - 4);
-            course.thumbnail = course.name + extension;
-            string destination = Server.MapPath("/uploads/") + course.thumbnail;
+            //string extension = course.thumbnail.Remove(0, course.thumbnail.Length - 4);
+            //course.thumbnail = course.name + extension;
+            string destination = source;//Server.MapPath("/uploads/") + course.thumbnail;
             //copy file
-            if (source != destination) {
+            if (System.IO.File.Exists(source)) {
                 System.IO.File.Copy(source, destination, true);
-                //System.IO.File.Delete(source);
             }
             
             //scorm course zip
             source = Server.MapPath("/uploads/" + course.scorm);
-            extension = course.scorm.Remove(0, course.scorm.Length - 4);
-            course.scorm = course.name + extension;
-            destination = Server.MapPath("/scorm-packages/") + course.scorm;
+            //extension = course.scorm.Remove(0, course.scorm.Length - 4);
+            //course.scorm = course.name + extension;
+            destination = source;//Server.MapPath("/scorm-packages/") + course.scorm;
             if (System.IO.File.Exists(source))
             {
                 System.IO.File.Copy(source, destination, true);
-                //System.IO.File.Delete(source);
+                System.IO.File.Delete(source);
                 ProcessController.UnzipFile(destination);
                 course.SetManifest(Server.MapPath("/scorm-packages/"));
             }
@@ -67,18 +66,9 @@ namespace RD.LMS.Controllers
         public ActionResult Stats(string data)
         {
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
-            int id = int.Parse(toFetch["courseId"].ToString());
+            string id = toFetch["courseId"].ToString();
             RD.LMS.Models.JSonModel model = new RD.LMS.Models.JSonModel();
-            Models.CourseStatsModel stats = new CourseStatsModel()
-            {
-                name = "course",
-                id = "123",
-                incomplete = 100,
-                failed = 50,
-                notAttempted = 5,
-                passed = 10,
-                completed = 5
-            };
+            Models.CourseStatsModel stats = new CourseStatsModel(id);
             model.data = stats;
 
             return Json(model);

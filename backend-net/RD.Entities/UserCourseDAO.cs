@@ -45,12 +45,20 @@ namespace RD.Entities
             RDModelContainer model = Context.SetContext(_password).model;
             return model.UserCourses.Single<UserCourse>(c=> c.Id.Equals(userCourseId));
         }
+
+        public int GetByStatus(string status, int courseId)
+        {
+            RDModelContainer model = Context.SetContext(_password).model;
+            int total = model.UserCourses.Count(c => c.Status.Equals(status) && c.CourseId.Equals(courseId));
+
+            return total;
+        }
         #endregion
 
         void IDAO.Save()
         {
 
-            Scorm scorm = new Scorm() { TotalTime = "0:00:00", ScoreRaw = "0" };
+            Scorm scorm = new Scorm() { TotalTime = "0:00:00", ScoreRaw = "0"};
             IDAO daoScorm = new ScormDAO(String.Empty, scorm);
             daoScorm.Save();
 
@@ -64,7 +72,15 @@ namespace RD.Entities
 
         void IDAO.Update()
         {
-            throw new NotImplementedException();
+            IDAO daoScorm = new ScormDAO(String.Empty, this._persist.Scorm);
+            daoScorm.Update();
+
+            RDModelContainer model = Context.SetContext(_password).model;
+            UserCourse course = model.UserCourses.Single(c => c.Id.Equals(this._persist.Id));
+
+            course.Status = this._persist.Status;
+
+            model.SaveChanges();
         }
 
         void IDAO.Delete()

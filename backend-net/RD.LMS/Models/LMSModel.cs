@@ -102,7 +102,7 @@ namespace RD.LMS.Models
 
         internal void EvalCourse(Entities.UserCourse course)
         {
-            
+            Business.UserController.UpdateUserCourse(course);
         }
     }
 }

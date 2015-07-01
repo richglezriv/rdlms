@@ -20,4 +20,32 @@ namespace RD.LMS.Models
 
     }
 
+    public class MessageData : IDataModel
+    {
+        public MessageData() { }
+
+        public MessageData(string message)
+        {
+            this.message = message;
+        }
+
+        public string id
+        {
+            get;
+            set;
+        }
+
+        public string name
+        {
+            get;
+            set;
+        }
+
+        public string message
+        {
+            get;
+            set;
+        }
+    }
+
 }
