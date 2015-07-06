@@ -68,5 +68,24 @@ try
             UserCourseDAO dao = new UserCourseDAO(string.Empty);
             return dao.GetAll();
         }
+
+        /// <summary>
+        /// For course stats
+        /// </summary>
+        /// <param name="status"> posible status "passed", "failed", "completed", "incomplete", "browsed",  "not attempted"</param>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
+        public static int GetByStatus(string status, int courseId)
+        {
+            UserCourseDAO dao = new UserCourseDAO(string.Empty);
+            
+            return dao.GetByStatus(status, courseId);
+        }
+
+        public static Entities.Course GetBy(int id)
+        {
+            CourseDAO dao = new CourseDAO(string.Empty);
+            return dao.GetCourses().Single(c=>c.Id.Equals(id));
+        }
     }
 }

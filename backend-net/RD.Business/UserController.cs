@@ -31,6 +31,19 @@ namespace RD.Business
             
         }
 
+        public static List<Entities.User> GetUsers(string nameLike)
+        {
+            List<Entities.User> result = new List<Entities.User>();
+            if (nameLike.Length < 3)
+                return result;
+
+            _dao = new RD.Entities.UserDAO(string.Empty);
+            result = _dao.GetBy(nameLike);
+
+            return result;
+
+        }
+
         public static void UpdateSessionState(int userId, SessionState state)
         {
             _dao = new RD.Entities.UserDAO(string.Empty);
@@ -104,6 +117,14 @@ namespace RD.Business
             Entities.UserCourseDAO dao = new Entities.UserCourseDAO(string.Empty);
 
             return dao.Get(userCourseId);
+        }
+
+        public static void UpdateUserCourse(Entities.UserCourse course)
+        {
+            Entities.IDAO dao = new Entities.UserCourseDAO(string.Empty, course);
+
+            dao.Update();
+            
         }
     }
 }

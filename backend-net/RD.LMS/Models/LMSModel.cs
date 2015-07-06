@@ -102,7 +102,20 @@ namespace RD.LMS.Models
 
         internal void EvalCourse(Entities.UserCourse course)
         {
+            course.Status = this.LessonStatus;
+            course.Scorm.LessonLocation = this.LessonLocation;
+            course.Scorm.Credit = this.Credit;
+            course.Scorm.Entry = this.Entry;
+            course.Scorm.Exit = this.Exit;
+            course.Scorm.LaunchData = this.LaunchData;
+            course.Scorm.ScoreMax = this.ScoreMax;
+            course.Scorm.ScoreMin = this.ScoreMin;
+            course.Scorm.ScoreRaw = this.ScoreRaw;
+            course.Scorm.SessionTime = this.SessionTime;
+            course.Scorm.SuspendData = this.SuspendData;
+            course.Scorm.TotalTime = this.TotalTime;
             
+            Business.UserController.UpdateUserCourse(course);
         }
     }
 }

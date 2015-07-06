@@ -47,6 +47,13 @@ namespace RD.Entities
 
         }
 
+        public List<User> GetBy(String nameLike)
+        {
+            RDModelContainer model = Context.SetContext(_password).model;
+
+            return model.Users.Where(u => u.FirstName.Contains(nameLike) || u.LastName.Contains(nameLike)).ToList<User>();
+        }
+
         void IDAO.Save()
         {
             throw new NotImplementedException();

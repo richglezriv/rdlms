@@ -35,7 +35,7 @@ namespace RD.LMS.Models
         {
             foreach (System.Reflection.PropertyInfo p in this.GetType().GetProperties())
             {
-                if (p.Name.Equals("id"))
+                if (p.Name.Equals("id") && json["courseId"] != null)
                     this.GetType().GetProperty(p.Name).SetValue(this,json["courseId"].ToString());
                 else
                     this.GetType().GetProperty(p.Name).SetValue(this, json[p.Name] != null ? json[p.Name].ToString() : null);
@@ -103,7 +103,8 @@ namespace RD.LMS.Models
                     ParentCourses = this.conditions,
                     ScoIndex = this.scoIndex,
                     ScormPackage = this.scorm,
-                    Thumbnail = this.thumbnail
+                    Thumbnail = this.thumbnail,
+                    IsEnabled = true
                 });
             }
             catch (Exception) { throw; }

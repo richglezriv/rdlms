@@ -15,14 +15,32 @@ namespace RD.LMS.Controllers
         public ActionResult UploadThumbnail(String qqfile)
         {
             List<String> thumbs = Session[Utilities.THUMBS] == null ? new List<string>() : (List<String>)Session[Utilities.THUMBS];
-
-            HttpRequestBase hfc = Request;
-            var img = Bitmap.FromStream(hfc.InputStream);
-            string path = Server.MapPath("/uploads/" + qqfile);
-            img.Save(path);
-
             JSonModel model = new JSonModel() { status = "success" };
-            thumbs.Add(qqfile);
+            HttpRequestBase hfc = Request;
+
+            try
+            {
+                if (hfc.ContentLength > 500000)
+                {
+                    MessageData message = new MessageData();
+                    message.message = "el archivo excede tamaño permitido";
+                    model.status = "fail";
+                    model.data = message;
+                    return Json(model);
+                }
+                    
+                    //throw new Exception("File too big");
+
+                var img = Bitmap.FromStream(hfc.InputStream);
+                string path = Server.MapPath("/uploads/" + qqfile);
+
+                img.Save(path);
+                thumbs.Add(qqfile);
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
+            
 
             return Json(model);
         }
@@ -30,21 +48,31 @@ namespace RD.LMS.Controllers
         public ActionResult UploadScorm(string qqfile)
         {
             List<String> scorms = Session[Utilities.SCORMS] == null ? new List<string>() : (List<String>)Session[Utilities.SCORMS];
+            JSonModel model = new JSonModel();
 
-            HttpRequestBase hfc = Request;
-            System.IO.Stream stream = hfc.InputStream;
-            string path = Server.MapPath("/uploads/" + qqfile);
-            System.IO.FileStream newFile = System.IO.File.Create(path);
-            stream.CopyTo(newFile);
+            try
+            {
+                HttpRequestBase hfc = Request;
+                System.IO.Stream stream = hfc.InputStream;
+                string path = Server.MapPath("/uploads/" + qqfile);
+                System.IO.FileStream newFile = System.IO.File.Create(path);
+                stream.CopyTo(newFile);
 
-            stream.Close();
-            stream.Dispose();
+                stream.Close();
+                stream.Dispose();
+
+                newFile.Close();
+                newFile.Dispose();
+
+                scorms.Add(qqfile);
+            }
+            catch (Exception)
+            {
+                model.status = "fail";
+                MessageData m = new MessageData("error al cargar archivo scorm");
+                model.data = m;
+            }
             
-            newFile.Close();
-            newFile.Dispose();
-
-            JSonModel model = new JSonModel() { status = "success" };
-            scorms.Add(qqfile);
 
             return Json(model);
         }

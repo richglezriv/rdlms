@@ -41,7 +41,25 @@ namespace RD.Entities
 
         void IDAO.Update()
         {
-            throw new NotImplementedException();
+            if (this._persist != null)
+            {
+                RDModelContainer model = Context.SetContext(_password).model;
+                Scorm scorm = model.Scorms.Single(s => s.Id.Equals(this._persist.Id));
+                scorm.Credit = this._persist.Credit;
+                scorm.DataMasteryScore = this._persist.DataMasteryScore;
+                scorm.Entry = this._persist.Entry;
+                scorm.Exit = this._persist.Exit;
+                scorm.LaunchData = this._persist.LaunchData;
+                scorm.LessonLocation = this._persist.LessonLocation;
+                scorm.ScoreMax = this._persist.ScoreMax;
+                scorm.ScoreMin = this._persist.ScoreMin;
+                scorm.ScoreRaw = this._persist.ScoreRaw;
+                scorm.SessionTime = this._persist.SessionTime;
+                scorm.SuspendData = this._persist.SuspendData;
+                scorm.TotalTime = this._persist.TotalTime;
+                scorm.Version = this._persist.Version;
+                model.SaveChanges();
+            }
         }
 
         void IDAO.Delete()

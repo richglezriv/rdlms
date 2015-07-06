@@ -118,6 +118,7 @@ namespace RD.LMS.Controllers
             Entities.UserCourse course = (Entities.UserCourse)Session[USER_COURSE];
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             Models.LMSModel lms = new Models.LMSModel();
+            lms.LoadCourse(course);
             lms.LoadValues(toFetch);
             lms.EvalCourse(course);
             LMSUser user = Session[Utilities.USER] != null ? (LMSUser)Session[Utilities.USER] : null;
@@ -129,6 +130,8 @@ namespace RD.LMS.Controllers
                     dataModel = lms.GenerateJSonString()
                 }
             };
+
+            Session.Remove(USER_COURSE);
 
             return Json(model);
         }

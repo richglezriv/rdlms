@@ -154,6 +154,7 @@
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\JSonModel.cs" />
     <Compile Include="Models\UserCourseModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -247,41 +248,7 @@
     <Content Include="login.html" />
     <Content Include="profile.html" />
     <Content Include="registration.html" />
-    <Content Include="scorm-packages\diagnostics\css\styles.css" />
-    <Content Include="scorm-packages\diagnostics\default.htm" />
-    <Content Include="scorm-packages\diagnostics\imsmanifest.xml" />
-    <Content Include="scorm-packages\diagnostics\js\APIWrapper.js" />
-    <Content Include="scorm-packages\diagnostics\js\lmsdiag.js" />
-    <Content Include="scorm-packages\diagnostics\js\ostynscormtime.js" />
-    <Content Include="scorm-packages\diagnostics\js\utils.js" />
-    <Content Include="scorm-packages\osty\imsmanifest.xml" />
-    <Content Include="scorm-packages\osty\packagemetadata.xml" />
-    <Content Include="scorm-packages\osty\proddingsco.htm" />
-    <Content Include="scorm-packages\reacciondigital\css\player-skin.css" />
-    <Content Include="scorm-packages\reacciondigital\css\player.css" />
-    <Content Include="scorm-packages\reacciondigital\css\reset.css" />
-    <Content Include="scorm-packages\reacciondigital\images\bg.png" />
-    <Content Include="scorm-packages\reacciondigital\images\glosario.png" />
-    <Content Include="scorm-packages\reacciondigital\images\guia.png" />
-    <Content Include="scorm-packages\reacciondigital\images\ios-play.png" />
-    <Content Include="scorm-packages\reacciondigital\images\loader.gif" />
-    <Content Include="scorm-packages\reacciondigital\images\logo.png" />
-    <Content Include="scorm-packages\reacciondigital\images\next.png" />
-    <Content Include="scorm-packages\reacciondigital\images\prev.png" />
-    <Content Include="scorm-packages\reacciondigital\images\temario.png" />
-    <Content Include="scorm-packages\reacciondigital\js\player.js" />
-    <Content Include="scorm-packages\reacciondigital\js\vendor\jquery-1.11.0.min.js" />
-    <Content Include="scorm-packages\reacciondigital\player.html" />
-    <Content Include="scorm-packages\reacciondigital\slides\slide_01.html" />
-    <Content Include="scorm-packages\reacciondigital\slides\slide_02.html" />
-    <Content Include="scorm-packages\reacciondigital\slides\slide_03.html" />
-    <Content Include="scorm-packages\reacciondigital\slides\slide_04.html" />
-    <Content Include="scorm-packages\reacciondigital\slides\slide_05.html" />
-    <Content Include="scorm-packages\reacciondigital\unsupported.html" />
     <Content Include="Views\Home\Player.html" />
-    <Content Include="uploads\thumb1.png" />
-    <Content Include="uploads\thumb2.png" />
-    <Content Include="uploads\thumb3.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -295,7 +262,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="scorm-packages\" />
+    <Folder Include="uploads\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -311,33 +281,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="Properties\PublishProfiles\RDProfile.pubxml" />
-    <None Include="scorm-packages\diagnostics\adlcp_rootv1p2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="scorm-packages\diagnostics\imscp_rootv1p1p2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="scorm-packages\diagnostics\imsmd_rootv1p2p1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="scorm-packages\diagnostics\ims_xml.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="scorm-packages\diagnostics\LICENSE" />
-    <Content Include="scorm-packages\diagnostics\README.md" />
-    <None Include="scorm-packages\osty\adlcp_rootv1p2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="scorm-packages\osty\imscp_rootv1p1p2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="scorm-packages\osty\imsmd_rootv1p2p1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="scorm-packages\osty\ims_xml.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="scorm-packages\reacciondigital\sco-settings.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RD.Business\RD.Business.csproj">
