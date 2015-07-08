@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Single upload demo</title>
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/simple-uploader.css">
+</head>
+<body>
+
+	<div class="container">
+
+		<div class="page-header">
+			<h1>Single field upload demo</h1>
+		</div>
+
+		<div class="form-group">
+			<label>Image upload</label>
+			<div id="upload-1" class="fileinput" data-provides="fileinput">
+				<div class="fileinput-preview panel panel-default" style="width: 150px; height: 150px;"></div>
+				<div>
+					<button href="#" class="fileinput-action btn btn-default">
+						<span class="fileinput-select">Select image</span>
+						<span class="fileinput-change">Change image</span>
+						<span class="fileinput-uploading">Uploading image...</span>
+					</button>
+					<button class="btn btn-danger fileinput-remove">Remove image</button>
+				</div>
+			</div>
+		</div>
+
+		<button id="get-val" class="btn btn-default">Get value</button>
+		<button id="set-val" class="btn btn-default">Set value</button>
+		<button id="clr-val" class="btn btn-default">Clear value</button>
+
+		<hr>
+
+		<div class="form-group">
+			<label>File upload</label>
+			<div id="upload-2" class="fileinput" data-provides="fileinput">
+				<div class="fileinput-preview panel panel-default" style="width: 250px;"></div>
+				<div>
+					<button href="#" class="fileinput-action btn btn-default">
+						<span class="fileinput-select">Select file</span>
+						<span class="fileinput-change">Change file</span>
+						<span class="fileinput-uploading">Uploading file...</span>
+					</button>
+					<button class="btn btn-danger fileinput-remove">Remove file</button>
+				</div>
+			</div>
+		</div>
+
+		<hr>
+
+		<div class="form-group">
+			<label>Image upload</label>
+			<div id="upload-3" class="fileinput" data-provides="fileinput">
+				<div class="fileinput-preview"></div>
+				<div>
+					<button href="#" class="fileinput-action btn btn-default">
+						<span class="fileinput-select">Select image</span>
+						<span class="fileinput-change">Change image</span>
+						<span class="fileinput-uploading">Uploading image...</span>
+					</button>
+					<button class="btn btn-danger fileinput-remove"><span class="glyphicon glyphicon-trash"></span></button>
+				</div>
+			</div>
+			<p class="help-block">Example block-level help text here.</p>
+		</div>
+
+		<hr>
+
+		<div class="form-group">
+			<label>File upload</label>
+			<div id="upload-4" class="fileinput" data-provides="fileinput">
+				<div class="fileinput-preview"></div>
+				<div>
+					<button href="#" class="fileinput-action btn btn-default">
+						<span class="fileinput-select">Select file</span>
+						<span class="fileinput-change">Change file</span>
+						<span class="fileinput-uploading">Uploading file...</span>
+					</button>
+					<button class="btn btn-danger fileinput-remove"><span class="glyphicon glyphicon-trash"></span></button>
+				</div>
+			</div>
+			<p class="help-block">Example block-level help text here.</p>
+		</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="../../fileuploader/js/fileuploader.js"></script>
+	<script src="../js/simple-uploader.js"></script>
+	<script>
+
+	jQuery(function($){
+
+		var upl0 = new SimpleUploader('#upload-1', {
+			uploadPath: 'uploads/',
+			type: 'image',
+			onSuccess: function(id, fileName, response){},
+			action: 'php/upload.php'
+		});
+		$('#get-val').on('click', function(e){ alert(upl0.val()); });
+		$('#set-val').on('click', function(e){ upl0.val('thumb2.png'); });
+		$('#clr-val').on('click', function(e){ upl0.val(''); });
+
+
+		var upl1 = new SimpleUploader('#upload-2', {
+			uploadPath: 'uploads/',
+			type: 'file',
+			onSuccess: function(id, fileName, response){},
+			action: 'php/upload.php'
+		});
+		var upl2 = new SimpleUploader('#upload-3', {
+			uploadPath: 'uploads/',
+			type: 'image',
+			onSuccess: function(id, fileName, response){},
+			action: 'php/upload.php'
+		});
+		var upl3 = new SimpleUploader('#upload-4', {
+			uploadPath: 'uploads/',
+			type: 'file',
+			onSuccess: function(id, fileName, response){},
+			action: 'php/upload.php'
+		});
+
+
+	});
+
+	</script>
+</body>
+</html>

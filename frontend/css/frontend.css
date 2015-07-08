@@ -1,0 +1,103 @@
+
+/* Core ___________________________________________*/
+
+body {
+	padding-top: 70px;
+	padding-bottom: 30px;
+}
+.btn:focus, .btn:active {
+	outline: 1px solid rgba(0,0,0,0.1) !important;
+}
+
+
+
+
+
+/* Spinning glyphicons ____________________________*/
+
+.glyphicon-spin {
+    -webkit-animation: spin 1000ms infinite linear;
+    animation: spin 1000ms infinite linear;
+}
+@-webkit-keyframes spin { 
+	0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(359deg); transform: rotate(359deg); }
+}
+@keyframes spin {
+	0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(359deg); transform: rotate(359deg); }
+}
+
+
+
+
+
+/* Lists __________________________________________*/
+
+.list {
+	margin-top: -20px;
+}
+
+
+
+
+
+/* Courses ________________________________________*/
+.course.not-active > div {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+.course.active > div {
+	cursor: pointer;
+}
+.courses .media,
+.users .media {
+	border-bottom: 1px solid #eee;
+	margin: 0;
+	padding: 1.2em 0;
+}
+.courses .media .media-object {
+	width: 90px;
+}
+.courses .media .status {
+	font-size: 0.9em;
+	margin-right: 0.5em;
+}
+.courses .media .score {
+	opacity: 0.5;
+	margin-right: 0.5em;
+}
+.courses .media .time,
+.users .media .email{
+	color: #aaa;
+	margin: 0.4em 0;
+}
+.courses .media .description {
+	margin-top: 0.5em;
+	max-width: 40em;
+}
+.courses .media.active:hover .media-heading,
+.users .media:hover .media-heading {
+	color: #07a;
+}
+@media (max-width:400px) {
+	.courses .media .media-object { width: 64px; }
+}
+
+#course-modal .fileinput .fileinput-preview img {
+	max-height: 100px;
+}
+
+
+
+
+/* Captcha ______________________________________*/
+
+.captcha {
+	padding: 10px;
+}
+.captcha > div {
+	margin: auto;
+	overflow: hidden;
+	max-width: 100%;
+}

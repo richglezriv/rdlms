@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Slide</title>
+	<style>
+		body {
+			font-family: sans-serif;
+			color: #666;
+			background: #999;
+		}
+		#slide {
+			font-size: 80px;
+			font-weight: bold;
+			text-align: center;
+			margin-top: 200px;
+		}
+		#bar {
+			margin: 0 auto;
+			width: 300px;
+			height: 15px;
+			border: 1px solid #888;
+			background: rgba(0,0,0,0.05);
+			position: relative;
+		}
+		#inner {
+			width: 50%;
+			height: 100%;
+			position: absolute;
+			top: 0; left: 0;
+			background: rgba(0,0,0,0.1);
+		}
+	</style>
+	<script>
+		var duration = 10;
+	</script>
+</head>
+<body>
+	<div id="slide">Slide 5</div>
+	<div id="bar"><div id="inner"></div></div>
+
+	<script>
+		var fps = 60;
+		var increment = 1/(duration*fps);
+		var bar = document.getElementById('inner');
+		var timer = null;
+		var w = 0;
+		function update(){
+			w += increment;
+			if(w >= 1) w = 1;
+			bar.style.width = (w*100) + '%';
+			if(w < 1) timer = setTimeout(function(){
+				update();
+			}, 1000/fps);
+			else if(window.Player) Player.slideEnded();
+		}
+		update();
+	</script>
+</body>
+</html>
