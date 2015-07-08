@@ -1,0 +1,198 @@
+html,body{ height: 100%; }
+body{
+	background: #000;
+	position: relative;
+	font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#player-version{
+	color: rgba(255,255,255,0.5);
+	text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+	font-size: 9px;
+	position: absolute; 
+	bottom: 3px; right: 6px;
+}
+#player{
+	background: #C9DCAF url(../images/bg.png) no-repeat 50% 50%;
+	position: absolute;
+	top: 50%; left: 50%;
+}
+#slide, #play-overlay{
+	position: absolute;
+}
+#slide{
+	background: #000 url(../images/loader.gif) no-repeat 50% 50%;
+}
+#play-overlay{
+	background: rgba(0,0,0,0.5) url(../images/ios-play.png) no-repeat 50% 50%;
+	background-size: 133px 133px;
+}
+
+#logo{
+	position: absolute;
+	z-index: 10;
+	background: transparent url(../images/logo.png) no-repeat;
+}
+#title{
+	position: absolute;
+	line-height: 104px;
+	font-weight: bold;
+	font-size: 32px;
+	margin: 0; padding: 0;
+}
+#topic{
+	position: absolute;
+	line-height: 80px;
+	text-align: center;
+	font-size: 18px;
+	margin: 0; padding: 0;
+}
+
+#overlay{
+	position: absolute;
+	top: 0; right: 0; left: 0; bottom: 0;
+	background: #000;
+	opacity: 0.5;
+	z-index: 11;
+	display: none;
+}
+.popup{
+	background: #eee;
+	position: absolute;
+	border-radius: 10px;
+	box-shadow: 0 0 40px #000;
+	width: 540px; 
+	height: 640px; height: 80vh;
+	padding: 40px 50px;
+	margin: -360px 0 0 -320px;
+	top: 50%; left: 50%;
+	z-index: 12;
+	color: #555;
+	text-shadow: none;
+	display: none;
+}
+.popup h1{
+	font-size: 45px;
+	font-weight: bold;
+	border-bottom: 2px solid #ccc;
+	padding-bottom: 20px;
+}
+.popup .content{
+	overflow: auto;
+	height: 500px;
+}
+.popup .content li{
+	margin: 0 0 10px 0;
+}
+.popup .content li a{
+	color: #555;
+	text-decoration: none;
+}
+.popup .content li a:hover{
+	text-decoration: underline;
+	color: #59b;
+}
+
+
+
+/* Rollover effect ______________________ */
+
+.scale-over{
+	transition: all .1s ease-out;
+	-webkit-transition: all .1s ease-out;
+	-moz-transition: all .1s ease-out;
+	-o-transition: all .1s ease-out;
+	-ms-transition: all .1s ease-out;
+}
+.scale-over:active{
+	transform: scale(1.1, 1.1);
+	-webkit-transform: scale(1.1, 1.1);
+	-moz-transform: scale(1.1, 1.1);
+	-o-transform: scale(1.1, 1.1);
+	-ms-transform: scale(1.1, 1.1);
+}
+
+
+
+/* Controls ______________________________ */
+
+#controls{ position: absolute; }
+#controls > a{
+	display: inline-block;
+	background: transparent url() no-repeat 50% 50%;
+	width: 62px; height: 81px;
+	outline: none;
+}
+#controls > a#temario-btn{ background-image: url(../images/temario.png); }
+#controls > a#glosario-btn{ background-image: url(../images/glosario.png); }
+#controls > a#guia-btn{ background-image: url(../images/guia.png); }
+#controls > a#audio-btn{ background-image: url(../images/audio.png); }
+#controls > a#cerrar-btn{ background-image: url(../images/cerrar.png); }
+
+
+
+/* Arrows _________________________________ */
+
+#prev-btn, #next-btn{
+	position: absolute;
+	background: transparent url() no-repeat;
+	z-index: 9;
+	outline: none;
+}
+#prev-btn{ background-image: url(../images/prev.png); }
+#next-btn{ background-image: url(../images/next.png); }
+
+
+
+
+/* Definition lists _______________________*/
+
+.popup dl{}
+.popup dl dt{
+	display: block;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+.popup dl dd{
+	display: block;
+	margin: 0.25em 0 1.5em 0;
+	padding: 0;
+}
+.popup .legend{
+	margin: 50px 0 0 0;
+	padding: 1em 0;
+	border-top: 1px solid #aaa;
+	font-size: 0.8em;
+	opacity: 0.8;
+}
+
+
+/* Guide _________________________________ */
+
+#guia .content .def{
+	background: transparent url() no-repeat 0px 0px;
+	padding: 0 0 0 80px;
+	margin-bottom: 20px;
+	min-height: 63px;
+	display: table;
+}
+#guia .content .def .v-center{
+	display: table-cell;
+	vertical-align: middle;
+}
+#guia .content .def h3,
+#guia .content .def p{
+	margin: 0;
+	padding: 0;
+	/*width: 460px;*/
+}
+#guia .content .prev{ background-image: url(../images/prev.png); }
+#guia .content .next{ background-image: url(../images/next.png); }
+#guia .content .toc{ background-image: url(../images/temario.png); }
+#guia .content .glos{ background-image: url(../images/glosario.png); }
+#guia .content .help{ background-image: url(../images/guia.png); }
+#guia .content .audio{ background-image: url(../images/audio.png); }
+#guia .content .close{ background-image: url(../images/cerrar.png); }
+
+
+

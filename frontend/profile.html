@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Edita tu perfil - LMS</title>
+	<link rel="stylesheet" href="components/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/frontend.css">
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">RD LMS</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="username"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="profile.html">Editar perfil</a></li>
+							<li><a href="login.html">Cerrar sesión</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</nav>
+
+
+
+
+
+
+
+	<div class="container">
+
+		<div class="page-header">
+			<h1>Edita tu perfil</h1>
+		</div>
+
+
+		<p class="lead">Información general</p>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label for="input-name">Nombre(s)</label>
+					<input type="text" class="form-control" id="input-name" placeholder="">
+				</div>
+				
+				<div class="form-group">
+					<label for="input-last_name">Apellido paterno</label>
+					<input type="text" class="form-control" id="input-last_name" placeholder="">
+				</div>
+
+				<div class="form-group">
+					<label for="input-second_last_name">Apellido materno</label>
+					<input type="text" class="form-control" id="input-second_last_name" placeholder="">
+				</div>
+
+				<div class="form-group">
+					<label for="input-email">Email</label>
+					<input type="email" class="form-control" id="input-email" placeholder="" disabled>
+				</div>
+			</div>
+		</div>
+
+
+		<p class="lead">Información de acceso</p>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label for="input-username">Nombre de usuario</label>
+					<input type="text" class="form-control" id="input-username" placeholder="" disabled>
+				</div>
+
+				<div class="form-group">
+					<label for="input-password">Contraseña</label>
+					<input type="password" class="form-control" id="input-password" placeholder="">
+				</div>
+
+				<div class="form-group">
+					<label for="input-confirm_password">Confirmar contraseña</label>
+					<input type="password" class="form-control" id="input-confirm_password" placeholder="">
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-sm-6">
+				<button type="submit" class="btn btn-primary">Guardar cambios</button>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="components/jquery/jquery.min.js"></script>
+	<script src="components/bootstrap/js/bootstrap.min.js"></script>
+	<!-- <script src="components/dot/dot.min.js"></script> -->
+	<script src="js/rdlms-rte.js"></script>
+	<script src="js/courses.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Registro - LMS</title>
+	<link rel="stylesheet" href="components/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/frontend.css">
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">RD LMS</a>
+			</div>
+		</div>
+	</nav>
+
+
+
+
+
+
+
+	<div class="container">
+
+		<div class="page-header">
+			<h1>Registro</h1>
+		</div>
+
+
+		<p class="lead">Información general</p>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label for="input-name">Nombre(s)</label>
+					<input type="text" class="form-control" id="input-name" placeholder="">
+				</div>
+				
+				<div class="form-group">
+					<label for="input-last_name">Apellido paterno</label>
+					<input type="text" class="form-control" id="input-last_name" placeholder="">
+				</div>
+
+				<div class="form-group">
+					<label for="input-second_last_name">Apellido materno</label>
+					<input type="text" class="form-control" id="input-second_last_name" placeholder="">
+				</div>
+
+				<div class="form-group">
+					<label for="input-email">Email</label>
+					<input type="email" class="form-control" id="input-email" placeholder="">
+				</div>
+			</div>
+		</div>
+
+
+		<p class="lead">Información de acceso</p>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label for="input-username">Nombre de usuario</label>
+					<input type="text" class="form-control" id="input-username" placeholder="">
+				</div>
+
+				<div class="form-group">
+					<label for="input-password">Contraseña</label>
+					<input type="password" class="form-control" id="input-password" placeholder="">
+				</div>
+
+				<div class="form-group">
+					<label for="input-confirm_password">Confirmar contraseña</label>
+					<input type="password" class="form-control" id="input-confirm_password" placeholder="">
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label for="inputCompany">Ingresa el texto de la imagen</label>
+
+					<div class="form-group">
+						<div class="captcha panel panel-default">
+							<div id="recaptcha_image" style="width: 300px; height: 57px;">
+								<img id="recaptcha_challenge_image" alt="reCAPTCHA challenge image" height="57" width="300" src="http://www.google.com/recaptcha/api/image?c=03AHJ_Vuu3galGhTqG0eJwTlqiCekzBQWeqbtjVaWQaCKMPlBTIoekjC_Bv8aptD3ZmbvpemvXVqWNcVPEJoDVpyhVRfVKDxqdqtvCTV6vml_vIB2ibM3AHrLC3kXqfsI6VazbUNepc-y4j6TMbD_EfQyGp_nXLxSYsWRJI0SibYWg2tDKxZ_kE_7TPKdLkj5M04Q01q9VexvFDPV5OS7XOh9tKoQlqDzjK1464qMkd0eBELoZsmObqVC8APt8IvuvrjJFujPfIrOAfrH86Ockv_wBFNY0IGSBVQ&amp;th=,EeCwDkLMFa0DgaC2L82S6Jd8-evwAAAAJKAAAAAE2ADDXc3CrjQbkYft_PAYoKjkLDXsAHng8INxN-T48RRqc2JAegss91ySec84ollGU2mJEAd8fOLu5IM1sF4BN4Yt5KLxtdE07vcyrZ31SiBIlDEP3QCa34r0AMtwHodVMEQFpb5QDNMuuGspX4Bhu-FRX4m8pXuytxcRFjckMPM2Q56U4Y8ztCG-V0FjWCBm3UCEzQ6j30LiLhn5Qr6u2ZbVquOz_RNU0ih94rSZeRRowYrdYtYKJ3Jz6uI8J7BroTwMJdUu">
+							</div>
+						</div>
+					</div>
+					
+					<div class="input-group">
+						<input type="text" id="recaptcha_response_field" class="form-control" />
+						<a class="btn btn-default input-group-addon" href="javascript:Recaptcha.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+						<a class="btn btn-default input-group-addon recaptcha_only_if_image" href="javascript:Recaptcha.switch_type('audio')"><span class="glyphicon glyphicon-volume-up"></span></a>
+						<a class="btn btn-default input-group-addon recaptcha_only_if_audio" href="javascript:Recaptcha.switch_type('image')"><span class="glyphicon glyphicon-picture"></span></a>
+						<a class="btn btn-default input-group-addon" href="javascript:Recaptcha.showhelp()"><span class="glyphicon glyphicon-info-sign"></span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="terms" value="1"> 
+						Acepto 
+						<a href="terms.html" target="terms">Términos y condiciones</a>
+					</label>
+				</div>
+
+				<button type="submit" class="btn btn-primary">Registrarse</button>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="components/jquery/jquery.min.js"></script>
+	<script src="components/bootstrap/js/bootstrap.min.js"></script>
+	<!-- <script src="components/dot/dot.min.js"></script> -->
+	<script src="js/rdlms-rte.js"></script>
+	<script src="js/courses.js"></script>
+</body>
+</html>
