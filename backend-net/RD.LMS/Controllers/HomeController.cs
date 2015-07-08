@@ -12,7 +12,7 @@ namespace RD.LMS.Controllers
         //
         // GET: /Home/
 
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
             return View();
         }

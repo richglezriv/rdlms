@@ -8,7 +8,7 @@ namespace RD.LMS.Models
     public class CourseModel : IDataModel
     {
 
-        #region declarations
+        #region properties
         public String id { get; set; }
 
         public String name { get; set; }

@@ -53,8 +53,17 @@ namespace RD.Business
             {
                 user.IsLogged = state.Equals(SessionState.LoggedIn) ? true : false;
                 Entities.IDAO control = new RD.Entities.UserDAO(string.Empty, user);
-                control.Save();
+                control.Update();
                 
+            }
+            else
+            {
+                user = new Entities.User();
+                user.Id = userId;
+                user.IsLogged = true;
+                user.IsAdmin = false;
+                Entities.IDAO control = new Entities.UserDAO(string.Empty, user);
+                control.Save();
             }
         }
 
