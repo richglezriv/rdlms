@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RDModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="RDModelStoreContainer">
+    <EntitySet Name="Courses" EntityType="RDModel.Store.Courses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="RDModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserCourses" EntityType="RDModel.Store.UserCourses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Scorms" EntityType="RDModel.Store.Scorms" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserUserCourse" Association="RDModel.Store.UserUserCourse">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserCourse" EntitySet="UserCourses" />
+    </AssociationSet>
+    <AssociationSet Name="CourseUserCourse" Association="RDModel.Store.CourseUserCourse">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="UserCourse" EntitySet="UserCourses" />
+    </AssociationSet>
+    <AssociationSet Name="ScormUserCourse" Association="RDModel.Store.ScormUserCourse">
+      <End Role="Scorm" EntitySet="Scorms" />
+      <End Role="UserCourse" EntitySet="UserCourses" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Thumbnail" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ScormPackage" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ParentCourses" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ScoIndex" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="IsEnabled" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="IsAdmin" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="IsLogged" Type="bit" Nullable="false" DefaultValue="false" />
+  </EntityType>
+  <EntityType Name="UserCourses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="CourseId" Type="int" Nullable="false" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ScormId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Scorms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LessonLocation" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Credit" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ScoreRaw" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ScoreMin" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ScoreMax" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="TotalTime" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SessionTime" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SuspendData" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="LaunchData" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="DataMasteryScore" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Entry" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Exit" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Version" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <Association Name="UserUserCourse">
+    <End Role="User" Type="RDModel.Store.Users" Multiplicity="1" />
+    <End Role="UserCourse" Type="RDModel.Store.UserCourses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserCourse">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CourseUserCourse">
+    <End Role="Course" Type="RDModel.Store.Courses" Multiplicity="1" />
+    <End Role="UserCourse" Type="RDModel.Store.UserCourses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserCourse">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ScormUserCourse">
+    <End Role="Scorm" Type="RDModel.Store.Scorms" Multiplicity="1" />
+    <End Role="UserCourse" Type="RDModel.Store.UserCourses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Scorm">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserCourse">
+        <PropertyRef Name="ScormId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="RDModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="RDModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Courses" EntityType="RDModel.Course" />
+          <EntitySet Name="Users" EntityType="RDModel.User" />
+          <EntitySet Name="UserCourses" EntityType="RDModel.UserCourse" />
+          <AssociationSet Name="UserUserCourse" Association="RDModel.UserUserCourse">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserCourse" EntitySet="UserCourses" />
+          </AssociationSet>
+          <AssociationSet Name="CourseUserCourse" Association="RDModel.CourseUserCourse">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="UserCourse" EntitySet="UserCourses" />
+          </AssociationSet>
+          <EntitySet Name="Scorms" EntityType="RDModel.Scorm" />
+          <AssociationSet Name="ScormUserCourse" Association="RDModel.ScormUserCourse">
+            <End Role="Scorm" EntitySet="Scorms" />
+            <End Role="UserCourse" EntitySet="UserCourses" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="Thumbnail" Type="String" Nullable="false" />
+          <Property Name="ScormPackage" Type="String" Nullable="false" />
+          <Property Name="ParentCourses" Type="String" Nullable="false" />
+          <Property Name="ScoIndex" Type="String" Nullable="true" />
+          <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="UserCourses" Relationship="RDModel.UserUserCourse" FromRole="User" ToRole="UserCourse" />
+          <Property Name="Login" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="true" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" DefaultValue="False" />
+          <Property Name="IsLogged" Type="Boolean" Nullable="false" DefaultValue="False" />
+        </EntityType>
+        <EntityType Name="UserCourse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="RDModel.CourseUserCourse" FromRole="UserCourse" ToRole="Course" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" />
+          <NavigationProperty Name="Scorm" Relationship="RDModel.ScormUserCourse" FromRole="UserCourse" ToRole="Scorm" />
+          <Property Name="ScormId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="UserUserCourse">
+          <End Type="RDModel.User" Role="User" Multiplicity="1" />
+          <End Type="RDModel.UserCourse" Role="UserCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserCourse">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CourseUserCourse">
+          <End Type="RDModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="RDModel.UserCourse" Role="UserCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserCourse">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Scorm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LessonLocation" Type="String" Nullable="true" />
+          <Property Name="Credit" Type="String" Nullable="true" />
+          <Property Name="ScoreRaw" Type="String" Nullable="false" />
+          <Property Name="ScoreMin" Type="String" Nullable="true" />
+          <Property Name="ScoreMax" Type="String" Nullable="true" />
+          <Property Name="TotalTime" Type="String" Nullable="true" />
+          <Property Name="SessionTime" Type="String" Nullable="true" />
+          <Property Name="SuspendData" Type="String" Nullable="true" />
+          <Property Name="LaunchData" Type="String" Nullable="true" />
+          <Property Name="DataMasteryScore" Type="String" Nullable="true" />
+          <Property Name="Entry" Type="String" Nullable="true" />
+          <Property Name="Exit" Type="String" Nullable="true" />
+          <Property Name="Version" Type="String" Nullable="true" />
+        </EntityType>
+        <Association Name="ScormUserCourse">
+          <End Type="RDModel.Scorm" Role="Scorm" Multiplicity="1" />
+          <End Type="RDModel.UserCourse" Role="UserCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Scorm">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserCourse">
+              <PropertyRef Name="ScormId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RDModelStoreContainer" CdmEntityContainer="RDModelContainer">
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="IsTypeOf(RDModel.Course)">
+        <MappingFragment StoreEntitySet="Courses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+          <ScalarProperty Name="ScormPackage" ColumnName="ScormPackage" />
+          <ScalarProperty Name="ParentCourses" ColumnName="ParentCourses" />
+          <ScalarProperty Name="ScoIndex" ColumnName="ScoIndex" />
+          <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(RDModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+          <ScalarProperty Name="IsLogged" ColumnName="IsLogged" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserCourses">
+      <EntityTypeMapping TypeName="IsTypeOf(RDModel.UserCourse)">
+        <MappingFragment StoreEntitySet="UserCourses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ScormId" ColumnName="ScormId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Scorms">
+      <EntityTypeMapping TypeName="IsTypeOf(RDModel.Scorm)">
+        <MappingFragment StoreEntitySet="Scorms">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LessonLocation" ColumnName="LessonLocation" />
+          <ScalarProperty Name="Credit" ColumnName="Credit" />
+          <ScalarProperty Name="ScoreRaw" ColumnName="ScoreRaw" />
+          <ScalarProperty Name="ScoreMin" ColumnName="ScoreMin" />
+          <ScalarProperty Name="ScoreMax" ColumnName="ScoreMax" />
+          <ScalarProperty Name="TotalTime" ColumnName="TotalTime" />
+          <ScalarProperty Name="SessionTime" ColumnName="SessionTime" />
+          <ScalarProperty Name="SuspendData" ColumnName="SuspendData" />
+          <ScalarProperty Name="LaunchData" ColumnName="LaunchData" />
+          <ScalarProperty Name="DataMasteryScore" ColumnName="DataMasteryScore" />
+          <ScalarProperty Name="Entry" ColumnName="Entry" />
+          <ScalarProperty Name="Exit" ColumnName="Exit" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,27 @@
+{
+    "sco": {
+        "fetch":"User/Fetch",
+        "commit":"User/Commit",
+        "basePath":"scorm-packages/"
+    },
+    "lms": {
+        "courses": "User/Get",
+        "registration": "",
+        "account": "",
+        "uploadPath": "uploads/"
+    },
+    "admin": {
+        "course": {
+            "uploadThumb": "Process/UploadThumbnail",
+            "uploadScorm": "Process/UploadScorm",
+            "list": "Admin/Get",
+            "save": "Admin/Save",
+            "delete": "Admin/Delete",
+            "stats": "Admin/Stats"
+        }
+    },
+    "session": {
+		"login": "/User/Login",
+		"logout": "/User/Logout"
+	}
+}
