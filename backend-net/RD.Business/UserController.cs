@@ -31,6 +31,19 @@ namespace RD.Business
             
         }
 
+        public static List<Entities.User> GetUsers(string nameLike)
+        {
+            List<Entities.User> result = new List<Entities.User>();
+            if (nameLike.Length < 3)
+                return result;
+
+            _dao = new RD.Entities.UserDAO(string.Empty);
+            result = _dao.GetBy(nameLike);
+
+            return result;
+
+        }
+
         public static void UpdateSessionState(int userId, SessionState state)
         {
             _dao = new RD.Entities.UserDAO(string.Empty);
@@ -40,8 +53,17 @@ namespace RD.Business
             {
                 user.IsLogged = state.Equals(SessionState.LoggedIn) ? true : false;
                 Entities.IDAO control = new RD.Entities.UserDAO(string.Empty, user);
-                control.Save();
+                control.Update();
                 
+            }
+            else
+            {
+                user = new Entities.User();
+                user.Id = userId;
+                user.IsLogged = true;
+                user.IsAdmin = false;
+                Entities.IDAO control = new Entities.UserDAO(string.Empty, user);
+                control.Save();
             }
         }
 

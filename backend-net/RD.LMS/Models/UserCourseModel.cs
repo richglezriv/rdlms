@@ -46,7 +46,7 @@ namespace RD.LMS.Models
                     description = item.Course.Description,
                     name = item.Course.Name,
                     thumbnail = item.Course.Thumbnail,
-                    totalTime = item.Scorm.TotalTime,
+                    totalTime = item.Scorm.SessionTime,
                     status = item.Status,
                     id = item.Id.ToString()
                 });

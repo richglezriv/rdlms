@@ -1,8 +1,8 @@
 {
     "sco": {
-        "fetch":"User/Fetch",
-        "commit":"User/Commit",
-        "basePath":"scorm-packages/"
+        "fetch": "User/Fetch",
+        "commit": "User/Commit",
+        "basePath": "scorm-packages/"
     },
     "lms": {
         "courses": "User/Get",
@@ -18,10 +18,13 @@
             "save": "Admin/Save",
             "delete": "Admin/Delete",
             "stats": "Admin/Stats"
+        },
+        "user": {
+            "find": "/Admin/FindUsers"
         }
     },
     "session": {
-		"login": "/User/Login",
-		"logout": "/User/Logout"
-	}
+        "login": "/User/Login",
+        "logout": "/User/Logout"
+    }
 }

@@ -29,8 +29,6 @@ namespace RD.LMS.Controllers
                     return Json(model);
                 }
                     
-                    //throw new Exception("File too big");
-
                 var img = Bitmap.FromStream(hfc.InputStream);
                 string path = Server.MapPath("/uploads/" + qqfile);
 

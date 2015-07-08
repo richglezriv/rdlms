@@ -16,11 +16,13 @@ namespace RD.LMS.Controllers
             return View();
         }
 
-        public ActionResult Login()
+        public ActionResult LoginUser(string data)
         {
             Models.JSonModel model = new Models.JSonModel();
 
-            return Json(model);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
+
+        
     }
 }

@@ -101,7 +101,7 @@ namespace RD.LMS.Controllers
             lms.LoadCourse(course);
             lms.StudentName = user.name;
             toCourse.dataModel = lms.GenerateJSonString();
-
+            object o = Newtonsoft.Json.JsonConvert.DeserializeObject(toCourse.dataModel);
             JSonModel model = new JSonModel()
             {
                 data = toCourse,

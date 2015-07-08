@@ -40,15 +40,15 @@ namespace RD.LMS.Controllers
             //course.thumbnail = course.name + extension;
             string destination = source;//Server.MapPath("/uploads/") + course.thumbnail;
             //copy file
-            if (System.IO.File.Exists(source)) {
-                System.IO.File.Copy(source, destination, true);
-            }
+            //if (System.IO.File.Exists(source)) {
+            //    System.IO.File.Copy(source, destination, true);
+            //}
             
             //scorm course zip
             source = Server.MapPath("/uploads/" + course.scorm);
-            //extension = course.scorm.Remove(0, course.scorm.Length - 4);
+            string extension = course.scorm.Remove(0, course.scorm.Length - 4);
             //course.scorm = course.name + extension;
-            destination = source;//Server.MapPath("/scorm-packages/") + course.scorm;
+            destination = Server.MapPath("/scorm-packages/") + course.scorm;
             if (System.IO.File.Exists(source))
             {
                 System.IO.File.Copy(source, destination, true);
@@ -85,7 +85,24 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        public ActionResult FindUsers(String jsonModel) { throw new NotImplementedException(); }
+        public ActionResult FindUsers(String data) {
+
+            JSonModelCollection model = new JSonModelCollection();
+            Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+            try
+            {
+                UserModel uModel = new UserModel();
+                uModel.DoSearch(toFetch["query"].ToString());
+                model.data = uModel.Users;
+            }
+            catch (Exception)
+            {
+                model.status = "fail";   
+            }
+
+            return Json(model);
+
+        }
 
         public ActionResult DeleteUser(String jsonModel) { throw new NotImplementedException(); }
 
