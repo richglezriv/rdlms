@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    Response.Redirect("~/login.html");
+    //Response.Redirect("~/login.html");
     
 }
 
@@ -25,19 +25,32 @@
 }
 <script src="components/jquery/jquery.min.js"></script>
 <script>
-
-    var object = '{"data":{"courseId":"123"}}';
-    var json = JSON.parse(object);
-    
-    function loadLMSSettings() {
+    $(document).ready(function () {
+        var jsonData = { "data": { "userId": 123, "key": "fde7c9b379106e6a7473f29131f0cfc5ee6e7626980642ea04e2390a8b1c512c1aff526b6025e19ba6dc763f365d39a8d0ba87ff32656de402644eca50acb71f" } };
         $.ajax({
-            url: "User/Login",
-            dataType: "json", method: 'GET',
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert(errorThrown);
-            }
-        });
+            url: "External/LoginUser",
+            dataType: "json", method: 'GET', data: JSON.stringify(jsonData)
+        })
+            .done(function (r) {
+                $('#message').html(r.status);
+            })
+            .fail(function (r) {
+                $('#message').html(r.status);
+            });
+    });
+
+    //var object = '{"data":{"courseId":"123"}}';
+    //var json = JSON.parse(object);
+    
+    //function loadLMSSettings() {
+    //    $.ajax({
+    //        url: "User/Login",
+    //        dataType: "json", method: 'GET',
+    //        error: function (XMLHttpRequest, textStatus, errorThrown) {
+    //            alert(errorThrown);
+    //        }
+    //    });
         
-    }
+    //}
 
 </script>
