@@ -63,7 +63,8 @@ namespace RD.LMS.Models
                         scoPath = item.ScormPackage,
                         scorm = item.ScormPackage,
                         status = "active",
-                        thumbnail = item.Thumbnail
+                        thumbnail = item.Thumbnail,
+                        conditions = item.ParentCourses
                     });
                 }
             }
@@ -74,7 +75,7 @@ namespace RD.LMS.Models
 
         public void LoadCourse(Entities.UserCourse userCourse)
         {
-            this.conditions = null;
+            this.conditions = userCourse.Course.ParentCourses;
             this.description = userCourse.Course.Description;
             this.id = userCourse.Id.ToString();
             this.name = userCourse.Course.Name;

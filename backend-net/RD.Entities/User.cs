@@ -28,6 +28,7 @@ namespace RD.Entities
         public string LastName { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsLogged { get; set; }
+        public Nullable<System.DateTime> LastLogged { get; set; }
     
         public virtual ICollection<UserCourse> UserCourses { get; set; }
     }

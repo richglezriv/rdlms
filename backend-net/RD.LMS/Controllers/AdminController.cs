@@ -104,11 +104,48 @@ namespace RD.LMS.Controllers
 
         }
 
-        public ActionResult DeleteUser(String jsonModel) { throw new NotImplementedException(); }
+        public ActionResult DeleteUser(String data)
+        {
+            Models.JSonModel model = new JSonModel();
+            Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+            Models.UserModel cUser = new UserModel();
+            Entities.User user = new Entities.User()
+            {
+                Id = Convert.ToInt32(toFetch["userId"].ToString())
+            };
 
-        public ActionResult SaveUser(String jsonModel) { throw new NotImplementedException(); }
+            cUser.Delete(user);
 
-        public ActionResult GetUserStats(String jsonModel) { throw new NotImplementedException(); }
+            return Json(model);
+
+        }
+
+        public ActionResult SaveUser(String data)
+        {
+            Models.JSonModel model = new JSonModel();
+            
+            return Json(model);
+        }
+
+        public ActionResult GetUserStats(String data)
+        {
+            Models.JSonModelCollection model = new Models.JSonModelCollection();
+            Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+            List<Models.UserCourseModel> courses = Models.UserCourseModel.Get(toFetch["userId"].ToString());
+            model.data = courses.ToList<IDataModel>();
+
+            return Json(model);
+        }
+
+        public ActionResult ClearUserScorm(String data)
+        {
+            Models.JSonModel model = new JSonModel();
+            Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+            Models.UserCourseModel userCourse = new UserCourseModel();
+            userCourse.ResetCourse(toFetch["userId"].ToString(), toFetch["courseId"].ToString());
+
+            return Json(model);
+        }
         
     }
 }

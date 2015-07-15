@@ -76,7 +76,7 @@ jQuery(function($){
 					users = response.data;
 					if(users.length){
 						$.each(users, function(i, user){
-							list.append(createUser(
+							list.append(renderUser(
 								user.id,
 								user.name,
 								user.lastName,
@@ -98,16 +98,15 @@ jQuery(function($){
 	}
 
 
-	function createUser(id, name, lastName, secondLastName, email, extra){
+	function renderUser(id, name, lastName, secondLastName, email, extra){
 		var user = $('<div class="media user"><div class="media-body"/></div>');
 		user.data('data', {id:id, name:name, lastName: lastName, secondLastName: secondLastName, email: email, extra: extra});
 		user.find('.media-body')
 			.append('<h4 class="media-heading">' + htmlEntities(([name, lastName, secondLastName]).join(' ')) + '</h4>')
-			//.append('<div class="actions"><button class="btn btn-default btn-sm btn-stats" aria-label="Estadísticas"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span></button> <button class="btn btn-default btn-sm btn-edit" aria-label="Editar"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button> <button class="btn btn-danger btn-sm btn-delete" aria-label="Borrar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></div>')
 			.append('<div class="email">' + htmlEntities(email) + '</div>')
-			.append('<div class="actions"><button class="btn btn-danger btn-sm btn-delete" aria-label="Borrar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></div>')
+			.append('<div class="actions"><button class="btn btn-default btn-sm btn-stats" aria-label="Cursos"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span></button> <button class="btn btn-danger btn-sm btn-delete" aria-label="Borrar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></div>')
 		;
-		//user.on('click', '.btn-stats', function(e){ showStats(id); });
+		user.on('click', '.btn-stats', function(e){ showStats(id); });
 		//user.on('click', '.btn-edit', function(e){ editUser(user); });
 		user.on('click', '.btn-delete', function(e){ deleteUser(user); });
 		return user;
@@ -121,6 +120,35 @@ jQuery(function($){
 
 	function addUser(){
 		showModal();
+	}
+
+
+	function clearScorm(uid, cid){
+		if(confirm(
+			"Esta acción borrará el avance del usuario para este curso. \nEstás seguro que deseas continuar?"
+		)){
+			var jsonData = {userId: uid, courseId: cid};
+			$.ajax({
+				url: settings.admin.user.clearScorm,
+				dataType: "json", method: 'POST',
+				data: {data: JSON.stringify(jsonData)}
+			})
+				.done(function(r){
+					if(r.status && r.status == 'success'){
+						//showFeedback('El avance del usuario fue borrado con éxito.');
+						showStats(uid);
+					}else{
+						showFeedback('No se pudo borrar el avance del usuario, por favor intenta más tarde.');
+					}
+				})
+				.fail(function(){
+					showFeedback('Ocurrió un error al intentar borrar el avance. Por favor intenta más tarde.');
+				})
+				.always(function(r){
+					console.log(r);
+				})
+			;
+		}
 	}
 
 
@@ -238,7 +266,8 @@ jQuery(function($){
 	function showStats(id){
 		stats.find('.stat').text('');
 		stats.modal('show');
-
+		var list = stats.find('tbody');
+		list.html('<tr><td>Cargando...</td></tr>');
 		var jsonData = {userId: id};
 		$.ajax({
 			url: settings.admin.user.stats,
@@ -247,14 +276,21 @@ jQuery(function($){
 		})
 			.done(function(response){
 				if(response.status && response.status == 'success'){
-					// TODO
+					list.empty();
+					$.each(response.data, function(i, c){
+						var course = $('<tr><td>' + c.name + '</td><td>' + c.status + '</td><td class="text-center">' + (c.score==null ? '' : c.score) + '</td><td class="text-right">' + (c.totalTime==null ? '' : c.totalTime) + '</td><td><button class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i></button></td></tr>');
+						list.append(course);
+						course.find('button').on('click', function(e){
+							clearScorm(id, c.id);
+						});
+					});
 				}else{
-					showFeedback('No se pudieron cargar los datos del usuario.');
+					showFeedback('No se pudieron cargar los cursos del usuario.');
 					stats.modal('hide');
 				}
 			})
 			.fail(function(){
-				showFeedback('No se pudieron cargar los datos del usuario.');
+				showFeedback('No se pudieron cargar los cursos del usuario.');
 				stats.modal('hide');
 			})
 			.always(function(r){

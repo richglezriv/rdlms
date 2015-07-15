@@ -98,7 +98,7 @@ jQuery(function($){
 
 	function createCourse(id, name, description, thumb, status, time, active){
 		var course = $('<div class="media course"><div class="media-left"><img class="media-object" alt="" /></div><div class="media-body"/></div>')
-			.addClass(active?'active':'not-active')
+			//.addClass(active?'active':'not-active')
 		;
 		course.data('data', {id:id, name:name, description:description, thumb:thumb, status:status, time:time, active:active});
 		course.find('.media-left > img').attr('src', RDLMS.settings.lms.uploadPath + '/' + thumb);
@@ -165,6 +165,7 @@ jQuery(function($){
 		uploadThumb.val('');
 		uploadScorm.val('');
 		modal.find('.modal-title').text('Nuevo curso');
+		modal.find('.help-block').eq(2).hide();
 		
 		// Load course info into modal (when id is provided)
 		if(course){
@@ -175,6 +176,7 @@ jQuery(function($){
 			uploadScorm.val(course.scorm);
 			modal.find('#input-conditions').val(course.conditions);
 			modal.find('.modal-title').text('Editar curso');
+			modal.find('.help-block').eq(2).show();
 		}
 		modal.modal('show');
 	}

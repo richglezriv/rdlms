@@ -21,7 +21,7 @@
 
 	window.ScormApi = function(options){
 		var commitURL = options.commitURL;
-		var cmiData = $.parseJSON(options.cmiData);
+		var cmiData = $.parseJSON(options.cmiData);//options.cmiData; RAGR: temp patch
 		var isFinished = false;
 		var isInitialized = false;
 		var lastError = "0";
@@ -132,11 +132,10 @@
 		function commit() {
 			lastError = "0";
 			if(!isInitialized || isFinished){ lastError = "301"; return "false"; }
-			getSanitizedCmiData(cmiData);
-			cleanData = JSON.stringify(cmiData);
+			var cleanData = getSanitizedCmiData(cmiData);
 			$.ajax({
-			    url: commitURL,	method: 'POST', dataType: "json",
-			    data: {data: cleanData}
+				url: commitURL,	method: 'POST',
+				data: {data: cleanData}
 			})
 				.done(function(response){
 					console.log('Successfully commited data!');
@@ -172,9 +171,9 @@
 
 		function getSanitizedCmiData(cmiData){
 			// Serialize only writable data
-		    var data = {}, p;
+			var data = {}, p;
 			$.each(cmiData, function(key, val){
-				console.log('Checking ' + key + ': ' + val);
+				//console.log('Checking ' + key + ': ' + val);
 				p = getProp(supportedData, key);
 				if(p && p.w === true) data[key] = val; 
 			});

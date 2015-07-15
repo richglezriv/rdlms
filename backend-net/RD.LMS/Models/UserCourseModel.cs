@@ -56,6 +56,16 @@ namespace RD.LMS.Models
 
         }
 
+        internal void ResetCourse(string userId, string courseId)
+        {
+            List<RD.Entities.UserCourse> list = RD.Business.UserController.GetUserCourses(Convert.ToInt32(userId), false);
+            RD.Entities.UserCourse course = list.Single(c => c.Id.Equals(Convert.ToInt32(courseId)));
+            course.Status = "not attempted";
+            course.Scorm.ScoreRaw = "0";
+            course.Scorm.SessionTime = "0:00:00";
+            Business.UserController.UpdateUserCourse(course);
+        }
         #endregion
+
     }
 }

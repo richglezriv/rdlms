@@ -93,23 +93,41 @@ namespace RD.LMS.Controllers
 
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             Models.LMSModel lms = new Models.LMSModel();
-            Entities.UserCourse course = Business.UserController.GetCourse(Convert.ToInt32(toFetch["courseId"].ToString()));
-            LMSUser user = Session[Utilities.USER] != null ? (LMSUser)Session[Utilities.USER] : null;
-            CourseModel toCourse = new CourseModel();
-
-            toCourse.LoadCourse(course);
-            lms.LoadCourse(course);
-            lms.StudentName = user.name;
-            toCourse.dataModel = lms.GenerateJSonString();
-            object o = Newtonsoft.Json.JsonConvert.DeserializeObject(toCourse.dataModel);
-            JSonModel model = new JSonModel()
+            JSonModel model = new JSonModel();
+            try
             {
-                data = toCourse,
-                status = "success"
-            };
+                Entities.UserCourse course = Business.UserController.GetCourse(Convert.ToInt32(toFetch["courseId"].ToString()));
 
-            Session.Add(USER_COURSE, course);
+                if (course == null)
+                {
+                    model.data = new MessageData(){
+                      message=  "no puede acceder a la evaluación de este curso"
+                    };
+                    model.status = "fail";
+                    return Json(model);
+                }
 
+                LMSUser user = Session[Utilities.USER] != null ? (LMSUser)Session[Utilities.USER] : null;
+                CourseModel toCourse = new CourseModel();
+
+                toCourse.LoadCourse(course);
+                lms.LoadCourse(course);
+                lms.StudentName = user.name;
+                toCourse.dataModel = lms.GenerateJSonString();
+                object o = Newtonsoft.Json.JsonConvert.DeserializeObject(toCourse.dataModel);
+
+                model.data = toCourse;
+
+                Session.Add(USER_COURSE, course);
+            }
+            catch (Exception)
+            {
+                model.data = new MessageData()
+                {
+                    message = "error al cargar el curso, verifique con el adminitrador"
+                };
+                model.status = "fail";
+            }
             return Json(model);
         }
 

@@ -52,6 +52,7 @@
 			});
 			window.onbeforeunload = function(){
 				window.API.LMSFinish();
+				onCourseFinished();
 			};
 		}else{
 			alert(response.message);

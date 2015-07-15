@@ -124,8 +124,22 @@ namespace RD.Business
         public static Entities.UserCourse GetCourse(int userCourseId)
         {
             Entities.UserCourseDAO dao = new Entities.UserCourseDAO(string.Empty);
+            int id;
+            //validate
+            Entities.UserCourse toTest = dao.Get(userCourseId);
+            string parentString = toTest.Course.ParentCourses;
+            parentString = parentString.Substring(1, parentString.Length - 2);
+            string[] parent = parentString.Split(',');
 
-            return dao.Get(userCourseId);
+            foreach (string item in parent)
+            {
+                id = int.Parse(item.Trim().Replace('"', char.Parse(" ")).ToString());
+
+                if (dao.GetCourses(toTest.UserId).Single(c => c.CourseId.Equals(id)).Status != "passed")
+                    return null;
+            }
+
+            return toTest;
         }
 
         public static void UpdateUserCourse(Entities.UserCourse course)
@@ -134,6 +148,17 @@ namespace RD.Business
 
             dao.Update();
             
+        }
+
+        public static void SaveUser(Entities.User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void Delete(Entities.User user)
+        {
+            Entities.IDAO dao = new Entities.UserDAO(string.Empty, user);
+            dao.Delete();
         }
     }
 }

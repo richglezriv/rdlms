@@ -28,6 +28,8 @@ namespace RD.LMS.Models
 
         public string extra { get; set; }
 
+        public Boolean resetPassword { get; set; }
+
         public List<IDataModel> Users { get; private set; }
 
         public UserModel() { }
@@ -40,6 +42,7 @@ namespace RD.LMS.Models
             this.extra = string.Empty;
             this.lastName = user.LastName;
             this.secondLastName = string.Empty;
+            this.resetPassword = Utilities.MonthDiff(user.LastLogged.Value, DateTime.Now.Date) > 3;
             
         }
 
@@ -50,6 +53,16 @@ namespace RD.LMS.Models
             {
                 this.Users.Add(new UserModel(item));
             }
+        }
+
+        internal void SaveUser(Entities.User user)
+        {
+            Business.UserController.SaveUser(user);
+        }
+
+        internal void Delete(Entities.User user)
+        {
+            Business.UserController.Delete(user);
         }
     }
 }

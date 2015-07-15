@@ -52,6 +52,15 @@ jQuery(function($){
 
 	function onLMSInitialized(){
 		fetchCourses(RDLMS.settings);
+		window.onbeforeunload = function(e){
+			if(!(currentSCO === null || typeof(currentSCO) === 'undefined' || currentSCO.closed)){
+				// e = e || window.event;
+				// var message = 'Al cerrar esta ventana se cerrará la actividad en curso.';
+				// if(e) e.returnValue = message; // IE7-
+				// return message;
+				currentSCO.close();
+			}
+		};
 	}
 
 	function fetchCourses(settings){
@@ -65,13 +74,14 @@ jQuery(function($){
 					list.empty();
 					if(response.data.length){
 						$.each(response.data, function(id, course){
-							list.append(createCourse(
+							list.append(renderCourse(
 								course.id,
 								course.name,
 								course.description,
 								course.thumbnail,
 								course.status,
-								course.totalTime,
+								(course.totalTime == null) ? '' : course.totalTime,
+								(course.score == null) ? '' : course.score,
 								course.active
 							));
 						});
@@ -89,7 +99,7 @@ jQuery(function($){
 		;
 	}
 
-	function createCourse(id, name, description, thumb, status, time, active){
+	function renderCourse(id, name, description, thumb, status, time, score, active){
 		var course = $('<div class="media course"><div class="media-left"><img class="media-object" alt="" /></div><div class="media-body"/></div>')
 			.addClass(active?'active':'not-active')
 		;
@@ -97,18 +107,26 @@ jQuery(function($){
 		course.find('.media-body')
 			.append('<h4 class="media-heading">' + htmlEntities(name) + '</h4>')
 			.append('<span class="status label label-' + statusMap[status][1] + '">' + statusMap[status][0] + '</span>')
+			.append('<span class="score badge">' + score + '</span>')
 			.append('<span class="time">' + time + '</span>')
 			.append('<div class="description">' + htmlEntities(description) + '</div>')
 		;
-		course.on('click', function(e){
-			launchSCO(id);
-		});
+		if(active){
+			course.on('click', function(e){
+				launchSCO(id);
+			});
+		}
 		return course;
 	}
 
 	function launchSCO(id){
 		if(currentSCO === null || typeof(currentSCO) === 'undefined' || currentSCO.closed){
 			currentSCO = window.open('launch-scorm.html#' + id, 'sco', '');
+			currentSCO.onCourseFinished = function(){
+				fetchCourses(RDLMS.settings);
+				$("#in-course").modal('hide');
+			};
+			$("#in-course").modal({backdrop: 'static', keyboard: false});
 		}else{
 			showFeedback('Sólo puedes ver un curso a la vez.');
 		}

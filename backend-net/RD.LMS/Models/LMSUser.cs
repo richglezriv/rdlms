@@ -7,6 +7,10 @@ namespace RD.LMS.Models
 {
     public class LMSUser : IDataModel
     {
+        #region properties
+        public Boolean resetPassword { get; set; }
+        #endregion
+
         #region declarations
         public string id
         {
@@ -53,6 +57,7 @@ namespace RD.LMS.Models
             this.name = daoUser.FirstName;
             this.id = daoUser.Id.ToString();
             this.TryOuts += 1;
+            this.resetPassword = daoUser.IsAdmin && Utilities.MonthDiff(daoUser.LastLogged.Value, DateTime.Now.Date) > 3;
 
             return "success";
         }

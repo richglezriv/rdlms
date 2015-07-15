@@ -33,6 +33,10 @@ namespace RD.LMS.Controllers
 
                 if (!json["data"]["key"].ToString().Equals(hashString))
                     model.status = "fail";
+                else
+                {
+                    model = SaveExternalUSer(json);
+                }
             }
             catch (Exception)
             {
@@ -43,6 +47,22 @@ namespace RD.LMS.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        
+        private Models.JSonModel SaveExternalUSer(Newtonsoft.Json.Linq.JObject json)
+        {
+            Models.JSonModel model = new Models.JSonModel();
+
+            try
+            {
+                int userId = Convert.ToInt32(json["data"]["userId"].ToString());
+                Business.UserController.UpdateSessionState(userId, Business.UserController.SessionState.LoggedIn);
+            }
+            catch (Exception)
+            {
+                model.status = "fail";
+            }
+
+            return model;
+
+        }
     }
 }

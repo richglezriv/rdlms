@@ -47,6 +47,7 @@
     <Property Name="LastName" Type="nvarchar(max)" Nullable="true" />
     <Property Name="IsAdmin" Type="bit" Nullable="false" DefaultValue="false" />
     <Property Name="IsLogged" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="LastLogged" Type="datetime" Nullable="true" />
   </EntityType>
   <EntityType Name="UserCourses">
     <Key>
@@ -160,6 +161,7 @@
           <Property Name="LastName" Type="String" Nullable="true" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" DefaultValue="False" />
           <Property Name="IsLogged" Type="Boolean" Nullable="false" DefaultValue="False" />
+          <Property Name="LastLogged" Type="DateTime" Nullable="true" />
         </EntityType>
         <EntityType Name="UserCourse">
           <Key>
@@ -258,6 +260,7 @@
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
           <ScalarProperty Name="IsLogged" ColumnName="IsLogged" />
+          <ScalarProperty Name="LastLogged" ColumnName="LastLogged" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

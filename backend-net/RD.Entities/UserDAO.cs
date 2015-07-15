@@ -31,6 +31,9 @@ namespace RD.Entities
         {
             RDModelContainer model = Context.SetContext(_password).model;
 
+            if (!model.Users.Any(u => u.Login.Equals(login)))
+                return null;
+
             var user = model.Users.Single(u => u.Login.Equals(login));
 
             if (user.Password.Equals(password))
@@ -75,7 +78,16 @@ namespace RD.Entities
 
         void IDAO.Delete()
         {
-            throw new NotImplementedException();
+            RDModelContainer model = Context.SetContext(_password).model;
+            User result = model.Users.Single(u => u.Id.Equals(_persist.Id));
+
+            foreach (UserCourse item in result.UserCourses)
+            {
+                model.Scorms.Remove(item.Scorm);
+            }
+            model.UserCourses.RemoveRange(result.UserCourses);
+            model.Users.Remove(result);
+            model.SaveChanges();
         }
     }
 }

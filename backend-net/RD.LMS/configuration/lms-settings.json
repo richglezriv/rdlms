@@ -20,7 +20,10 @@
             "stats": "Admin/Stats"
         },
         "user": {
-            "find": "/Admin/FindUsers"
+            "find": "Admin/FindUsers",
+            "stats": "Admin/GetUserStats",
+            "clearScorm": "Admin/ClearUserScorm",
+            "delete": "Admin/DeleteUser"
         }
     },
     "session": {
