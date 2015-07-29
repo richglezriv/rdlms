@@ -123,7 +123,9 @@ jQuery(function($){
 		if(currentSCO === null || typeof(currentSCO) === 'undefined' || currentSCO.closed){
 			currentSCO = window.open('launch-scorm.html#' + id, 'sco', '');
 			currentSCO.onCourseFinished = function(){
-				fetchCourses(RDLMS.settings);
+				setTimeout(function(){
+					fetchCourses(RDLMS.settings);
+				}, 1000);
 				$("#in-course").modal('hide');
 			};
 			$("#in-course").modal({backdrop: 'static', keyboard: false});
