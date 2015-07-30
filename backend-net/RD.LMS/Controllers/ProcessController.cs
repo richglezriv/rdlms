@@ -17,6 +17,7 @@ namespace RD.LMS.Controllers
             List<String> thumbs = Session[Utilities.THUMBS] == null ? new List<string>() : (List<String>)Session[Utilities.THUMBS];
             JSonModel model = new JSonModel() { status = "success" };
             HttpRequestBase hfc = Request;
+            string path = Server.MapPath("~/uploads/" + qqfile);
 
             try
             {
@@ -30,13 +31,17 @@ namespace RD.LMS.Controllers
                 }
                     
                 var img = Bitmap.FromStream(hfc.InputStream);
-                string path = Server.MapPath("/uploads/" + qqfile);
+                
 
                 img.Save(path);
                 thumbs.Add(qqfile);
             }
             catch (Exception ex) {
-                throw ex;
+
+                MessageData message = new MessageData();
+                message.message = ex.Message + " with file " + path;
+                model.status = "fail";
+                model.data = message;
             }
             
 
@@ -52,7 +57,7 @@ namespace RD.LMS.Controllers
             {
                 HttpRequestBase hfc = Request;
                 System.IO.Stream stream = hfc.InputStream;
-                string path = Server.MapPath("/uploads/" + qqfile);
+                string path = Server.MapPath("~/uploads/" + qqfile);
                 System.IO.FileStream newFile = System.IO.File.Create(path);
                 stream.CopyTo(newFile);
 

@@ -5,7 +5,8 @@
 
 	var courseId = document.location.hash.substr(1), //LMS.SCO.courseId,
 		commitURL = RDLMS.settings.sco.commit,
-		fetchURL = RDLMS.settings.sco.fetch
+		fetchURL = RDLMS.settings.sco.fetch,
+		scormPkgFolder = RDLMS.settings.sco.basePath
 	;
 		
 	// Some caching...
@@ -13,10 +14,6 @@
 	var loadingStr = document.title,
 		iframe = $(document.body).find('iframe')
 	;
-
-	var scormPkgFolder = 'scorm-packages'; // We'll later decide if this needs to on the config
-
-
 
 
 	// SCO Settings & Data __________________________________________________________________
@@ -39,13 +36,15 @@
 	}
 	function onSCOSettingsError(){
 		alert('No se pudo cargar la configuración del SCO. Por favor, intenta más tarde.');
+		console.error('Could not load course settings.');
+		onCourseFinished();
 		window.close();
 	}
 	function onSCOSettingsLoaded(response){
 		if(response.status === 'success'){
 			courseId = response.data.id; // Again just in case
 			document.title = response.data.name;
-			iframe.attr('src', scormPkgFolder + '/' + response.data.scoPath + '/' + response.data.scoIndex);
+			iframe.attr('src', scormPkgFolder + response.data.scoPath + '/' + response.data.scoIndex);
 			window.API = new ScormApi({
 				commitURL: commitURL,
 				cmiData: response.data.dataModel
@@ -55,7 +54,9 @@
 				onCourseFinished();
 			};
 		}else{
-			alert(response.message);
+			alert(response.message || 'No se pudo cargar la lección. Por favor intenta mas tarde.');
+			console.log(response);
+			onCourseFinished();
 			window.close();
 		}
 	}

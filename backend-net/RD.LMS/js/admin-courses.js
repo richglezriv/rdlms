@@ -177,6 +177,12 @@ jQuery(function($){
 			modal.find('#input-conditions').val(course.conditions);
 			modal.find('.modal-title').text('Editar curso');
 			modal.find('.help-block').eq(2).show();
+			modal.find('#input-conditions option')
+				.show()
+				.filter('[value="' + course.id + '"]')
+				.prop('selected', false)
+				.hide()
+			;
 		}
 		modal.modal('show');
 	}
