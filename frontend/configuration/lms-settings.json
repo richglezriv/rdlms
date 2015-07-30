@@ -12,6 +12,17 @@
 		"uploadPath": "/rdlms/frontend/uploads/"
 	},
 
+	"branding": {
+		"headerImage": "/rdlms/frontend/branding/nutrir-full.png",
+		"headerCaption": "",
+		"headerCaptionColor": "#fff",
+		"headerBackgroundColor": "#F3A344",
+		"headerHeight": 80,
+		"headerHideAccount": true,
+		"courseListTitle": "Módulos",
+		"courseListIntro": "Haz clic en el módulo que deseas revisar."
+	},
+
 	"admin": {
 		"course":{
 			"list": "/rdlms/backend-php/admin-courses.php",
