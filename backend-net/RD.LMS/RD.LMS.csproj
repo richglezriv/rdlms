@@ -151,6 +151,7 @@
     <Compile Include="Models\JSonModelCollection.cs" />
     <Compile Include="Models\LMSModel.cs" />
     <Compile Include="Models\LMSUser.cs" />
+    <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\JSonModel.cs" />
     <Compile Include="Models\UserCourseModel.cs" />
@@ -277,10 +278,11 @@
     <Content Include="components\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="components\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="components\jquery\jquery.min.map" />
-    <EmbeddedResource Include="configuration\lms-settings.json">
+    <Content Include="configuration\lms-settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
     <None Include="Properties\PublishProfiles\RDProfile.pubxml" />
+    <Content Include="Views\Home\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RD.Business\RD.Business.csproj">

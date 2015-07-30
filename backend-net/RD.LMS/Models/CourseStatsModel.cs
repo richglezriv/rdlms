@@ -36,7 +36,7 @@ namespace RD.LMS.Models
             failed = Business.CourseController.GetByStatus("failed", int.Parse(this.id));
             incomplete = Business.CourseController.GetByStatus("incomplete", int.Parse(this.id));
             notAttempted = Business.CourseController.GetByStatus("not attempted", int.Parse(this.id));
-
+            completed = Business.CourseController.GetByStatus("completed", int.Parse(this.id));
         }
     }
 }

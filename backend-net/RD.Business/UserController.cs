@@ -21,7 +21,7 @@ namespace RD.Business
             try
             {
                 _dao = new RD.Entities.UserDAO(string.Empty);
-                user = _dao.Validate(login, password);
+                user = _dao.Validate(login, GetStringHashed(password));
                 return user;
             }
             catch (Exception)
@@ -29,6 +29,22 @@ namespace RD.Business
                 throw;
             }
             
+        }
+
+        public static Entities.User GetUserById(int id)
+        {
+            RD.Entities.User user;
+
+            try
+            {
+                _dao = new RD.Entities.UserDAO(string.Empty);
+                user = _dao.GetBy(id);
+                return user;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public static List<Entities.User> GetUsers(string nameLike)
@@ -133,10 +149,14 @@ namespace RD.Business
 
             foreach (string item in parent)
             {
-                id = int.Parse(item.Trim().Replace('"', char.Parse(" ")).ToString());
+                if (!item.Trim().Equals(String.Empty))
+                {
+                    id = int.Parse(item.Trim().Replace('"', char.Parse(" ")).ToString());
 
-                if (dao.GetCourses(toTest.UserId).Single(c => c.CourseId.Equals(id)).Status != "passed")
-                    return null;
+                    if (dao.GetCourses(toTest.UserId).Single(c => c.CourseId.Equals(id)).Status != "passed")
+                        return null;
+                }
+                
             }
 
             return toTest;
@@ -160,5 +180,36 @@ namespace RD.Business
             Entities.IDAO dao = new Entities.UserDAO(string.Empty, user);
             dao.Delete();
         }
+
+        private static string GetStringHashed(string toHash)
+        {
+            System.Security.Cryptography.SHA1 hashKey = System.Security.Cryptography.SHA1.Create();
+            hashKey.ComputeHash(Encoding.UTF8.GetBytes(toHash));
+            string hashString = BitConverter.ToString(hashKey.Hash).Replace("-", String.Empty).ToLower();
+
+            return hashString;
+        }
+
+        public static void UpdateUserPassword(int id, string newPassword)
+        {
+            Entities.UserDAO dao = new Entities.UserDAO(string.Empty);
+            Entities.User user = dao.GetBy(id);
+            if (!user.IsAdmin)
+                throw new Exception("Error: No es un usuario administrador.");
+
+            try
+            {
+                user.Password = GetStringHashed(newPassword);
+                Entities.IDAO control = new Entities.UserDAO(string.Empty, user);
+                control.Update();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Error: No se pudo actualiar la contraseña");
+            }
+            
+        }
+
+        
     }
 }

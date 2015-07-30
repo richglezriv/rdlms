@@ -9,9 +9,7 @@ namespace RD.LMS.Models
     {
         #region properties
         public Boolean resetPassword { get; set; }
-        #endregion
-
-        #region declarations
+        
         public string id
         {
             get;
@@ -43,6 +41,25 @@ namespace RD.LMS.Models
         #endregion
 
         #region methods
+        internal string BeginSession(int id)
+        {
+            RD.Entities.User daoUser = RD.Business.UserController.GetUserById(id);
+            if (daoUser == null || !daoUser.IsLogged)
+            {
+                this.reason = "credentials-error";
+                return "fail";
+            }
+
+            this.isAdmin = daoUser.IsAdmin;
+            this.name = daoUser.FirstName;
+            this.id = daoUser.Id.ToString();
+            this.TryOuts += 1;
+
+            return "success";
+
+                
+        }
+
         internal String Validate()
         {
             RD.Entities.User daoUser = RD.Business.UserController.GetUser(login, password);

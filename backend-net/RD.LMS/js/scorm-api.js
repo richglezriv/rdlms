@@ -135,7 +135,7 @@
 			var cleanData = getSanitizedCmiData(cmiData);
 			$.ajax({
 				url: commitURL,	method: 'POST',
-				data: {data: cleanData}
+				data: {data: JSON.stringify(cleanData)}
 			})
 				.done(function(response){
 					console.log('Successfully commited data!');

@@ -7,7 +7,7 @@ namespace RD.LMS.Models
 {
     public class UserCourseModel : IDataModel
     {
-        #region declarations
+        #region properties
         public string id
         {
             get;
@@ -29,6 +29,8 @@ namespace RD.LMS.Models
         public String totalTime { get; set; }
 
         public Boolean active { get; set; }
+
+        public string score { get; set; }
         #endregion
 
         #region methods
@@ -48,7 +50,8 @@ namespace RD.LMS.Models
                     thumbnail = item.Course.Thumbnail,
                     totalTime = item.Scorm.SessionTime,
                     status = item.Status,
-                    id = item.Id.ToString()
+                    id = item.Id.ToString(), 
+                    score = item.Scorm.ScoreRaw
                 });
             }
 
@@ -67,5 +70,7 @@ namespace RD.LMS.Models
         }
         #endregion
 
+
+        
     }
 }

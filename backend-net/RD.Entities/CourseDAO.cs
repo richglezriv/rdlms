@@ -50,7 +50,7 @@ namespace RD.Entities
             update.Description = _course.Description;
             update.Name = _course.Name;
             update.ParentCourses = _course.ParentCourses;
-            update.ScoIndex = _course.ScoIndex;
+            update.ScoIndex = _course.ScoIndex == null ? update.ScoIndex :  _course.ScoIndex;
             update.ScormPackage = _course.ScormPackage;
             update.Thumbnail = _course.Thumbnail;
             update.IsEnabled = _course.IsEnabled;
