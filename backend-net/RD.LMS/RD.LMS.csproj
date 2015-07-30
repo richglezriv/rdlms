@@ -166,6 +166,8 @@
     <Content Include="App_Data\dbLMSRD_log.ldf">
       <DependentUpon>dbLMSRD.mdf</DependentUpon>
     </Content>
+    <Content Include="branding\nutrir-full.png" />
+    <Content Include="branding\nutrir.png" />
     <Content Include="components\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="components\bootstrap\css\bootstrap.min.css" />
     <Content Include="components\bootstrap\fonts\glyphicons-halflings-regular.svg" />

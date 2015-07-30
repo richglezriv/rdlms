@@ -29,5 +29,15 @@
     "session": {
         "login": "User/Login",
         "logout": "User/Logout"
-    }
+    },
+    "branding": {
+		"headerImage": "branding/nutrir-full.png",
+		"headerCaption": "",
+		"headerCaptionColor": "#fff",
+		"headerBackgroundColor": "#F3A344",
+		"headerHeight": 80,
+		"headerHideAccount": true,
+		"courseListTitle": "Módulos",
+		"courseListIntro": "Haz clic en el módulo que deseas revisar."
+	}
 }
