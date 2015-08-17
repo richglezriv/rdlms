@@ -26,6 +26,7 @@ namespace RD.LMS.Models
         private Boolean IsStrongPassword()
         {
             Boolean success = true;
+            string[] blackList = new string[] { "password", "contrasena", "senha" };
             //Regex regex1 = new Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]){6,20}$");
             //Regex regex2 = new Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*?[#?!@$%^&*-]){6,20}$");
             //Regex regex3 = new Regex("^(?=.*[0-9])(?=.*[A-Z])(?=.*?[#?!@$%^&*-]){6,20}$");
@@ -44,6 +45,10 @@ namespace RD.LMS.Models
             if (!NewPassword.Any(char.IsDigit))
                 success = false;
             if (NewPassword.Length < 6)
+                success = false;
+            if (NewPassword.Trim().ToLower().Contains(blackList[0]) ||
+                NewPassword.Trim().ToLower().Contains(blackList[1]) ||
+                NewPassword.Trim().ToLower().Contains(blackList[2]))
                 success = false;
 
             return success;

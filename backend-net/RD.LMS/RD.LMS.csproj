@@ -166,6 +166,7 @@
     <Content Include="App_Data\dbLMSRD_log.ldf">
       <DependentUpon>dbLMSRD.mdf</DependentUpon>
     </Content>
+    <Content Include="branding\Logo_UXNS.png" />
     <Content Include="branding\nutrir-full.png" />
     <Content Include="branding\nutrir.png" />
     <Content Include="components\bootstrap\css\bootstrap-theme.min.css" />
@@ -252,7 +253,9 @@
     <Content Include="profile.html" />
     <Content Include="registration.html" />
     <Content Include="Views\Home\Player.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -285,6 +288,7 @@
     </Content>
     <None Include="Properties\PublishProfiles\RDProfile.pubxml" />
     <Content Include="Views\Home\ResetPassword.cshtml" />
+    <Content Include="Views\Home\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RD.Business\RD.Business.csproj">

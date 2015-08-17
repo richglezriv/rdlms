@@ -31,10 +31,10 @@
         "logout": "User/Logout"
     },
     "branding": {
-		"headerImage": "branding/nutrir-full.png",
+		"headerImage": "branding/Logo_UXNS.png",
 		"headerCaption": "",
 		"headerCaptionColor": "#fff",
-		"headerBackgroundColor": "#F3A344",
+		"headerBackgroundColor": "#1ABC9C",
 		"headerHeight": 80,
 		"headerHideAccount": true,
 		"courseListTitle": "M&oacute;dulos",

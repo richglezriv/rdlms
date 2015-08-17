@@ -66,6 +66,13 @@ namespace RD.LMS.Models
             course.Status = "not attempted";
             course.Scorm.ScoreRaw = "0";
             course.Scorm.SessionTime = "0:00:00";
+            course.Scorm.Credit = string.Empty;
+            course.Scorm.DataMasteryScore = string.Empty;
+            course.Scorm.Entry = string.Empty;
+            course.Scorm.Exit = string.Empty;
+            course.Scorm.LaunchData = string.Empty;
+            course.Scorm.LessonLocation = string.Empty;
+            course.Scorm.TotalTime = "0:00:00";
             Business.UserController.UpdateUserCourse(course);
         }
         #endregion

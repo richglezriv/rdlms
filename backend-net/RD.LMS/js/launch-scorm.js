@@ -34,10 +34,10 @@
 			})
 		;
 	}
-	function onSCOSettingsError(){
-		alert('No se pudo cargar la configuración del SCO. Por favor, intenta más tarde.');
-		console.error('Could not load course settings.');
-		onCourseFinished();
+	function onSCOSettingsError() {
+	    alert('No se pudo cargar la configuración del SCO. Por favor, intenta más tarde.');
+	    console.error('Could not load course settings.');
+	    onCourseFinished();
 		window.close();
 	}
 	function onSCOSettingsLoaded(response){
@@ -54,7 +54,7 @@
 				onCourseFinished();
 			};
 		}else{
-			alert(response.message || 'No se pudo cargar la lección. Por favor intenta mas tarde.');
+			alert(response.data.message || 'No se pudo cargar la lección. Por favor intenta mas tarde.');
 			console.log(response);
 			onCourseFinished();
 			window.close();

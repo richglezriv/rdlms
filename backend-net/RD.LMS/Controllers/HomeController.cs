@@ -78,5 +78,46 @@ namespace RD.LMS.Controllers
             return View(model);
         }
 
+        public ActionResult Profile(FormCollection fc)
+        {
+            Models.JSonModel model = new Models.JSonModel();
+
+            if (Session[Utilities.USER] != null)
+            {
+                model.data = (Models.LMSUser)Session[Utilities.USER];
+            }
+
+            if (fc.Keys.Count > 0)
+            {
+                Models.LMSUser user = (Models.LMSUser)Session[Utilities.USER];
+                if (!fc["input-old-password"].Equals(user.password))
+                    user.SetReason("La contraseña actual no coincide");
+                else
+                {
+                    Models.ResetPasswordModel resetPass = new ResetPasswordModel();
+                    resetPass.Id = user.id;
+                    try
+                    {
+                        resetPass.NewPassword = fc["input-password"].ToString();
+                        if (!resetPass.NewPassword.Equals(fc["input-retype-password"].ToString()))
+                            user.SetReason("Error: Las contraseñas deben coincidir");
+                        else
+                        {
+                            resetPass.UpdatePassword();
+                            user.SetReason(resetPass.Message);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        user.SetReason("No se pudo actualizar la contraseña");
+                    }
+                }
+
+                model.data = user;
+                Session[Utilities.USER] = user;
+            }
+
+            return View(model);
+        }
     }
 }

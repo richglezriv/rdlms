@@ -113,7 +113,7 @@ namespace RD.LMS.Models
             course.Scorm.ScoreRaw = this.ScoreRaw;
             course.Scorm.SessionTime = this.SessionTime;
             course.Scorm.SuspendData = this.SuspendData;
-            course.Scorm.TotalTime = this.TotalTime;
+            course.Scorm.TotalTime = this.SessionTime;
             
             Business.UserController.UpdateUserCourse(course);
         }

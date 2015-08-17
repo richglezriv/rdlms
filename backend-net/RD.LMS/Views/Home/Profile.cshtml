@@ -1,0 +1,85 @@
+﻿@{
+    
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edita tu perfil - LMS</title>
+    <link rel="stylesheet" href="components/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/frontend.css">
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="branded-header">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">LMS</a>
+                <div class="navbar-branding"></div>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="~/admin-courses.html">Cursos</a></li>
+                    <li><a href="~/admin-users.html">Usuarios</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right navbar-user">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="username"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="profile.html">Editar perfil</a></li>
+                            <li><a href="login.html">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container">
+        <form id="changePassword-form" class="row" method="post" name="changePassword-form">
+            <p class="lead">Información de acceso</p>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="input-username">Nombre de usuario</label>
+                        <input type="text" class="form-control" id="input-username" name="input-username" placeholder="" disabled value="@Model.data.login">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="input-password">Contraseña Anterior</label>
+                        <input type="password" class="form-control" id="input-old-password" name="input-old-password" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="input-password">Contraseña nueva</label>
+                        <input type="password" class="form-control" id="input-password" name="input-password" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="input-confirm_password">Confirmar contraseña</label>
+                        <input type="password" class="form-control" id="input-retype-password" name="input-retype-password" placeholder="">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <span>&nbsp;@Model.data.reason</span>
+                </div>
+            </div>
+        </form>
+
+</div>
+
+    <!-- Scripts -->
+    <script src="components/jquery/jquery.min.js"></script>
+    <script src="components/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/rdlms.js"></script>
+</body>
+</html>

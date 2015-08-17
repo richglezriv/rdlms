@@ -24,6 +24,8 @@ namespace RD.LMS.Controllers
                 password = json["password"].ToString(),
             };
 
+            try
+            {
             model.status = user.Validate();
 
             if (model.status.Equals(Utilities.SUCCESS))
@@ -36,6 +38,13 @@ namespace RD.LMS.Controllers
             }
             
             model.data = user;
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            
 
             return Json(model);
         }
@@ -101,7 +110,7 @@ namespace RD.LMS.Controllers
                 if (course == null)
                 {
                     model.data = new MessageData(){
-                      message=  "no puede acceder a la evaluación de este curso"
+                      message=  "No puede acceder todavía a la evaluación de este curso."
                     };
                     model.status = "fail";
                     return Json(model);
@@ -149,7 +158,7 @@ namespace RD.LMS.Controllers
                 }
             };
 
-            Session.Remove(USER_COURSE);
+            //Session.Remove(USER_COURSE);
 
             return Json(model);
         }

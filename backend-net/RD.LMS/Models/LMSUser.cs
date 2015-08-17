@@ -84,6 +84,11 @@ namespace RD.LMS.Models
             this.reason = "too-many-tries";
         }
 
+        internal void SetReason(string reason)
+        {
+            this.reason = reason;
+        }
+
         internal String GetDataResponse()
         {
             String response = "{\"status\":\"success\", \"data\":{\"isAdmin\":\"" + this.isAdmin.ToString() + "\"}}";
