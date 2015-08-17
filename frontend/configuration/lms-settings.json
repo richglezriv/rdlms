@@ -11,8 +11,8 @@
 		"profile": "/rdlms/backend-php/profile.php",
 		"uploadPath": "/rdlms/frontend/uploads/"
 	},
-
 	"branding": {
+
 		"headerImage": "/rdlms/frontend/branding/nutrir-full.png",
 		"headerCaption": "",
 		"headerCaptionColor": "#fff",
