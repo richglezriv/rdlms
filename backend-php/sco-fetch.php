@@ -1,4 +1,5 @@
 <?php 
+
 $formData = json_decode($_POST['data']);
 $courseId = $formData->courseId;
 

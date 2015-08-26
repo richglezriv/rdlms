@@ -14,6 +14,7 @@ jQuery(function($){
 		courses = null
 	;
 
+	$('a[href="#logout"]').on('click', function(e){ e.preventDefault(); RDLMS.logout(); });
 
 
 
@@ -86,8 +87,12 @@ jQuery(function($){
 					}else{
 						list.append('<div><h4 class="text-info">No hay ningún curso en el sistema.</h4><p>Haz clic en "Agregar curso" para crear un nuevo curso.</p></div>');
 					}
+				}else if(response.status && response.status === 'fail' && response.data.reason){
+					var failResult = RDLMS.handleFailure(response.data.reason);
+					if(!handleFailure) showFeedback('No fue posible cargar la lista de cursos. Ocurrió una falla con el servidor');
+					console.error(response.data.reason);
 				}else{
-					showFeedback(response.message);
+					showFeedback('No fue posible cargar la lista de cursos. Ocurrió un error al comunicarse con el servidor');
 				}
 			})
 			.fail(function(){ showFeedback('No fue posible cargar la lista de cursos'); })

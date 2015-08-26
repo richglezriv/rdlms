@@ -43,7 +43,9 @@
 	},
 
 	"session": {
-		"login": "/rdlms/backend-php/tester.php?a=login",
-		"logout": "/rdlms/backend-php/tester.php?a=logout"
+		"login": "/rdlms/backend-php/login.php",
+		"logout": "/rdlms/backend-php/logout.php",
+		"user": "/rdlms/backend-php/user.php",
+		"logoutRedirect": "login.html"
 	}
 }

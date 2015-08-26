@@ -87,9 +87,48 @@ RDLMS = (function($){
 		loadLMSSettings();
 	}
 
+	function handleFailure(code){
+		if(code === 'session-expired'){
+			showFeedback('Tu sesión ha expirado');
+			document.location.href = self.settings.logoutRedirect || 'login.html';
+			return true;
+		}
+		if(code === 'admins-only'){
+			document.location.href = 'courses.html';
+			return true;
+		}
+		if(code === 'users-only'){
+			document.location.href = 'admin-courses.html';
+			return true;
+		}
+		return false;
+	}
+
+	function logout(){
+		if(!isInitialized) return;
+		$.ajax({
+			url: self.settings.session.logout,
+			dataType: "json"
+		})
+			.done(function(response){
+				if(response.status && response.status === 'success'){
+					document.location.href = self.settings.logoutRedirect || 'login.html';
+				}else{
+					console.error('Could not logout.');
+				}
+			})
+			.fail(function(){
+				console.error('Could not logout: Invalid response from server.');
+			})
+			//.always()
+		;
+	}
+
 	// Public methods
 	self.init = initialize;
 	self.showFeedback = showFeedback;
+	self.handleFailure = handleFailure;
+	self.logout = logout;
 	self.isInitialized = function(){ return isInitialized; };
 
 

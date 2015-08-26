@@ -5,7 +5,8 @@ jQuery(function($){
 		loading = false,
 		body = $('body'),
 		win = $(window),
-		loginForm = $('#login-form').hide()
+		loginForm = $('#login-form').hide(),
+		registrationForm = $('#registration-form').hide()
 	;
 
 
@@ -50,6 +51,7 @@ jQuery(function($){
 	function onLMSInitialized(){
 		settings = RDLMS.settings;
 		loginForm.show();
+		if(settings.lms.registration) registrationForm.show();
 	}
 
 
@@ -77,7 +79,7 @@ jQuery(function($){
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "credentials-error"){
 					showFeedback('Nombre de usuario o contraseña incorrectos');
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "too-many-tries"){
-					showFeedback('Demasiados intentos fallidos. El acceso al sistema de ha bloqueado por 10 minutos');
+					showFeedback('Demasiados intentos fallidos. Tu acceso se ha bloqueado por una hora.');
 				}else{
 					showFeedback('No se pudo establecer conexión con el servidor. Por favor, intenta más tarde.');
 				}

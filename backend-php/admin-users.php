@@ -1,5 +1,9 @@
 <?php 
 
+session_start();
+if(!isset($_SESSION['user'])){ die(json_encode(array('status'=>'fail','data'=>array('reason'=>'session-expired')))); }
+if(!$_SESSION['user']['isAdmin']){ die(json_encode(array('status'=>'fail','data'=>array('reason'=>'admins-only')))); }
+
 $data = json_decode($_POST['data'], true);
 $q = $data['query'];
 

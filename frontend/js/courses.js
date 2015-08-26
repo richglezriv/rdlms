@@ -8,6 +8,8 @@ jQuery(function($){
 		currentSCO = null
 	;
 
+	$('a[href="#logout"]').on('click', function(e){ e.preventDefault(); RDLMS.logout(); });
+
 	var statusMap = {
 		"passed": ['Aprobado', 'success'],
 		"failed": ['Reprobado', 'danger'],
@@ -52,12 +54,14 @@ jQuery(function($){
 
 	function onLMSInitialized(){
 		fetchCourses(RDLMS.settings);
+		
+		//win.on('unload', function(e){
 		window.onbeforeunload = function(e){
 			if(!(currentSCO === null || typeof(currentSCO) === 'undefined' || currentSCO.closed)){
-				// e = e || window.event;
-				// var message = 'Al cerrar esta ventana se cerrará la actividad en curso.';
-				// if(e) e.returnValue = message; // IE7-
-				// return message;
+				//e = e || window.event;
+				//var message = 'Al cerrar esta ventana se cerrará la actividad en curso.';
+				//if(e) e.returnValue = message; // IE7-
+				//return message;
 				currentSCO.close();
 			}
 		};
@@ -88,8 +92,12 @@ jQuery(function($){
 					}else{
 						list.append('<div><h4 class="text-info">Por el momento no tienes asignado ningún curso.</h4><p>Por favor regresa más tarde.</p></div>');
 					}
+				}else if(response.status && response.status === 'fail' && response.data.reason){
+					var failResult = RDLMS.handleFailure(response.data.reason);
+					if(!handleFailure) showFeedback('No fue posible cargar la lista de cursos. Ocurrió una falla con el servidor');
+					console.error(response.data.reason);
 				}else{
-					showFeedback(response.message);
+					showFeedback('No fue posible cargar la lista de cursos. Ocurrió un error al comunicarse con el servidor');
 				}
 			})
 			.fail(function(){
@@ -122,13 +130,15 @@ jQuery(function($){
 	function launchSCO(id){
 		if(currentSCO === null || typeof(currentSCO) === 'undefined' || currentSCO.closed){
 			currentSCO = window.open('launch-scorm.html#' + id, 'sco', '');
-			currentSCO.onCourseFinished = function(){
+			currentSCO.onSCOClosed = function(){
+				//console.log('onSCOClosed()');
 				setTimeout(function(){
 					fetchCourses(RDLMS.settings);
 				}, 1000);
 				$("#in-course").modal('hide');
 			};
 			$("#in-course").modal({backdrop: 'static', keyboard: false});
+			window.scowin = currentSCO;
 		}else{
 			showFeedback('Sólo puedes ver un curso a la vez.');
 		}
