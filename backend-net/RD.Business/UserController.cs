@@ -146,6 +146,7 @@ namespace RD.Business
             string parentString = toTest.Course.ParentCourses;
             parentString = parentString.Substring(1, parentString.Length - 2);
             string[] parent = parentString.Split(',');
+            string[] status = new String[] { "passed", "completed" };
 
             foreach (string item in parent)
             {
@@ -153,7 +154,7 @@ namespace RD.Business
                 {
                     id = int.Parse(item.Trim().Replace('"', char.Parse(" ")).ToString());
 
-                    if (dao.GetCourses(toTest.UserId).Single(c => c.CourseId.Equals(id)).Status != "passed")
+                    if (!status.Contains(dao.GetCourses(toTest.UserId).Single(c => c.CourseId.Equals(id)).Status))
                         return null;
                 }
                 

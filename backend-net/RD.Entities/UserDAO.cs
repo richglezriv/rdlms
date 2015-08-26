@@ -59,7 +59,9 @@ namespace RD.Entities
 
         void IDAO.Save()
         {
-            throw new NotImplementedException();
+            RDModelContainer model = Context.SetContext(_password).model;
+            model.Users.Add(_persist);
+            model.SaveChanges();
         }
 
         void IDAO.Update()
