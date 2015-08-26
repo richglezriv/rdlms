@@ -54,14 +54,16 @@
 			// Placed this code on <body onbeforeunload=""> for compatibility
 			
 			window.onbeforeunload = function(){
-				try{ window.API.LMSFinish(); }catch(err){ 
-					opener.console.log('API.LMSFinish error:');
-					opener.console.log(err);
-				};
-				try{ onSCOClosed(); }catch(err){
-					opener.console.log('onSCOClosed error:');
-					opener.console.log(err);
-				};
+				//try{ window.API.LMSFinish(); }catch(err){ 
+				//	opener.console.log('API.LMSFinish error:');
+				//	opener.console.log(err);
+				//};
+				//try{ onSCOClosed(); }catch(err){
+				//	opener.console.log('onSCOClosed error:');
+				//	opener.console.log(err);
+				//};
+				API.LMSFinish();
+				onSCOClosed();
 			};
 
 		}else{
