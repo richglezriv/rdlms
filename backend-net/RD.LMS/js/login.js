@@ -77,7 +77,7 @@ jQuery(function($){
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "credentials-error"){
 					showFeedback('Nombre de usuario o contraseña incorrectos');
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "too-many-tries"){
-					showFeedback('Demasiados intentos fallidos. El acceso al sistema de ha bloqueado por 10 minutos');
+					showFeedback('Demasiados intentos fallidos. El acceso al sistema se ha bloqueado por 60 minutos');
 				}else{
 					showFeedback('No se pudo establecer conexión con el servidor. Por favor, intenta más tarde.');
 				}

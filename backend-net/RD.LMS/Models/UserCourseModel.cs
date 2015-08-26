@@ -38,13 +38,14 @@ namespace RD.LMS.Models
         {
             List<RD.Entities.UserCourse> list = RD.Business.UserController.GetUserCourses(Convert.ToInt32(userId), true);
             List<UserCourseModel> result = new List<UserCourseModel>();
-            
+            string[] status = new String[] { "passed", "completed" };
+
             //loads user courses
             foreach (RD.Entities.UserCourse item in list)
             {
                 result.Add(new UserCourseModel()
                 {
-                    active = true,
+                    active = RD.Business.UserController.GetCourse(item.Id) != null,
                     description = item.Course.Description,
                     name = item.Course.Name,
                     thumbnail = item.Course.Thumbnail,

@@ -50,7 +50,8 @@ jQuery(function($){
 
 	// Courses loading ____________________________________________________________
 
-	function onLMSInitialized(){
+	function onLMSInitialized() {
+	    RDLMS.validateSession();
 		fetchCourses(RDLMS.settings);
 		window.onbeforeunload = function(e){
 			if(!(currentSCO === null || typeof(currentSCO) === 'undefined' || currentSCO.closed)){

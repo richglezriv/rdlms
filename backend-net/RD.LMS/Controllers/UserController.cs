@@ -9,8 +9,8 @@ namespace RD.LMS.Controllers
 {
     public class UserController : Controller
     {
-        //
-        // GET: /User/
+        List<UserTryout> tryouts;
+        private const string TRYOUTS = "USER_TRYOUTS";
         private string USER_COURSE = "USER_COURSE";
 
         public ActionResult Login(string data)
@@ -22,31 +22,56 @@ namespace RD.LMS.Controllers
             {
                 login = json["username"].ToString(),
                 password = json["password"].ToString(),
+                TryOuts = Convert.ToInt32(Session["TRYOUTS"])
             };
 
             try
             {
-            model.status = user.Validate();
+                tryouts = GetTryouts();
+                ReviewTryouts();
 
-            if (model.status.Equals(Utilities.SUCCESS))
-                Session.Add(Utilities.USER, user);
+                if (tryouts.Any(u => u.login.Equals(user.login)))
+                {
+                    model.status = Utilities.FAIL;
+                    user.SetReason();
+                }
+                else
+                {
+                    model.status = user.Validate();
+                    Session.Add("TRYOUTS", user.TryOuts);
 
-            if (user.TryOuts > 3)
-            {
-                model.status = Utilities.FAIL;
-                user.SetReason();
-            }
-            
-            model.data = user;
+                    if (model.status.Equals(Utilities.SUCCESS))
+                        Session.Add(Utilities.USER, user);
+                    else if (user.TryOuts > 5)
+                    {
+                        model.status = Utilities.FAIL;
+                        user.SetReason();
+                        if (!tryouts.Any(u => u.login.Equals(user.login)))
+                            tryouts.Add(new UserTryout() { login = user.login, lastTry = DateTime.Now });
+                        this.HttpContext.Application[TRYOUTS] = tryouts;
+                    }
+                    
+                }
+
+                model.data = user;
             }
             catch (Exception ex)
             {
 
             }
 
-            
+
 
             return Json(model);
+        }
+
+        private void ReviewTryouts()
+        {
+            for (int i = tryouts.Count - 1; i >= 0; i--)
+            {
+                if (DateTime.Now.Subtract(tryouts[i].lastTry).Minutes >= 60)
+                    tryouts.RemoveAt(i);
+            }
         }
 
         public ActionResult Logout()
@@ -71,6 +96,7 @@ namespace RD.LMS.Controllers
 
         public ActionResult Get()
         {
+            System.Diagnostics.Debug.WriteLine("sesion id " + Session.SessionID);
             Models.JSonModelCollection model = new Models.JSonModelCollection();
             List<Models.UserCourseModel> courses = Models.UserCourseModel.Get(((Models.LMSUser)Session[Utilities.USER]).id);
 
@@ -158,10 +184,29 @@ namespace RD.LMS.Controllers
                 }
             };
 
-            //Session.Remove(USER_COURSE);
-
             return Json(model);
         }
 
+        public ActionResult SessionEnabled()
+        {
+            Models.JSonModel model = new JSonModel();
+            Models.MessageData message = new MessageData();
+            if (Session[Utilities.USER] != null){
+                message.id = ((LMSUser)Session[Utilities.USER]).id;
+                model.status = "success";
+            }
+            else
+            {
+                model.status = "fail";
+            }
+            model.data = message;
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        private List<UserTryout> GetTryouts()
+        {
+            return this.HttpContext.Application[TRYOUTS] == null ? new List<UserTryout>() : (List<UserTryout>)this.HttpContext.Application[TRYOUTS];
+        }
     }
 }

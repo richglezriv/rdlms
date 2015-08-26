@@ -26,30 +26,41 @@ namespace RD.LMS.Models
         private Boolean IsStrongPassword()
         {
             Boolean success = true;
-            string[] blackList = new string[] { "password", "contrasena", "senha" };
+            string[] blackList = new string[] { "password", "contrasena", "senha", "passw0rd","pa55w0rd"
+                ,"pas5word"
+                ,"pas5w0rd"
+                ,"pa5sword"
+                ,"pa5sw0rd"
+                ,"passw0rd"
+                ,"contra5enha"
+                ,"c0ntra5enha"
+                ,"contra53nha"
+                ,"c0ntra53nha"
+                ,"c0ntras3nha"
+                ,"c0ntrasenha"
+                ,"contras3nha"
+                ,"c0ntra"
+                ,"5enha"
+                ,"53nha"
+                ,"s3nha" };
             //Regex regex1 = new Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]){6,20}$");
-            //Regex regex2 = new Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*?[#?!@$%^&*-]){6,20}$");
-            //Regex regex3 = new Regex("^(?=.*[0-9])(?=.*[A-Z])(?=.*?[#?!@$%^&*-]){6,20}$");
-            //Regex regex4 = new Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-]){6,20}$");
-            //Regex regex5 = new Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-]){6,20}$");
-
             //Match match1 = regex1.Match(NewPassword);
-            //Match match2 = regex2.Match(NewPassword);
-            //Match match3 = regex3.Match(NewPassword);
-            //Match match4 = regex4.Match(NewPassword);
-            //Match match5 = regex5.Match(NewPassword);
+            success = false;
+            string special = "#?!@$%^&*-_|[{}]+/";
+            for (int i = 0; i < special.Length; i++)
+            {
+                if (NewPassword.Contains(special[i]))
+                    success = true;
+            }
             if (!NewPassword.Any(char.IsLower))
                 success = false;
             if (!NewPassword.Any(char.IsUpper))
                 success = false;
             if (!NewPassword.Any(char.IsDigit))
                 success = false;
-            if (NewPassword.Length < 6)
+            if (NewPassword.Length < 8)
                 success = false;
-            if (NewPassword.Trim().ToLower().Contains(blackList[0]) ||
-                NewPassword.Trim().ToLower().Contains(blackList[1]) ||
-                NewPassword.Trim().ToLower().Contains(blackList[2]))
-                success = false;
+            success = blackList.Any(b => NewPassword.Trim().ToLower().Contains(b)) ? false : success;
 
             return success;
         }

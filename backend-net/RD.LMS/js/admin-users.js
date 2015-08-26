@@ -52,7 +52,8 @@ jQuery(function($){
 		//add.on('click', function(e){ e.preventDefault(); if(!loading) addUser(); });
 
 		// Fetch users
-		settings = RDLMS.settings;
+	    settings = RDLMS.settings;
+	    RDLMS.validateSession();
 		searchForm.show();
 		searchForm.on('submit', function(e){
 			e.preventDefault();

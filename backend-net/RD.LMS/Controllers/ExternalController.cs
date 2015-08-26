@@ -23,20 +23,20 @@ namespace RD.LMS.Controllers
 
             try
             {
-                //const String KEY = "ZaZaCruREcHA8a7*as";
+                const String KEY = "ZaZaCruREcHA8a7*as";
                 Newtonsoft.Json.Linq.JObject json = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(Request.QueryString[0].ToString());
-                //string userId = json["data"]["userId"].ToString();
-                //string serialKey = String.Format("{0}{1}", userId, KEY);
-                //System.Security.Cryptography.SHA512 hashKey = System.Security.Cryptography.SHA512.Create();
-                //hashKey.ComputeHash(Encoding.UTF8.GetBytes(serialKey));
-                //string hashString = BitConverter.ToString(hashKey.Hash).Replace("-", String.Empty).ToLower();
+                string userId = json["data"]["userId"].ToString();
+                string serialKey = String.Format("{0}{1}", userId, KEY);
+                System.Security.Cryptography.SHA512 hashKey = System.Security.Cryptography.SHA512.Create();
+                hashKey.ComputeHash(Encoding.UTF8.GetBytes(serialKey));
+                string hashString = BitConverter.ToString(hashKey.Hash).Replace("-", String.Empty).ToLower();
 
-                //if (!json["data"]["key"].ToString().Equals(hashString))
-                //    model.status = "fail";
-                //else
-                //{
-                //    model = SaveExternalUSer(json);
-                //}
+                if (!json["data"]["key"].ToString().Equals(hashString))
+                    model.status = "fail";
+                else
+                {
+                    model = SaveExternalUSer(json);
+                }
                 model = SaveExternalUSer(json);
             }
             catch (Exception)
@@ -57,9 +57,9 @@ namespace RD.LMS.Controllers
                 int userId = Convert.ToInt32(json["data"]["userId"].ToString());
                 Business.UserController.UpdateSessionState(userId, Business.UserController.SessionState.LoggedIn);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                model.status = "fail";
+                model.status = "fail: " + ex.Message;
             }
 
             return model;

@@ -1,22 +1,20 @@
 (function($, RDLMS){
 
 
-	// Course Id & private vars
+    // Course Id & private vars
 
-	var courseId = document.location.hash.substr(1), //LMS.SCO.courseId,
+    var courseId = document.location.hash.substr(1), //LMS.SCO.courseId,
 		commitURL = RDLMS.settings.sco.commit,
 		fetchURL = RDLMS.settings.sco.fetch,
 		scormPkgFolder = RDLMS.settings.sco.basePath
-	;
+    ;
 		
-	// Some caching...
-
-	var loadingStr = document.title,
-		iframe = $(document.body).find('iframe')
-	;
-
-
-	// SCO Settings & Data __________________________________________________________________
+    // Some caching...
+    var loadingStr = document.title,
+    iframe = $(document).find('iframe');  //IE & Edge sends syntax error
+    //var iframe = _frame;
+    
+    // SCO Settings & Data __________________________________________________________________
 
 	function loadSCOSettings(courseId, fetchURL){
 		console.log('Loading ' + fetchURL);
@@ -57,6 +55,7 @@
 			alert(response.data.message || 'No se pudo cargar la lección. Por favor intenta mas tarde.');
 			console.log(response);
 			onCourseFinished();
+
 			window.close();
 		}
 	}

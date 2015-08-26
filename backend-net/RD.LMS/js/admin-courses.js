@@ -49,7 +49,8 @@ jQuery(function($){
 
 	// Courses loading ____________________________________________________________
 
-	function onLMSInitialized(){
+	function onLMSInitialized() {
+	    
 		// Init
 		add.on('click', function(e){ e.preventDefault(); if(!loading) addCourse(); });
 		uploadThumb = new SimpleUploader('#input-thumbnail', { uploadPath: RDLMS.settings.lms.uploadPath, action: RDLMS.settings.admin.course.uploadThumb, type: 'image' });
@@ -57,6 +58,7 @@ jQuery(function($){
 		
 		// Fetch courses
 		settings = RDLMS.settings;
+		RDLMS.validateSession();
 		fetchCourses();
 	}
 
@@ -87,7 +89,7 @@ jQuery(function($){
 						list.append('<div><h4 class="text-info">No hay ningún curso en el sistema.</h4><p>Haz clic en "Agregar curso" para crear un nuevo curso.</p></div>');
 					}
 				}else{
-					showFeedback(response.message);
+					showFeedback(response.data.message);
 				}
 			})
 			.fail(function(){ showFeedback('No fue posible cargar la lista de cursos'); })

@@ -18,13 +18,9 @@ namespace RD.LMS.Controllers
 
         public ActionResult Get()
         {
-            
             RD.LMS.Models.JSonModelCollection model = new RD.LMS.Models.JSonModelCollection();
-
-            model.status = Utilities.SUCCESS;
             List<Models.CourseModel> list = CourseModel.GetCourses();
             model.data = list.ToList<IDataModel>();
-
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 

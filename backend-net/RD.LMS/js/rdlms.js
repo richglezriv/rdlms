@@ -11,7 +11,23 @@ RDLMS = (function($){
 	// Public vars
 	self.settings = null;
 
-
+	function validateSession(){
+	    $.ajax({
+	        url: settings.session.validate,
+	        dataType: 'json'
+	    })
+            .done(function (response) {
+                if (response.status == "success") {
+                    console.info('sesion is still enabled');
+                }
+                else if (response.status == "fail"){
+                    window.alert('no tiene una sesión activa');
+                    window.location.href = 'login.html';
+                }
+            })
+            .fail(console.error('unable to validate user session'))
+	    ;
+	}
 
 
 	function loadLMSSettings(){
@@ -91,7 +107,7 @@ RDLMS = (function($){
 	self.init = initialize;
 	self.showFeedback = showFeedback;
 	self.isInitialized = function(){ return isInitialized; };
-
+	self.validateSession = function(){ return validateSession(); };
 
 	return self;
 

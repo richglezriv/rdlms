@@ -28,7 +28,7 @@ namespace RD.LMS.Models
 
         public Boolean isAdmin { get; set; }
 
-        public int TryOuts { get; private set; }
+        public int TryOuts { get; set; }
 
         public string reason { get; private set; }
         #endregion
@@ -63,6 +63,7 @@ namespace RD.LMS.Models
         internal String Validate()
         {
             RD.Entities.User daoUser = RD.Business.UserController.GetUser(login, password);
+            this.TryOuts += 1;
 
             if (daoUser == null)
             {
@@ -73,7 +74,6 @@ namespace RD.LMS.Models
             this.isAdmin = daoUser.IsAdmin;
             this.name = daoUser.FirstName;
             this.id = daoUser.Id.ToString();
-            this.TryOuts += 1;
             this.resetPassword = daoUser.IsAdmin && Utilities.MonthDiff(daoUser.LastLogged.Value, DateTime.Now.Date) > 3;
 
             return "success";
@@ -101,5 +101,11 @@ namespace RD.LMS.Models
             RD.Business.UserController.UpdateSessionState(Convert.ToInt32(this.id), Business.UserController.SessionState.LoggedOut);
         }
         #endregion
+    }
+
+    public struct UserTryout
+    {
+        public String login { get; set; }
+        public DateTime lastTry { get; set; }
     }
 }

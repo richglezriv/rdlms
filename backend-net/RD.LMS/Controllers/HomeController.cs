@@ -23,8 +23,10 @@ namespace RD.LMS.Controllers
 
                 model.status = user.BeginSession(userId);
 
-                if (model.status.Equals(Utilities.SUCCESS))
+                if (model.status.Equals(Utilities.SUCCESS)){
                     Session.Add(Utilities.USER, user);
+                    System.Diagnostics.Debug.WriteLine("sesion id " + Session.SessionID);
+                }
                 else
                 {
                     Session.Clear();
@@ -33,7 +35,11 @@ namespace RD.LMS.Controllers
                     
 
             }
-
+            else
+            {
+                Session.Clear();
+                Session.Abandon();
+            }
 
             return View();
         }

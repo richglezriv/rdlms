@@ -3,7 +3,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     if (Session["USER_LMS"] != null)
     {
+        var usr = Session["USER_LMS"];
         Response.Redirect("~/courses.html");
+        Session["USER_LMS"] = usr;
     }
     else
     {
@@ -33,6 +35,7 @@
 }
 <script src="components/jquery/jquery.min.js"></script>
 <script>
+    /**
     $(document).ready(function () {
         var jsonData = { "data": { "userId": 123, "key": "fde7c9b379106e6a7473f29131f0cfc5ee6e7626980642ea04e2390a8b1c512c1aff526b6025e19ba6dc763f365d39a8d0ba87ff32656de402644eca50acb71f" } };
         $.ajax({
@@ -45,7 +48,7 @@
             .fail(function (r) {
                 $('#message').html(r.status);
             });
-    });
+    });**/
 
     //var object = '{"data":{"courseId":"123"}}';
     //var json = JSON.parse(object);
