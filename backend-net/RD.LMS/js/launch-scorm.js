@@ -50,12 +50,12 @@
 			});
 			window.onbeforeunload = function(){
 				API.LMSFinish();
-				//onSCOClosed();
+				onSCOClosed();
 			};
 		}else{
 			alert(response.data.message || 'No se pudo cargar la lección. Por favor intenta mas tarde.');
 			console.log(response);
-			//onSCOClosed();
+			onSCOClosed();
 			window.close();
 		}
 	}
