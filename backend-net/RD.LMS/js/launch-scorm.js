@@ -49,16 +49,13 @@
 				cmiData: response.data.dataModel
 			});
 			window.onbeforeunload = function(){
-				/**window.API.LMSFinish();
-				onCourseFinished();**/
 				API.LMSFinish();
-				onSCOClosed();
+				//onSCOClosed();
 			};
 		}else{
 			alert(response.data.message || 'No se pudo cargar la lección. Por favor intenta mas tarde.');
 			console.log(response);
-			//onCourseFinished();
-			onSCOClosed();
+			//onSCOClosed();
 			window.close();
 		}
 	}
@@ -70,5 +67,4 @@
 
 	loadSCOSettings(courseId, fetchURL);
 
-
-})(opener.jQuery, opener.RDLMS);
+})(jQuery, opener.RDLMS);

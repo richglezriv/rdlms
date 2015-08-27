@@ -31,15 +31,5 @@
         "logout": "User/Logout",
         "validate": "User/SessionEnabled"
     }
-    /**,
-    "branding": {
-		"headerImage": "branding/Logo_UXNS.png",
-		"headerCaption": "",
-		"headerCaptionColor": "#fff",
-		"headerBackgroundColor": "#1ABC9C",
-		"headerHeight": 80,
-		"headerHideAccount": true,
-		"courseListTitle": "M&oacute;dulos",
-		"courseListIntro": "Haz clic en el m&oacute;dulo que deseas revisar."
-	}**/
+    
 }

@@ -122,14 +122,16 @@ jQuery(function($){
 
 	function launchSCO(id){
 		if(currentSCO === null || typeof(currentSCO) === 'undefined' || currentSCO.closed){
-			currentSCO = window.open('launch-scorm.html#' + id, 'sco', '');
-			currentSCO.onCourseFinished = function(){
-				setTimeout(function(){
-					fetchCourses(RDLMS.settings);
-				}, 1000);
-				$("#in-course").modal('hide');
-			};
-			$("#in-course").modal({backdrop: 'static', keyboard: false});
+		    currentSCO = window.open('launch-scorm.html#' + id, 'scowin', '');
+		    currentSCO.onSCOClosed = function () {
+		        console.log('onSCOClosed()');
+		        setTimeout(function () {
+		            fetchCourses(RDLMS.settings);
+		        }, 1000);
+		        $("#in-course").modal('hide');
+		    };
+		    $("#in-course").modal({ backdrop: 'static', keyboard: false });
+		    window.scowin = currentSCO;
 		}else{
 			showFeedback('Sólo puedes ver un curso a la vez.');
 		}
