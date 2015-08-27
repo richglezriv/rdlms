@@ -10,9 +10,10 @@
     ;
 		
     // Some caching...
-    var loadingStr = document.title,
-    iframe = $(document).find('iframe');  //IE & Edge sends syntax error
-    //var iframe = _frame;
+    var loadingStr = document.title;
+    var iframe = $(document.body).find('iframe');
+    //iframe = $(document).find('iframe');  //IE & Edge sends syntax error
+    
     
     // SCO Settings & Data __________________________________________________________________
 
@@ -48,14 +49,16 @@
 				cmiData: response.data.dataModel
 			});
 			window.onbeforeunload = function(){
-				window.API.LMSFinish();
-				onCourseFinished();
+				/**window.API.LMSFinish();
+				onCourseFinished();**/
+				API.LMSFinish();
+				onSCOClosed();
 			};
 		}else{
 			alert(response.data.message || 'No se pudo cargar la lección. Por favor intenta mas tarde.');
 			console.log(response);
-			onCourseFinished();
-
+			//onCourseFinished();
+			onSCOClosed();
 			window.close();
 		}
 	}
