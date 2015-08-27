@@ -71,6 +71,8 @@ jQuery(function($){
 		if(loading) return;
 		$.ajax({
 			url: settings.lms.courses,
+			method: 'POST',
+			cache: false,
 			dataType: 'json'
 		})
 			.done(function(response){
