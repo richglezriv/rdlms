@@ -59,7 +59,7 @@
 				//	opener.console.log(err);
 				//};
 				//try{ onSCOClosed(); }catch(err){
-				//	opener.console.log('onSCOClosed error:');
+				//	opener.console.log('window.onSCOClosed error:');
 				//	opener.console.log(err);
 				//};
 				API.LMSFinish();

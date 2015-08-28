@@ -27,25 +27,16 @@ namespace RD.LMS.Models
         public MessageData(string message)
         {
             this.message = message;
+            this.reason = message;
         }
 
-        public string id
-        {
-            get;
-            set;
-        }
+        public string id { get; set; }
 
-        public string name
-        {
-            get;
-            set;
-        }
+        public string name { get; set; }
 
-        public string message
-        {
-            get;
-            set;
-        }
+        public string message { get; set; }
+
+        public String reason { get; set; }
     }
 
 }

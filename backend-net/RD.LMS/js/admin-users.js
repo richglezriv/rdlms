@@ -78,7 +78,7 @@ jQuery(function($){
 					if(users.length){
 						$.each(users, function(i, user){
 							list.append(renderUser(
-								user.userId,
+								user.id,
 								user.name,
 								user.lastName,
 								user.secondLastName,
@@ -89,10 +89,10 @@ jQuery(function($){
 					}else{
 						list.append('<div><h4 class="text-info">No se encontró ningún usuario.</h4></div>');
 					}
-				}else if(response.status && response.status === 'fail' && response.data.message){
-					var failResult = RDLMS.handleFailure(response.data.message);
+				}else if(response.status && response.status === 'fail' && response.data.reason){
+					var failResult = RDLMS.handleFailure(response.data.reason);
 					if(!handleFailure) showFeedback('No fue posible cargar la lista de usuarios. Ocurrió una falla con el servidor');
-					console.error(response.data.message);
+					console.error(response.data.reason);
 				}else{
 					showFeedback('No fue posible cargar la lista de usuarios. Ocurrió un error al comunicarse con el servidor');
 				}

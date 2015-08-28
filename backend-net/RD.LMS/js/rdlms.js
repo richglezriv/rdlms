@@ -17,7 +17,7 @@ RDLMS = (function($){
 	function loadLMSSettings(){
 		$.ajax({
 			url: "configuration/lms-settings.json",
-			dataType: "json", method: 'GET'
+			dataType: "json"
 		})
 			.done(onLMSSettingsLoaded)
 			.fail(onLMSSettingsError)
@@ -108,7 +108,7 @@ RDLMS = (function($){
 		if(!isInitialized) return;
 		$.ajax({
 			url: self.settings.session.logout,
-			dataType: "json"
+			dataType: "json", method: 'POST'
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){

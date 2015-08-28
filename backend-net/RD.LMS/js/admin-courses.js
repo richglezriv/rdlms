@@ -67,8 +67,7 @@ jQuery(function($){
 		startLoading();
 		$.ajax({
 			url: settings.admin.course.list,
-			dataType: 'json',
-			method: 'POST'
+			dataType: 'json', method: 'POST'
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){
@@ -88,10 +87,10 @@ jQuery(function($){
 					}else{
 						list.append('<div><h4 class="text-info">No hay ningún curso en el sistema.</h4><p>Haz clic en "Agregar curso" para crear un nuevo curso.</p></div>');
 					}
-				}else if(response.status && response.status === 'fail' && response.data.message){
-					var failResult = RDLMS.handleFailure(response.data.message);
+				}else if(response.status && response.status === 'fail' && response.data.reason){
+					var failResult = RDLMS.handleFailure(response.data.reason);
 					if(!handleFailure) showFeedback('No fue posible cargar la lista de cursos. Ocurrió una falla con el servidor');
-					console.error(response.data.message);
+					console.error(response.data.reason);
 				}else{
 					showFeedback('No fue posible cargar la lista de cursos. Ocurrió un error al comunicarse con el servidor');
 				}

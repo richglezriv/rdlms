@@ -22,7 +22,7 @@
 	window.ScormApi = function(options){
 		var commitURL = options.commitURL;
 		var cmiData = $.parseJSON(options.cmiData);//options.cmiData; RAGR: temp patch
-		//var cmiData = options.cmiData;
+	    //var cmiData = options.cmiData;
 
 		var onChange = typeof(options.onChange === 'function') ? options.onChange : null;
 		var onCommit = typeof(options.onCommit === 'function') ? options.onCommit : null;

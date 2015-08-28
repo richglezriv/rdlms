@@ -31,7 +31,11 @@ namespace RD.LMS.Models
         {
             if (session == null)
                 return new JSonModel() { status = "fail", data = new MessageData("session-expired") };
-            //else if ((LMSUser)session)
+            //else if (((LMSUser)session).isAdmin)
+            //    return new JSonModel() { status = "fail", data = new MessageData("admins-only") };
+            //else if (!((LMSUser)session).isAdmin)
+            //    return new JSonModel() { status = "fail", data = new MessageData("users-only") };
+
             return null;
         }
 

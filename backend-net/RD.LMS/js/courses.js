@@ -8,7 +8,7 @@ jQuery(function($){
 		currentSCO = null
 	;
 
-	$('a[href="#logout"]').on('click', function (e) { e.preventDefault(); RDLMS.logout(); });
+	$('a[href="#logout"]').on('click', function(e){ e.preventDefault(); RDLMS.logout(); });
 
 	var statusMap = {
 		"passed": ['Aprobado', 'success'],
@@ -63,6 +63,7 @@ jQuery(function($){
 				//if(e) e.returnValue = message; // IE7-
 				//return message;
 				currentSCO.close();
+				currentSCO = null;
 			}
 		};
 	}
@@ -71,9 +72,8 @@ jQuery(function($){
 		if(loading) return;
 		$.ajax({
 			url: settings.lms.courses,
-			method: 'POST',
-			cache: false,
-			dataType: 'json'
+			dataType: 'json', method: 'POST'
+			
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){
@@ -94,10 +94,10 @@ jQuery(function($){
 					}else{
 						list.append('<div><h4 class="text-info">Por el momento no tienes asignado ningún curso.</h4><p>Por favor regresa más tarde.</p></div>');
 					}
-				}else if(response.status && response.status === 'fail' && response.data.message){
-					var failResult = RDLMS.handleFailure(response.data.message);
+				}else if(response.status && response.status === 'fail' && response.data.reason){
+					var failResult = RDLMS.handleFailure(response.data.reason);
 					if(!handleFailure) showFeedback('No fue posible cargar la lista de cursos. Ocurrió una falla con el servidor');
-					console.error(response.data.message);
+					console.error(response.data.reason);
 				}else{
 					showFeedback('No fue posible cargar la lista de cursos. Ocurrió un error al comunicarse con el servidor');
 				}
@@ -132,13 +132,16 @@ jQuery(function($){
 	function launchSCO(id){
 		if(currentSCO === null || typeof(currentSCO) === 'undefined' || currentSCO.closed){
 			currentSCO = window.open('launch-scorm.html#' + id, 'sco', '');
-			currentSCO.onSCOClosed = function(){
-				//console.log('onSCOClosed()');
-				setTimeout(function(){
-					fetchCourses(RDLMS.settings);
-				}, 1000);
-				$("#in-course").modal('hide');
-			};
+			setTimeout(function(){
+				currentSCO.onSCOClosed = function(){
+					console.log('onSCOClosed()');
+					currentSCO = null;
+					setTimeout(function(){
+						fetchCourses(RDLMS.settings);
+					}, 1000);
+					$("#in-course").modal('hide');
+				};
+			}, 1500);
 			$("#in-course").modal({backdrop: 'static', keyboard: false});
 			window.scowin = currentSCO;
 		}else{

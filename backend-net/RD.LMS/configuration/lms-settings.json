@@ -31,7 +31,6 @@
         "logout": "User/Logout",
         "validate": "User/SessionEnabled",
         "user": "/rdlms/backend-php/user.php",
-		"logoutRedirect": "login.html"
+        "logoutRedirect": "login.html"
     }
-    
 }
