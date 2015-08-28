@@ -63,6 +63,7 @@ jQuery(function($){
 				//if(e) e.returnValue = message; // IE7-
 				//return message;
 				currentSCO.close();
+				currentSCO = null;
 			}
 		};
 	}
@@ -131,13 +132,16 @@ jQuery(function($){
 	function launchSCO(id){
 		if(currentSCO === null || typeof(currentSCO) === 'undefined' || currentSCO.closed){
 			currentSCO = window.open('launch-scorm.html#' + id, 'sco', '');
-			currentSCO.onSCOClosed = function(){
-				//console.log('onSCOClosed()');
-				setTimeout(function(){
-					fetchCourses(RDLMS.settings);
-				}, 1000);
-				$("#in-course").modal('hide');
-			};
+			setTimeout(function(){
+				currentSCO.onSCOClosed = function(){
+					console.log('onSCOClosed()');
+					currentSCO = null;
+					setTimeout(function(){
+						fetchCourses(RDLMS.settings);
+					}, 1000);
+					$("#in-course").modal('hide');
+				};
+			}, 1500);
 			$("#in-course").modal({backdrop: 'static', keyboard: false});
 			window.scowin = currentSCO;
 		}else{
