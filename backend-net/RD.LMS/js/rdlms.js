@@ -11,23 +11,7 @@ RDLMS = (function($){
 	// Public vars
 	self.settings = null;
 
-	function validateSession(){
-	    $.ajax({
-	        url: settings.session.validate,
-	        dataType: 'json'
-	    })
-            .done(function (response) {
-                if (response.status == "success") {
-                    console.info('sesion is still enabled');
-                }
-                else if (response.status == "fail"){
-                    window.alert('no tiene una sesión activa');
-                    window.location.href = 'login.html';
-                }
-            })
-            .fail(console.error('unable to validate user session'))
-	    ;
-	}
+
 
 
 	function loadLMSSettings(){
@@ -103,11 +87,50 @@ RDLMS = (function($){
 		loadLMSSettings();
 	}
 
+	function handleFailure(code){
+		if(code === 'session-expired'){
+			showFeedback('Tu sesión ha expirado');
+			document.location.href = self.settings.logoutRedirect || 'login.html';
+			return true;
+		}
+		if(code === 'admins-only'){
+			document.location.href = 'courses.html';
+			return true;
+		}
+		if(code === 'users-only'){
+			document.location.href = 'admin-courses.html';
+			return true;
+		}
+		return false;
+	}
+
+	function logout(){
+		if(!isInitialized) return;
+		$.ajax({
+			url: self.settings.session.logout,
+			dataType: "json"
+		})
+			.done(function(response){
+				if(response.status && response.status === 'success'){
+					document.location.href = self.settings.logoutRedirect || 'login.html';
+				}else{
+					console.error('Could not logout.');
+				}
+			})
+			.fail(function(){
+				console.error('Could not logout: Invalid response from server.');
+			})
+			//.always()
+		;
+	}
+
 	// Public methods
 	self.init = initialize;
 	self.showFeedback = showFeedback;
+	self.handleFailure = handleFailure;
+	self.logout = logout;
 	self.isInitialized = function(){ return isInitialized; };
-	self.validateSession = function(){ return validateSession(); };
+
 
 	return self;
 

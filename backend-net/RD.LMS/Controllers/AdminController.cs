@@ -11,6 +11,8 @@ namespace RD.LMS.Controllers
     public class AdminController : Controller
     {
 
+        private Boolean _sessionActive;
+
         public ActionResult Index()
         {
             return View();
@@ -19,6 +21,11 @@ namespace RD.LMS.Controllers
         public ActionResult Get()
         {
             RD.LMS.Models.JSonModelCollection model = new RD.LMS.Models.JSonModelCollection();
+
+            Models.JSonModel mSession = Utilities.IsSessionActive(Session[Utilities.USER]);
+            if (mSession != null)
+                return Json(mSession, JsonRequestBehavior.AllowGet);
+
             List<Models.CourseModel> list = CourseModel.GetCourses();
             model.data = list.ToList<IDataModel>();
             return Json(model, JsonRequestBehavior.AllowGet);
@@ -84,6 +91,11 @@ namespace RD.LMS.Controllers
         public ActionResult FindUsers(String data) {
 
             JSonModelCollection model = new JSonModelCollection();
+
+            Models.JSonModel mSession = Utilities.IsSessionActive(Session[Utilities.USER]);
+            if (mSession != null)
+                return Json(mSession);
+
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             try
             {
@@ -142,6 +154,18 @@ namespace RD.LMS.Controllers
 
             return Json(model);
         }
-        
+
+        private string isSessionActive(out Boolean active)
+        {
+            active = true;
+            if (Session[Utilities.USER] == null)
+            {
+                active = false;
+                return "session-expired";
+            }
+
+            return "success";
+
+        }
     }
 }

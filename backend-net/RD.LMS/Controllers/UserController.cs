@@ -12,6 +12,7 @@ namespace RD.LMS.Controllers
         List<UserTryout> tryouts;
         private const string TRYOUTS = "USER_TRYOUTS";
         private string USER_COURSE = "USER_COURSE";
+        private Boolean _sessionActive;
 
         public ActionResult Login(string data)
         {
@@ -77,7 +78,6 @@ namespace RD.LMS.Controllers
         public ActionResult Logout()
         {
             Models.JSonModel model = new Models.JSonModel();
-            model.status = Utilities.SUCCESS;
 
             try
             {
@@ -91,13 +91,17 @@ namespace RD.LMS.Controllers
 
             Session.Abandon();
             
-            return Json(model);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Get()
         {
-            System.Diagnostics.Debug.WriteLine("sesion id " + Session.SessionID);
             Models.JSonModelCollection model = new Models.JSonModelCollection();
+            Models.JSonModel mSession = Utilities.IsSessionActive(Session[Utilities.USER]);
+
+            if (mSession != null)
+                return Json(mSession , JsonRequestBehavior.AllowGet);
+             
             List<Models.UserCourseModel> courses = Models.UserCourseModel.Get(((Models.LMSUser)Session[Utilities.USER]).id);
 
             model.data = courses.ToList<IDataModel>();
@@ -208,5 +212,6 @@ namespace RD.LMS.Controllers
         {
             return this.HttpContext.Application[TRYOUTS] == null ? new List<UserTryout>() : (List<UserTryout>)this.HttpContext.Application[TRYOUTS];
         }
+
     }
 }

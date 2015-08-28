@@ -23,8 +23,18 @@ namespace RD.LMS.Models
             {
                 return 12 - dateB.Month + dateE.Month;
             }
-
+            
             return 0;
         }
+
+        public static JSonModel IsSessionActive(Object session)
+        {
+            if (session == null)
+                return new JSonModel() { status = "fail", data = new MessageData("session-expired") };
+            //else if ((LMSUser)session)
+            return null;
+        }
+
+
     }
 }

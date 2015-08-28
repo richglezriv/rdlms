@@ -14,6 +14,7 @@ jQuery(function($){
 		courses = null
 	;
 
+	$('a[href="#logout"]').on('click', function(e){ e.preventDefault(); RDLMS.logout(); });
 
 
 
@@ -49,8 +50,7 @@ jQuery(function($){
 
 	// Courses loading ____________________________________________________________
 
-	function onLMSInitialized() {
-	    
+	function onLMSInitialized(){
 		// Init
 		add.on('click', function(e){ e.preventDefault(); if(!loading) addCourse(); });
 		uploadThumb = new SimpleUploader('#input-thumbnail', { uploadPath: RDLMS.settings.lms.uploadPath, action: RDLMS.settings.admin.course.uploadThumb, type: 'image' });
@@ -58,7 +58,6 @@ jQuery(function($){
 		
 		// Fetch courses
 		settings = RDLMS.settings;
-		RDLMS.validateSession();
 		fetchCourses();
 	}
 
@@ -68,7 +67,8 @@ jQuery(function($){
 		startLoading();
 		$.ajax({
 			url: settings.admin.course.list,
-			dataType: 'json'
+			dataType: 'json',
+			method: 'POST'
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){
@@ -88,8 +88,12 @@ jQuery(function($){
 					}else{
 						list.append('<div><h4 class="text-info">No hay ningún curso en el sistema.</h4><p>Haz clic en "Agregar curso" para crear un nuevo curso.</p></div>');
 					}
+				}else if(response.status && response.status === 'fail' && response.data.message){
+					var failResult = RDLMS.handleFailure(response.data.message);
+					if(!handleFailure) showFeedback('No fue posible cargar la lista de cursos. Ocurrió una falla con el servidor');
+					console.error(response.data.message);
 				}else{
-					showFeedback(response.data.message);
+					showFeedback('No fue posible cargar la lista de cursos. Ocurrió un error al comunicarse con el servidor');
 				}
 			})
 			.fail(function(){ showFeedback('No fue posible cargar la lista de cursos'); })
