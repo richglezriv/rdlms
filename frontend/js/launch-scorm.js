@@ -36,7 +36,7 @@
 	function onSCOSettingsError(){
 		alert('No se pudo cargar la configuración del SCO. Por favor, intenta más tarde.');
 		console.error('Could not load course settings.');
-		onSCOClosed();
+		window.onSCOClosed();
 		window.close();
 	}
 	function onSCOSettingsLoaded(response){
@@ -58,18 +58,18 @@
 				//	opener.console.log('API.LMSFinish error:');
 				//	opener.console.log(err);
 				//};
-				//try{ onSCOClosed(); }catch(err){
-				//	opener.console.log('onSCOClosed error:');
+				//try{ window.onSCOClosed(); }catch(err){
+				//	opener.console.log('window.onSCOClosed error:');
 				//	opener.console.log(err);
 				//};
 				API.LMSFinish();
-				onSCOClosed();
+				window.onSCOClosed();
 			};
 
 		}else{
 			alert(response.message || 'No se pudo cargar la lección. Por favor intenta mas tarde.');
 			console.log(response);
-			onSCOClosed();
+			window.onSCOClosed();
 			window.close();
 		}
 	}
