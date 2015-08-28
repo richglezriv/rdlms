@@ -71,9 +71,8 @@ jQuery(function($){
 		if(loading) return;
 		$.ajax({
 			url: settings.lms.courses,
-			method: 'POST',
-			cache: false,
-			dataType: 'json'
+			dataType: 'json', method: 'POST'
+			
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){

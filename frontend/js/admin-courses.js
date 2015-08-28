@@ -67,7 +67,7 @@ jQuery(function($){
 		startLoading();
 		$.ajax({
 			url: settings.admin.course.list,
-			dataType: 'json'
+			dataType: 'json', method: 'POST'
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){

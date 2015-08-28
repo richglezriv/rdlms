@@ -108,7 +108,7 @@ RDLMS = (function($){
 		if(!isInitialized) return;
 		$.ajax({
 			url: self.settings.session.logout,
-			dataType: "json"
+			dataType: "json", method: 'POST'
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){
