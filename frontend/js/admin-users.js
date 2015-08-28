@@ -13,6 +13,7 @@ jQuery(function($){
 		searchForm = $('#user-search').hide()
 	;
 
+	$('a[href="#logout"]').on('click', function(e){ e.preventDefault(); RDLMS.logout(); });
 
 
 
@@ -88,8 +89,12 @@ jQuery(function($){
 					}else{
 						list.append('<div><h4 class="text-info">No se encontró ningún usuario.</h4></div>');
 					}
+				}else if(response.status && response.status === 'fail' && response.data.reason){
+					var failResult = RDLMS.handleFailure(response.data.reason);
+					if(!handleFailure) showFeedback('No fue posible cargar la lista de usuarios. Ocurrió una falla con el servidor');
+					console.error(response.data.reason);
 				}else{
-					showFeedback(response.message);
+					showFeedback('No fue posible cargar la lista de usuarios. Ocurrió un error al comunicarse con el servidor');
 				}
 			})
 			.fail(function(){ showFeedback('No fue posible cargar la lista de usuarios'); })

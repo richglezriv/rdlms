@@ -22,6 +22,10 @@
 	window.ScormApi = function(options){
 		var commitURL = options.commitURL;
 		var cmiData = options.cmiData;
+
+		var onChange = typeof(options.onChange === 'function') ? options.onChange : null;
+		var onCommit = typeof(options.onCommit === 'function') ? options.onCommit : null;
+		
 		var isFinished = false;
 		var isInitialized = false;
 		var lastError = "0";
@@ -121,7 +125,10 @@
 					} else err = "405";
 				}); else err = "403";
 			} else err = "401";
-			if(match || err === "0") return "true";
+			if(match || err === "0"){
+				if(onChange) onChange();
+				return "true";
+			}
 			lastError = err; return "false";
 		}
 
@@ -139,6 +146,7 @@
 			})
 				.done(function(response){
 					console.log('Successfully commited data!');
+					if(onCommit) onCommit();
 					//console.log(cleanData);
 					//console.log(response);
 				})
