@@ -42,7 +42,20 @@ namespace RD.LMS.Models
                 ,"c0ntra"
                 ,"5enha"
                 ,"53nha"
-                ,"s3nha" };
+                ,"s3nha"
+                ,"contraseña"
+                ,"contra5eña"
+                ,"c0ntra5eña"
+                ,"contra53ña"
+                ,"c0ntra53ña"
+                ,"c0ntras3ña"
+                ,"c0ntraseña"
+                ,"contras3ña"
+                ,"contra"
+                ,"c0ntra"
+                ,"seña"
+                ,"5eña"
+            };
             //Regex regex1 = new Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]){6,20}$");
             //Match match1 = regex1.Match(NewPassword);
             success = false;
