@@ -74,7 +74,7 @@ RDLMS = (function($){
 				h.find('.navbar-toggle').css('border-color', b.headerCaptionColor);
 			}
 			if(b.headerBackgroundColor) h.css({ background: b.headerBackgroundColor, border: 'none' });
-			if(b.headerHideAccount) h.find('.navbar-toggle, .navbar-user').hide();
+			if(b.headerHideEditProfile) h.find('.navbar-user .dropdown-menu > li').eq(0).hide();
 			if(b.courseListTitle) $('#course-list-title').html(b.courseListTitle);
 			if(b.courseListIntro) $('#course-list-intro').html(b.courseListIntro);
 		}

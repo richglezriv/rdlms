@@ -18,7 +18,7 @@
 		"headerCaptionColor": "#fff",
 		"headerBackgroundColor": "#F3A344",
 		"headerHeight": 80,
-		"headerHideAccount": true,
+		"headerHideEditProfile": true,
 		"courseListTitle": "Módulos",
 		"courseListIntro": "Haz clic en el módulo que deseas revisar."
 	},
