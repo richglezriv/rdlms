@@ -29,5 +29,6 @@ namespace RD.Entities
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserCourse> UserCourses { get; set; }
         public virtual DbSet<Scorm> Scorms { get; set; }
+        public virtual DbSet<BnnAppUser> BnnAppUsers { get; set; }
     }
 }

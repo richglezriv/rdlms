@@ -12,7 +12,8 @@
         <AssociationConnector Association="RDModel.CourseUserCourse" />
         <EntityTypeShape EntityType="RDModel.Scorm" Width="1.5" PointX="7.375" PointY="0.75" />
         <AssociationConnector Association="RDModel.ScormUserCourse" />
-      </Diagram>
+        <EntityTypeShape EntityType="RDModel.BnnAppUser" Width="1.5" PointX="3.375" PointY="4.75" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/12/2015 16:26:13
+-- Date Created: 09/01/2015 20:23:19
 -- Generated from EDMX file: C:\Users\rgonzalez\Documents\Proyectos\Reaccion Digital\rdlms\backend-net\RD.Entities\RDModel.edmx
 -- --------------------------------------------------
 
@@ -17,14 +17,23 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_UserUserCourse]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserCourses] DROP CONSTRAINT [FK_UserUserCourse];
-GO
 IF OBJECT_ID(N'[dbo].[FK_CourseUserCourse]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserCourses] DROP CONSTRAINT [FK_CourseUserCourse];
 GO
+IF OBJECT_ID(N'[dbo].[FK_rd_CourseUserCourse]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[rd_UserCourses] DROP CONSTRAINT [FK_rd_CourseUserCourse];
+GO
+IF OBJECT_ID(N'[dbo].[FK_rd_ScormUserCourse]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[rd_UserCourses] DROP CONSTRAINT [FK_rd_ScormUserCourse];
+GO
+IF OBJECT_ID(N'[dbo].[FK_rd_UserUserCourse]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[rd_UserCourses] DROP CONSTRAINT [FK_rd_UserUserCourse];
+GO
 IF OBJECT_ID(N'[dbo].[FK_ScormUserCourse]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserCourses] DROP CONSTRAINT [FK_ScormUserCourse];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserUserCourse]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserCourses] DROP CONSTRAINT [FK_UserUserCourse];
 GO
 
 -- --------------------------------------------------
@@ -34,14 +43,26 @@ GO
 IF OBJECT_ID(N'[dbo].[Courses]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Courses];
 GO
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
+IF OBJECT_ID(N'[dbo].[rd_Courses]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[rd_Courses];
+GO
+IF OBJECT_ID(N'[dbo].[rd_Scorms]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[rd_Scorms];
+GO
+IF OBJECT_ID(N'[dbo].[rd_UserCourses]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[rd_UserCourses];
+GO
+IF OBJECT_ID(N'[dbo].[rd_Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[rd_Users];
+GO
+IF OBJECT_ID(N'[dbo].[Scorms]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Scorms];
 GO
 IF OBJECT_ID(N'[dbo].[UserCourses]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserCourses];
 GO
-IF OBJECT_ID(N'[dbo].[Scorms]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Scorms];
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
 GO
 
 -- --------------------------------------------------
@@ -64,9 +85,9 @@ GO
 -- Creating table 'Users'
 CREATE TABLE [dbo].[Users] (
     [Id] int  NOT NULL,
-    [Login] nvarchar(max)  NULL,
-    [Password] nvarchar(max)  NULL,
-    [FirstName] nvarchar(max)  NULL,
+    [Login] nvarchar(max)  NOT NULL,
+    [Password] nvarchar(max)  NOT NULL,
+    [FirstName] nvarchar(max)  NOT NULL,
     [LastName] nvarchar(max)  NULL,
     [IsAdmin] bit  NOT NULL,
     [IsLogged] bit  NOT NULL,

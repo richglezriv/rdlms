@@ -54,7 +54,23 @@ namespace RD.Entities
         {
             RDModelContainer model = Context.SetContext(_password).model;
 
-            return model.Users.Where(u => u.FirstName.Contains(nameLike) || u.LastName.Contains(nameLike)).ToList<User>();
+            List<BnnAppUser> result = model.BnnAppUsers.Where(u => u.Name.Contains(nameLike) || u.LastNames.Contains(nameLike)).ToList<BnnAppUser>();
+            IEnumerable<long> ids = result.Select(r => r.Id);
+            List<Int32> sIds = new List<Int32>();
+            foreach (long item in ids)
+            {
+                sIds.Add(Convert.ToInt32(item));
+            }
+            List<User> users = model.Users.Where(u => ids.Contains(u.Id)).ToList();
+            
+
+            users.ForEach(u =>
+            {
+                u.FirstName = result.Single(r => r.Id.Equals(u.Id)).Name;
+                u.LastName = result.Single(r => r.Id.Equals(u.Id)).LastNames;
+            });
+
+            return users;
         }
 
         void IDAO.Save()

@@ -72,6 +72,7 @@ namespace RD.LMS.Models
             }
 
             this.isAdmin = daoUser.IsAdmin;
+            //this.isAdmin = false;
             this.name = daoUser.FirstName;
             this.id = daoUser.Id.ToString();
             this.resetPassword = daoUser.IsAdmin && Utilities.MonthDiff(daoUser.LastLogged.Value, DateTime.Now.Date) > 3;
