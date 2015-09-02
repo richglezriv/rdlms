@@ -78,6 +78,7 @@ namespace RD.Business
                 user.Id = userId;
                 user.IsLogged = true;
                 user.IsAdmin = false;
+                user.LastLogged = new DateTime(1899, 11, 30);
                 Entities.IDAO control = new Entities.UserDAO(string.Empty, user);
                 control.Save();
             }

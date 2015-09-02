@@ -31,17 +31,19 @@ namespace RD.LMS.Controllers
                 hashKey.ComputeHash(Encoding.UTF8.GetBytes(serialKey));
                 string hashString = BitConverter.ToString(hashKey.Hash).Replace("-", String.Empty).ToLower();
 
-                if (!json["data"]["key"].ToString().Equals(hashString))
+                if (!json["data"]["key"].ToString().Equals(hashString)){
                     model.status = "fail";
+                    model.data = new Models.MessageData() { reason = "invalid key" };
+                }
                 else
                 {
                     model = SaveExternalUSer(json);
                 }
-                model = SaveExternalUSer(json);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 model.status = "fail";
+                model.data = new Models.MessageData() { reason = ex.Message };
             }
 
 

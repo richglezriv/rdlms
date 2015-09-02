@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <title></title>
+	<style>
+		li{padding:5px;}
+	</style>
+</head>
+<body>
+    <form name="frmTest" id="frmTest">
+		<ul style="list-style:none">
+			<li><label for="txtUserId">User Id</label>&nbsp;<input type="text" id="txtUserId" name="txtUserId"/></li>
+			<li><label for="key">Key</label>&nbsp;<input type="text" id="key" name="key"/></li>
+			<li><input type="button" id="btnLogin" name="btnLogin" value="Login" onclick="externalLogin();"/>
+			&nbsp;&nbsp;<input type="button" id="btnAccess" name="btnAccess" value="Acces api" onclick="accessApi();"/></li>
+			<li>Demo json request api&nbsp;<span id="message"></span></li>
+		</ul>
+    </form>
+    <script>
+		function externalLogin(){
+			var userId = $('#txtUserId').val();
+			var key = $('#key').val();
+			var jsonData = { "data": { "userId": userId , "key":key} };
+				$.ajax({
+					url: "External/LoginUser/",
+					dataType: "json", method: 'GET', data: JSON.stringify(jsonData)
+				})
+					.done(function (r) {
+						$('#message').html(r.status);
+					})
+					.fail(function (r) {
+						$('#message').html(r.status);
+					});
+		}
+		
+		function accessApi(){
+			var userId = $('#txtUserId').val();
+			var uri = "http://localhost:2000/?id=" + userId;
+			window.location.href(uri);
+		}
+        /**
+		$(document).ready(function () {
+            var jsonData = { "data": { "userId": 123 , "key":"dd808ebfab61071302fedf8379a3787f5859ca815d469292e0b9dfb21b4256f3e8a627a48ef58584317b4c7cc0bda55a5beac02116bf4f6eb2fdcd08fd6d9195"} };
+            $.ajax({
+                url: "http://localhost/lmsbnn/External/LoginUser",
+                dataType: "json", method: 'GET', data:JSON.stringify(jsonData)
+            })
+                .done(function (r) {
+                    $('#message').html(r.status);
+                })
+                .fail(function (r) {
+                    $('#message').html(r.status);
+                });
+        });
+		**/
+    </script>
+</body>
+</html>

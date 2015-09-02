@@ -253,6 +253,7 @@
     <Content Include="login.html" />
     <Content Include="profile.html" />
     <Content Include="registration.html" />
+    <Content Include="roadTest.html" />
     <Content Include="Views\Home\Player.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
