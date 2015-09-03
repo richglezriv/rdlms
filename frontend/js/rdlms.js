@@ -124,11 +124,19 @@ RDLMS = (function($){
 		;
 	}
 
+	function delayedRedirect(uri, milliseconds){
+		milliseconds = milliseconds || 2000;
+		setTimeout(function(){
+			window.location = uri;
+		}, milliseconds);
+	}
+
 	// Public methods
 	self.init = initialize;
 	self.showFeedback = showFeedback;
 	self.handleFailure = handleFailure;
 	self.logout = logout;
+	self.delayedRedirect = delayedRedirect;
 	self.isInitialized = function(){ return isInitialized; };
 
 
