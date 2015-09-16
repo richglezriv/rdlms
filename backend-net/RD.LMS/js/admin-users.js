@@ -78,7 +78,7 @@ jQuery(function($){
 					if(users.length){
 						$.each(users, function(i, user){
 							list.append(renderUser(
-								user.id,
+								user.userId,
 								user.name,
 								user.lastName,
 								user.secondLastName,
