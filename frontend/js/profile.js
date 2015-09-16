@@ -5,7 +5,8 @@ jQuery(function($){
 		loading = false,
 		body = $('body'),
 		win = $(window),
-		saveBtn = $('#registration-submit'),
+		saveBtn = $('#profile-submit'),
+		cancelBtn = $('#profile-cancel'),
 		pwd = $('#input-password'),
 		pwdBar = $('#pwd-bar'),
 		already = $('#already')
@@ -42,8 +43,18 @@ jQuery(function($){
 	// Courses loading ____________________________________________________________
 
 	function onLMSInitialized(session){
-		// Init
+
+		if(session.type != 'student' && session.type != 'admin'){
+			RDLMS.handleFailure('session-expired');
+			return false;
+		}
+
+		settings = RDLMS.settings;
+
 		saveBtn.on('click', function(e){ e.preventDefault(); saveUser(); });
+		cancelBtn.on('click', function(e){ e.preventDefault(); cancelUser(); });
+		setFormData(session.user);
+
 		$('#input-birthday').datetimepicker({
 			locale: 'es',
 			viewMode: 'years',
@@ -55,13 +66,14 @@ jQuery(function($){
 			}
 		});
 
-		already.attr('href', self.settings.logoutRedirect || 'login.html');
-		
-		// Fetch courses
-		settings = RDLMS.settings;
 	}
 	
 
+	function cancelUser(){
+		document.location.href = RDLMS.session.type == 'admin' ? 'admin-courses.html' : 'courses.html';
+	}
+
+	
 	// Save user
 	function saveUser(){
 		if(loading) return;
@@ -77,15 +89,15 @@ jQuery(function($){
 		}
 	
 		$.ajax({
-			url: settings.lms.registration,
+			url: settings.lms.profile,
 			dataType: "json", method: 'POST',
 			data: {data: JSON.stringify(jsonData)}
 		})
 			.done(function(r){
 				if(r.status && r.status == 'success'){
 					stopLoading();
-					showFeedback('Gracias, tu registro ha sido guardado con éxito. Muy pronto recibirás un correo electrónico con los siguientes pasos para continuar con el proceso.');
-					document.location.href = self.settings.logoutRedirect || 'login.html';
+					showFeedback('Tus cambios han sido guardados con éxito.');
+					document.location.href = RDLMS.session.type == 'admin' ? 'admin-courses.html' : 'courses.html';
 				}else if(r.status && r.status == 'fail' && r.data.reason == 'validation-error'){
 					showFeedback('Algunos de los datos que especificaste son inválidos. Por favor revisa los campos marcados.');
 					showErrors(r.data.fields);
@@ -115,18 +127,6 @@ jQuery(function($){
 			password: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
 		}
 		
-		if(!(patterns.name).test(data.name)){
-			errors.name = 'El nombre proporcionado es inválido.';
-		}
-		if(!(patterns.name).test(data.lastName)){
-			errors.lastName = 'El apellido paterno proporcionado es inválido.';
-		}
-		if(!(patterns.name).test(data.secondLastName)){
-			errors.secondLastName = 'El apellido materno proporcionado es inválido.';
-		}
-		if(!(patterns.email).test(data.email)){
-			errors.email = 'La dirección de correo proporcionada es inválida.';
-		}
 		if(!(patterns.birthday).test(data.birthday)){
 			errors.birthday = 'La fecha de nacimiento proporcionada es inválida.';
 		}
@@ -139,14 +139,14 @@ jQuery(function($){
 		if(!(patterns.integer).test(data.organization)){
 			errors.organization = 'Por favor, selecciona una organización de la lista.';
 		}
-		if(!(patterns.password).test(data.password)){
-			errors.password = 'La contraseña no cumple con los lineamientos especificados.';
-		}
-		if(data.passwordCheck !== data.password){
-			errors.passwordCheck = 'La confirmación de tu contraseña es diferente a tu contraseña.';
-		}
-		if(!data.terms){
-			errors.terms = 'Debes aceptar los terminos para poder registrarte.'
+		if(data.newPassword != ''){
+			console.log(data.newPassword)
+			if(!(patterns.password).test(data.newPassword)){
+				errors.newPassword = 'La contraseña no cumple con los lineamientos especificados.';
+			}
+			if(data.newPasswordCheck !== data.newPassword){
+				errors.newPasswordCheck = 'La confirmación de tu contraseña es diferente a tu contraseña.';
+			}
 		}
 
 		return $.isEmptyObject(errors) ? null : errors;
@@ -154,20 +154,25 @@ jQuery(function($){
 
 	function getFormData(){
 		var data = {
-			name: $.trim($('#input-name').val()),
-			lastName: $.trim($('#input-lastName').val()),
-			secondLastName: $.trim($('#input-secondLastName').val()),
-			email: $.trim($('#input-email').val()),
 			birthday: $.trim($('#input-birthday').val()),
 			gender: $.trim($('#input-gender').val()),
 			occupation: $.trim($('#input-occupation').val()),
 			organization: $.trim($('#input-organization').val()),
-			password: $('#input-password').val(),
-			passwordCheck: $('#input-passwordCheck').val(),
-			captcha: $('#input-captcha').val(),
-			terms: ~~$('#input-terms:checked').val()
+			oldPassword: $('#input-oldPassword').val(),
+			newPassword: $('#input-newPassword').val(),
+			newPasswordCheck: $('#input-newPasswordCheck').val()
 		}
 		return data;
+	}
+
+	function setFormData(data){
+		console.log(data);
+		$.each([
+			'name', 'lastName', 'secondLastName', 'email',
+			'birthday', 'gender', 'occupation', 'organization'
+		], function(i, v){
+			$('#input-' + v).val(data[v]);
+		});
 	}
 
 	function showErrors(errors){

@@ -5,10 +5,9 @@ jQuery(function($){
 		loading = false,
 		body = $('body'),
 		win = $(window),
-		saveBtn = $('#registration-submit'),
+		saveBtn = $('#reset-password-submit'),
 		pwd = $('#input-password'),
-		pwdBar = $('#pwd-bar'),
-		already = $('#already')
+		pwdBar = $('#pwd-bar')
 	;
 
 	// Utils ______________________________________________________________________
@@ -42,28 +41,19 @@ jQuery(function($){
 	// Courses loading ____________________________________________________________
 
 	function onLMSInitialized(session){
-		// Init
-		saveBtn.on('click', function(e){ e.preventDefault(); saveUser(); });
-		$('#input-birthday').datetimepicker({
-			locale: 'es',
-			viewMode: 'years',
-			format: 'YYYY-MM-DD',
-			useCurrent: false,
-			widgetPositioning: {
-				horizontal: 'auto',
-				vertical: 'bottom'
-			}
-		});
-
-		already.attr('href', self.settings.logoutRedirect || 'login.html');
-		
-		// Fetch courses
 		settings = RDLMS.settings;
+
+		if(session.type != 'reset-password'){
+			showFeedback('Tu contraseña ya ha sido cambiada o tu sesión ha caducado. Por favor, reinicia el proceso.');
+			document.location.href = settings.session.logoutRedirect || 'login.html';
+			return false;
+		}
+		saveBtn.on('click', function(e){ e.preventDefault(); saveNewPassword(); });
 	}
 	
 
 	// Save user
-	function saveUser(){
+	function saveNewPassword(){
 		if(loading) return;
 		startLoading();
 		
@@ -77,14 +67,14 @@ jQuery(function($){
 		}
 	
 		$.ajax({
-			url: settings.lms.registration,
+			url: settings.session.resetPassword,
 			dataType: "json", method: 'POST',
 			data: {data: JSON.stringify(jsonData)}
 		})
 			.done(function(r){
 				if(r.status && r.status == 'success'){
 					stopLoading();
-					showFeedback('Gracias, tu registro ha sido guardado con éxito. Muy pronto recibirás un correo electrónico con los siguientes pasos para continuar con el proceso.');
+					showFeedback('Tu contraseña ha sido cambiada con éxito.');
 					document.location.href = self.settings.logoutRedirect || 'login.html';
 				}else if(r.status && r.status == 'fail' && r.data.reason == 'validation-error'){
 					showFeedback('Algunos de los datos que especificaste son inválidos. Por favor revisa los campos marcados.');
@@ -115,38 +105,11 @@ jQuery(function($){
 			password: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
 		}
 		
-		if(!(patterns.name).test(data.name)){
-			errors.name = 'El nombre proporcionado es inválido.';
-		}
-		if(!(patterns.name).test(data.lastName)){
-			errors.lastName = 'El apellido paterno proporcionado es inválido.';
-		}
-		if(!(patterns.name).test(data.secondLastName)){
-			errors.secondLastName = 'El apellido materno proporcionado es inválido.';
-		}
-		if(!(patterns.email).test(data.email)){
-			errors.email = 'La dirección de correo proporcionada es inválida.';
-		}
-		if(!(patterns.birthday).test(data.birthday)){
-			errors.birthday = 'La fecha de nacimiento proporcionada es inválida.';
-		}
-		if(!(patterns.gender).test(data.gender)){
-			errors.gender = 'Por favor, selecciona un género de la lista.';
-		}
-		if(!(patterns.integer).test(data.occupation)){
-			errors.occupation = 'Por favor, selecciona una ocupación de la lista.';
-		}
-		if(!(patterns.integer).test(data.organization)){
-			errors.organization = 'Por favor, selecciona una organización de la lista.';
-		}
 		if(!(patterns.password).test(data.password)){
 			errors.password = 'La contraseña no cumple con los lineamientos especificados.';
 		}
 		if(data.passwordCheck !== data.password){
 			errors.passwordCheck = 'La confirmación de tu contraseña es diferente a tu contraseña.';
-		}
-		if(!data.terms){
-			errors.terms = 'Debes aceptar los terminos para poder registrarte.'
 		}
 
 		return $.isEmptyObject(errors) ? null : errors;
@@ -154,18 +117,8 @@ jQuery(function($){
 
 	function getFormData(){
 		var data = {
-			name: $.trim($('#input-name').val()),
-			lastName: $.trim($('#input-lastName').val()),
-			secondLastName: $.trim($('#input-secondLastName').val()),
-			email: $.trim($('#input-email').val()),
-			birthday: $.trim($('#input-birthday').val()),
-			gender: $.trim($('#input-gender').val()),
-			occupation: $.trim($('#input-occupation').val()),
-			organization: $.trim($('#input-organization').val()),
 			password: $('#input-password').val(),
-			passwordCheck: $('#input-passwordCheck').val(),
-			captcha: $('#input-captcha').val(),
-			terms: ~~$('#input-terms:checked').val()
+			passwordCheck: $('#input-passwordCheck').val()
 		}
 		return data;
 	}

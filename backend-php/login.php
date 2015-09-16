@@ -20,10 +20,10 @@ $students = array(
 		'lastName' => "Márquez",
 		'secondLastName' => "Ortiz",
 		'email' => "victmo@gmail.com",
-		'extra' => array(
-			"Campeche", 
-			"1982-04-06"
-		)
+		'birthday' => '1982-04-06',
+		'gender' => 'M',
+		'occupation' => 2, // Profesional de la salud
+		'organization' => 3 // Independiente
 	),
 
 	'edgar' => array(
@@ -33,10 +33,10 @@ $students = array(
 		'lastName' => "Rosas",
 		'secondLastName' => "Vicente",
 		'email' => "edgar@reacciondigital.com",
-		'extra' => array(
-			"Queretaro", 
-			"1980-02-01"
-		)
+		'birthday' => '1980-06-18',
+		'gender' => 'M',
+		'occupation' => 4, // Profesor/Maestro
+		'organization' => 2 // ONG
 	)
 
 );
@@ -68,9 +68,9 @@ $response = array(
 	)
 );
 
-if(isset($students[$data['username']]) && $data['password'] === 'user'){
+if(isset($students[$data['email']]) && $data['password'] === 'user'){
 	$_SESSION['tries'] = 0;
-	$_SESSION['user'] = $students[$data['username']];
+	$_SESSION['user'] = $students[$data['email']];
 	$response = array(
 		'status' => "success",
 		'data' => array(
@@ -79,9 +79,9 @@ if(isset($students[$data['username']]) && $data['password'] === 'user'){
 	);
 }
 
-if(isset($admins[$data['username']]) && $data['password'] === 'admin'){
+if(isset($admins[$data['email']]) && $data['password'] === 'admin'){
 	$_SESSION['tries'] = 0;
-	$_SESSION['user'] = $admins[$data['username']];
+	$_SESSION['user'] = $admins[$data['email']];
 	$response = array(
 		'status' => "success",
 		'data' => array(

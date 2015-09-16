@@ -37,8 +37,57 @@ RDLMS = (function($){
 		isInitialized = true;
 		self.settings = response;
 		// TODO: Check if lms-settings has all the required attributes.
-		setBranding(self.settings);
-		if(initSuccessCallback) initSuccessCallback();
+		loadLMSUser();
+	}
+
+
+	function loadLMSUser(){
+		$.ajax({
+			url: settings.session.user,
+			dataType: "json", method: 'POST'
+		})
+			.done(onLMSUserLoaded)
+			.fail(onLMSUserError)
+			//.always()
+		;
+	}
+
+
+	function onLMSUserError(){
+		self.showFeedback('No se pudo cargar la información de la sesión. Por favor, intenta más tarde.');
+		console.error('Unable to load session info.');
+		if(initErrorCallback) initErrorCallback();
+	}
+
+
+	function onLMSUserLoaded(response){
+		if(response.status && response.status === 'success'){
+			var session = {
+				type: response.data.sessionType,
+				user: response.data.user
+			}
+		
+			self.session = session;
+			setBranding(self.settings, self.session);
+			$(window).on('hashchange', onHashChange);
+			
+			if(initSuccessCallback) initSuccessCallback(session); // sending `sessionType` and `user`
+		
+		}else{
+			onLMSUserError();
+		}
+	}
+
+
+	function onHashChange(e){
+		var hash = location.hash;
+		if(hash === '#lms-logout'){
+			logout();
+		}
+		if(hash === '#lms-profile'){
+			location.href = 'profile.html';
+		}
+		location.hash = '';
 	}
 
 
@@ -48,36 +97,25 @@ RDLMS = (function($){
 
 
 	function setBranding(settings){
+		var left = -1;
 		if(settings.branding){
-			var b = settings.branding;
-			var h = $('#branded-header');
-			if(b.headerCaption){
-				h.find('.navbar-brand').hide();
-				h.find('.navbar-branding').text(b.headerCaption);
-			}
-			if(b.headerImage){
-				h.find('.navbar-brand').hide();
-				h.find('.navbar-branding').prepend('<img src="'+b.headerImage+'" />');
-			}
-			if(b.headerHeight){
-				h.find('.navbar-branding').css({
-					lineHeight: b.headerHeight + 'px',
-					fontSize: (b.headerHeight * 0.3) + 'px',
-					height: b.headerHeight
-				});
-				h.find('.dropdown > a').css('padding', ((b.headerHeight-20) / 2) + 'px 15px');
-				h.find('.navbar-toggle').css('margin', ((b.headerHeight-34) / 2) + 'px 15px');
-				if(h.length) $('body').css('padding-top', b.headerHeight + 20);
-			}
-			if(b.headerCaptionColor){
-				h.find('.dropdown > *, .navbar-brand, .navbar-branding').css('color', b.headerCaptionColor);
-				h.find('.navbar-toggle').css('border-color', b.headerCaptionColor);
-			}
-			if(b.headerBackgroundColor) h.css({ background: b.headerBackgroundColor, border: 'none' });
-			if(b.headerHideEditProfile) h.find('.navbar-user .dropdown-menu > li').eq(0).hide();
-			if(b.courseListTitle) $('#course-list-title').html(b.courseListTitle);
-			if(b.courseListIntro) $('#course-list-intro').html(b.courseListIntro);
+			var hi = $('.logged-in #branded-header');
+			if(hi.length) hi.load(settings.branding.headerLoggedIn || '_header-logged-in.html', paintBrandingVariables);
+			
+			var ho = $('.logged-out #branded-header');
+			if(ho.length) ho.load(settings.branding.headerLoggedOut || '_header-logged-out.html');
+			
+			var f = $('#branded-footer');
+			if(f.length && settings.branding.footer) f.load(settings.branding.footer);
 		}
+	}
+
+
+	function paintBrandingVariables(){
+		if(!self.session.user) return;
+		$('.lms-user-name').text(self.session.user.name);
+		$('.lms-user-lastName').text(self.session.user.lastName);
+		$('.lms-user-secondLastName').text(self.session.user.secondLastName);
 	}
 
 
@@ -90,15 +128,15 @@ RDLMS = (function($){
 	function handleFailure(code){
 		if(code === 'session-expired'){
 			showFeedback('Tu sesión ha expirado');
-			document.location.href = self.settings.logoutRedirect || 'login.html';
+			document.location.href = self.settings.session.logoutRedirect || 'login.html';
 			return true;
 		}
 		if(code === 'admins-only'){
-			document.location.href = 'courses.html';
+			document.location.href = 'admin-courses.html';
 			return true;
 		}
-		if(code === 'users-only'){
-			document.location.href = 'admin-courses.html';
+		if(code === 'students-only'){
+			document.location.href = 'courses.html';
 			return true;
 		}
 		return false;
@@ -112,7 +150,7 @@ RDLMS = (function($){
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){
-					document.location.href = self.settings.logoutRedirect || 'login.html';
+					document.location.href = self.settings.session.logoutRedirect || 'login.html';
 				}else{
 					console.error('Could not logout.');
 				}

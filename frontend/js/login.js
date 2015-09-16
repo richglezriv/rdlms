@@ -6,7 +6,9 @@ jQuery(function($){
 		body = $('body'),
 		win = $(window),
 		loginForm = $('#login-form').hide(),
-		registrationForm = $('#registration-form').hide()
+		forgotForm = $('#forgot-form').hide(),
+		registrationForm = $('#registration-form').hide(),
+		forgotBtns = $('.forgot-btn')
 	;
 
 
@@ -48,10 +50,27 @@ jQuery(function($){
 
 	// Courses loading ____________________________________________________________
 
-	function onLMSInitialized(){
+	function onLMSInitialized(session){
+
+		if(session.type == 'student') return RDLMS.handleFailure('students-only');
+		if(session.type == 'admin') return RDLMS.handleFailure('admins-only');
+
 		settings = RDLMS.settings;
 		loginForm.show();
 		if(settings.lms.registration) registrationForm.show();
+
+		forgotBtns.on('click', function(e){
+			e.preventDefault();
+			var hash = $(this).attr('href');
+			if(hash == '#forgot'){
+				loginForm.hide();
+				forgotForm.show();
+			}
+			if(hash == '#login'){
+				loginForm.show();
+				forgotForm.hide();
+			}
+		});
 	}
 
 
@@ -64,7 +83,7 @@ jQuery(function($){
 		startLoading();
 		
 		var jsonData = {
-			username: $('#input-username').val(),
+			email: $('#input-email').val(),
 			password: $('#input-password').val()
 		};
 		$.ajax({
@@ -76,6 +95,8 @@ jQuery(function($){
 				//r.status='fail'; r.data.reason='credentials-error';
 				if(r.status && r.status == 'success'){
 					document.location.href = r.data.isAdmin ? "admin-courses.html" : "courses.html";
+				}else if(r.status && r.status == "fail" && r.data.reason === 'validation-error'){
+					showErrors(r.data.fields);
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "credentials-error"){
 					showFeedback('Nombre de usuario o contraseña incorrectos');
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "too-many-tries"){
@@ -93,6 +114,60 @@ jQuery(function($){
 			})
 		;
 	});
+
+
+
+
+	forgotForm.on('submit', function(e){
+		e.preventDefault();
+		if(loading) return;
+		startLoading();
+		
+		var jsonData = {
+			username: $('#input-email').val()
+		};
+		$.ajax({
+			url: settings.session.forgot,
+			dataType: "json", method: 'POST',
+			data: {data: JSON.stringify(jsonData)}
+		})
+			.done(function(r){
+				//r.status='fail'; r.data.reason='credentials-error';
+				if(r.status){
+					if(r.status === 'fail' && r.data.reason === 'validation-error'){
+						showErrors(r.data.fields);
+					}
+					showFeedback('Te hemos enviado un correo con los siguientes pasos.');
+				}else{
+					showFeedback('Ocurrió un error al intentar procesar tu solicitud, por favor intenta mas tarde.');
+				}
+			})
+			.fail(function(){
+				showFeedback('No se pudo establecer conexión con el servidor. Por favor, intenta más tarde.');
+			})
+			.always(function(r){
+				console.log(r);
+				stopLoading();
+			})
+		;
+	});
+
+
+
+	function showErrors(errors){
+		hideErrors();
+		var input;
+		$.each(errors, function(k, v){
+			input = $('#input-' + k);
+			input.parent().addClass('has-error');
+			input.after('<p class="help-block error-feedback"><i class="glyphicon glyphicon-exclamation-sign"></i> ' + v + '<p>');
+		});
+	}
+	
+	function hideErrors(){
+		$('.has-error').removeClass('has-error');
+		$('.error-feedback').remove();
+	}
 
 
 

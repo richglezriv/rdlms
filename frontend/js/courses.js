@@ -8,8 +8,6 @@ jQuery(function($){
 		currentSCO = null
 	;
 
-	$('a[href="#logout"]').on('click', function(e){ e.preventDefault(); RDLMS.logout(); });
-
 	var statusMap = {
 		"passed": ['Aprobado', 'success'],
 		"failed": ['Reprobado', 'danger'],
@@ -52,7 +50,14 @@ jQuery(function($){
 
 	// Courses loading ____________________________________________________________
 
-	function onLMSInitialized(){
+	function onLMSInitialized(session){
+
+		if(session.type != 'student'){
+			if(session.type == 'admin') RDLMS.handleFailure('students-only');
+			else RDLMS.handleFailure('session-expired');
+			return false;
+		}
+
 		fetchCourses(RDLMS.settings);
 		
 		//win.on('unload', function(e){

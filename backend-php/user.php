@@ -1,12 +1,20 @@
 <?php 
 
 session_start();
-if(!isset($_SESSION['user'])){ die(json_encode(array('status'=>'fail','data'=>array('reason'=>'session-expired')))); }
 
+$user = null;
+$type = "logged-out";
+if(isset($_SESSION['user'])){
+	$user = $_SESSION['user'];
+	$type = $user['isAdmin'] ? 'admin' : 'student';
+}
 
 $response = array(
 	'status' => "success",
-	'data' => $_SESSION['user']
+	'data' => array(
+		'sessionType' => $type,
+		'user' => $user
+	)
 );
 
 echo json_encode($response);

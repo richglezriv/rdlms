@@ -5,23 +5,17 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Registro - LMS</title>
 	<link rel="stylesheet" href="components/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"></script>
 	<link rel="stylesheet" href="css/frontend.css">
+	<link rel="stylesheet" href="branding/branding.css">
 	<script>browser={'sucks':false};(function(){var method;var noop=function noop(){};var methods=['assert','clear','count','debug','dir','dirxml','error','exception','group','groupCollapsed','groupEnd','info','log','markTimeline','profile','profileEnd','table','time','timeEnd','timeStamp','trace','warn'];var length = methods.length;var console=(window.console=window.console||{});while(length--){method=methods[length];if(!console[method]){console[method]=noop;}}}());</script>
 	<!--[if lt IE 9]><script>browser.sucks = true;</script><![endif]-->
 </head>
-<body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" id="branded-header">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">LMS</a>
-				<div class="navbar-branding"></div>
-			</div>
-		</div>
-	</nav>
+<body class="logged-out">
+	
 
-
-
+	<div id="branded-header"></div>
 
 
 
@@ -51,13 +45,13 @@
 				</div>
 				
 				<div class="form-group">
-					<label for="input-last_name">Apellido paterno</label>
-					<input type="text" class="form-control" id="input-last_name" placeholder="">
+					<label for="input-lastName">Apellido paterno</label>
+					<input type="text" class="form-control" id="input-lastName" placeholder="">
 				</div>
 
 				<div class="form-group">
-					<label for="input-second_last_name">Apellido materno</label>
-					<input type="text" class="form-control" id="input-second_last_name" placeholder="">
+					<label for="input-secondLastName">Apellido materno</label>
+					<input type="text" class="form-control" id="input-secondLastName" placeholder="">
 				</div>
 
 				<div class="form-group">
@@ -122,7 +116,7 @@
 					</p>
 					<div class="progress">
 						<div id="pwd-bar" class="progress-bar progress-bar-danger" style="min-width: 3em; width: 10%;">
-							Debil
+							Débil
 						</div>
 					</div>
 
@@ -139,8 +133,8 @@
 				</small>
 
 				<div class="form-group">
-					<label for="input-confirm_password">Confirmar contraseña</label>
-					<input type="password" class="form-control" id="input-confirm_password" placeholder="">
+					<label for="input-passwordCheck">Confirmar contraseña</label>
+					<input type="password" class="form-control" id="input-passwordCheck" placeholder="">
 				</div>
 			</div>
 		</div>
@@ -198,6 +192,13 @@
 		</div>
 
 	</div>
+
+
+
+	<div id="branded-footer"></div>
+
+
+
 
 	<!-- Scripts -->
 	<script src="components/moment/moment.min.js"></script>

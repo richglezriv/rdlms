@@ -8,19 +8,14 @@
 	"lms": {
 		"courses": "/rdlms/backend-php/courses.php",
 		"registration": "/rdlms/backend-php/registration.php",
-		"profile": "/rdlms/backend-php/profile.php",
+		"profile": "/rdlms/backend-php/tester.php?a=save-profile",
 		"uploadPath": "/rdlms/frontend/uploads/"
 	},
 
 	"branding": {
-		"headerImage": "/rdlms/frontend/branding/nutrir-full.png",
-		"headerCaption": "",
-		"headerCaptionColor": "#fff",
-		"headerBackgroundColor": "#F3A344",
-		"headerHeight": 80,
-		"headerHideEditProfile": true,
-		"courseListTitle": "Módulos",
-		"courseListIntro": "Haz clic en el módulo que deseas revisar."
+		"headerLoggedIn": "/rdlms/frontend/branding/header-logged-in.html",
+		"headerLoggedOut": "/rdlms/frontend/branding/header-logged-out.html",
+		"footer": "/rdlms/frontend/branding/footer.html"
 	},
 
 	"admin": {
@@ -45,6 +40,7 @@
 	"session": {
 		"login": "/rdlms/backend-php/login.php",
 		"logout": "/rdlms/backend-php/logout.php",
+		"resetPassword": "/rdlms/backend-php/tester.php?a=reset-password",
 		"user": "/rdlms/backend-php/user.php",
 		"logoutRedirect": "login.html"
 	}

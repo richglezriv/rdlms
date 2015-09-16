@@ -1,0 +1,59 @@
+html {
+	height: 100%;
+}
+body {
+	min-height: 100%;
+	padding-bottom: 150px;
+	position: relative;
+}
+
+#branded-header > nav {
+	background-color: #F3A344;
+	border: none;
+}
+
+#branded-header button.navbar-toggle {
+	margin: 23px 15px;
+	border-color: #fff;
+}
+
+#branded-header .logo {
+	line-height: 80px;
+	font-size: 24px;
+	height: 80px;
+	color: #fff;
+}
+
+#branded-header .navbar-inverse .navbar-nav > li > a  {
+	color: #fff;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+
+
+
+#branded-footer {
+	background-color: #000;
+	overflow: hidden;
+	color: #ddd;
+	position: absolute;
+	bottom: 0px;
+	left: 0;
+	right: 0;
+}
+
+#branded-footer .social {
+	margin: 0;
+	padding: 0.25em 1em 0.25em 0;
+	list-style: none;
+	text-align: left;
+	font-size: 1.5em;
+}
+
+#branded-footer .social li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: inline;
+}
