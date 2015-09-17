@@ -4,7 +4,7 @@ session_start();
 if(!isset($_SESSION['user'])){ die(json_encode(array('status'=>'fail','data'=>array('reason'=>'session-expired')))); }
 if($_SESSION['user']['isAdmin']){ die(json_encode(array('status'=>'fail','data'=>array('reason'=>'users-only')))); }
 
-$sts = ['not attempted', 'incomplete', 'browsed', 'completed'];
+$sts = array('not attempted', 'incomplete', 'browsed', 'completed');
 
 $courses = array(
 	array(

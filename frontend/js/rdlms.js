@@ -44,7 +44,8 @@ RDLMS = (function($){
 	function loadLMSUser(){
 		$.ajax({
 			url: settings.session.user,
-			dataType: "json", method: 'POST'
+			dataType: "json", method: 'POST',
+			cache: false // No necessary but just in case (IE)
 		})
 			.done(onLMSUserLoaded)
 			.fail(onLMSUserError)
