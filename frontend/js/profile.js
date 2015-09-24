@@ -7,7 +7,7 @@ jQuery(function($){
 		win = $(window),
 		saveBtn = $('#profile-submit'),
 		cancelBtn = $('#profile-cancel'),
-		pwd = $('#input-password'),
+		pwd = $('#input-newPassword'),
 		pwdBar = $('#pwd-bar'),
 		already = $('#already')
 	;
