@@ -1,3 +1,5 @@
+@import url("https://fast.fonts.net/cssapi/ef6712b7-d3dd-4547-bfea-f54a5ffe1c95.css");
+
 html {
 	height: 100%;
 }
@@ -8,7 +10,7 @@ body {
 }
 
 #branded-header > nav {
-	background-color: #F3A344;
+	background-color: #1ABC9C;
 	border: none;
 }
 
@@ -18,6 +20,7 @@ body {
 }
 
 #branded-header .logo {
+	display: block;
 	line-height: 80px;
 	font-size: 24px;
 	height: 80px;
@@ -56,4 +59,34 @@ body {
 	padding: 0;
 	list-style: none;
 	display: inline;
+}
+
+
+
+
+.page-header { color: #1ABC9C; }
+h1, h2, .btn { font-family: 'Populaire Light1263935', Arial, sans-serif; }
+h1 {font-size: 5em;}
+h2 {font-size: 3.5em;}
+
+.btn {
+	font-size: 2em;
+	letter-spacing: 1px;
+	padding: 4px 2em 0px;
+	margin-top: 0.25em;
+}
+
+.btn.input-group-addon {
+	padding: 6px 12px;
+	font-size: 1em;
+}
+
+.btn.btn-primary {
+	background-color: #F3A346;
+	border: #F3A346;
+	border: rgba(0,0,0,0.5);
+}
+
+.btn.btn-default {
+	background-color: #eee;
 }

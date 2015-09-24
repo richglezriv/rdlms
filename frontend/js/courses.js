@@ -51,7 +51,7 @@ jQuery(function($){
 	// Courses loading ____________________________________________________________
 
 	function onLMSInitialized(session){
-
+		//alert('courses '+session.type);
 		if(session.type != 'student'){
 			if(session.type == 'admin') RDLMS.handleFailure('students-only');
 			else RDLMS.handleFailure('session-expired');
