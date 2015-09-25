@@ -44,7 +44,8 @@ RDLMS = (function($){
 	function loadLMSUser(){
 		$.ajax({
 			url: settings.session.user,
-			dataType: "json", method: 'POST'
+			dataType: "json", method: 'POST',
+			cache: false // No necessary but just in case (IE)
 		})
 			.done(onLMSUserLoaded)
 			.fail(onLMSUserError)
@@ -65,7 +66,7 @@ RDLMS = (function($){
 			var session = {
 				type: response.data.sessionType,
 				user: response.data.user
-			}
+			};
 		
 			self.session = session;
 			setBranding(self.settings, self.session);
@@ -126,17 +127,21 @@ RDLMS = (function($){
 	}
 
 	function handleFailure(code){
+		//alert(code);
 		if(code === 'session-expired'){
 			showFeedback('Tu sesión ha expirado');
+			//alert('Redirecting to login...');
 			document.location.href = self.settings.session.logoutRedirect || 'login.html';
 			return true;
 		}
 		if(code === 'admins-only'){
-			document.location.href = 'admin-courses.html';
+			//alert('Redirecting to student module...');
+			document.location.href = 'courses.html';
 			return true;
 		}
 		if(code === 'students-only'){
-			document.location.href = 'courses.html';
+			//alert('Redirecting to admin module...');
+			document.location.href = 'admin-courses.html';
 			return true;
 		}
 		return false;

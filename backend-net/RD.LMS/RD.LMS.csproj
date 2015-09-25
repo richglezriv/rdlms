@@ -173,11 +173,10 @@
     <Content Include="branding\footer.html" />
     <Content Include="branding\header-logged-in.html" />
     <Content Include="branding\header-logged-out.html" />
-    <Content Include="branding\Logo_Contorno_Nutrir.png" />
     <Content Include="branding\Logo_UXNS.png" />
-    <Content Include="branding\nutrir-full.png" />
-    <Content Include="branding\nutrir.png" />
     <Content Include="branding\pleca_uxns.jpg" />
+    <Content Include="branding\uxns-full.png" />
+    <Content Include="branding\uxns.png" />
     <Content Include="components\bootstrap-datetimepicker\css\bootstrap-datetimepicker.min.css" />
     <Content Include="components\bootstrap-datetimepicker\js\bootstrap-datetimepicker.min.js" />
     <Content Include="components\bootstrap\css\bootstrap-theme.min.css" />

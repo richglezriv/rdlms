@@ -7,7 +7,7 @@ jQuery(function($){
 		win = $(window),
 		saveBtn = $('#profile-submit'),
 		cancelBtn = $('#profile-cancel'),
-		pwd = $('#input-password'),
+		pwd = $('#input-newPassword'),
 		pwdBar = $('#pwd-bar'),
 		already = $('#already')
 	;
@@ -125,8 +125,17 @@ jQuery(function($){
 			integer: /^\d+$/,
 			bool: /^[01]$/,
 			password: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
-		}
+		};
 		
+		if(!(patterns.name).test(data.name)){
+			errors.name = 'El nombre proporcionado es inválido.';
+		}
+		if(!(patterns.name).test(data.lastName)){
+			errors.lastName = 'El apellido paterno proporcionado es inválido.';
+		}
+		if(!(patterns.name).test(data.secondLastName)){
+			errors.secondLastName = 'El apellido materno proporcionado es inválido.';
+		}
 		if(!(patterns.birthday).test(data.birthday)){
 			errors.birthday = 'La fecha de nacimiento proporcionada es inválida.';
 		}
@@ -139,8 +148,8 @@ jQuery(function($){
 		if(!(patterns.integer).test(data.organization)){
 			errors.organization = 'Por favor, selecciona una organización de la lista.';
 		}
-		if(data.newPassword != ''){
-			console.log(data.newPassword)
+		if(data.newPassword !== ''){
+			//console.log(data.newPassword);
 			if(!(patterns.password).test(data.newPassword)){
 				errors.newPassword = 'La contraseña no cumple con los lineamientos especificados.';
 			}
@@ -154,17 +163,18 @@ jQuery(function($){
 
 	function getFormData(){
 		var data = {
-			birthday: $.trim($('#input-birthday').val()),
+			name: $.trim($('#input-name').val()),
+			lastName: $.trim($('#input-lastName').val()),
+			secondLastName: $.trim($('#input-secondLastName').val()),
 			gender: $.trim($('#input-gender').val()),
 			occupation: $.trim($('#input-occupation').val()),
 			organization: $.trim($('#input-organization').val()),
 			oldPassword: $('#input-oldPassword').val(),
 			newPassword: $('#input-newPassword').val(),
 			newPasswordCheck: $('#input-newPasswordCheck').val()
-		}
+		};
 		return data;
 	}
-
 	function setFormData(data){
 		console.log(data);
 		$.each([

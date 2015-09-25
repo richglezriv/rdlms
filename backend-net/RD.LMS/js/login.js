@@ -100,9 +100,7 @@ jQuery(function($){
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "credentials-error"){
 					showFeedback('Nombre de usuario o contraseña incorrectos');
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "too-many-tries"){
-				    showFeedback('Demasiados intentos fallidos. Tu acceso se ha bloqueado por una hora.');
-				} else if (r.status && r.status == "fail" && r.data && r.data.reason == "user-inactive") {
-				    showFeedback('El usuario no ha sido confirmado.');
+					showFeedback('Demasiados intentos fallidos. Tu acceso se ha bloqueado por una hora.');
 				}else{
 					showFeedback('No se pudo establecer conexión con el servidor. Por favor, intenta más tarde.');
 				}
@@ -126,7 +124,7 @@ jQuery(function($){
 		startLoading();
 		
 		var jsonData = {
-		    username: $('#input-email1').val()
+			username: $('#input-email').val()
 		};
 		$.ajax({
 			url: settings.session.forgot,

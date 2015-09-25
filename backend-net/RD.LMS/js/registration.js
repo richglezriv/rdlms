@@ -113,7 +113,7 @@ jQuery(function($){
 			integer: /^\d+$/,
 			bool: /^[01]$/,
 			password: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
-		}
+		};
 		
 		if(!(patterns.name).test(data.name)){
 			errors.name = 'El nombre proporcionado es inválido.';
@@ -146,7 +146,7 @@ jQuery(function($){
 			errors.passwordCheck = 'La confirmación de tu contraseña es diferente a tu contraseña.';
 		}
 		if(!data.terms){
-			errors.terms = 'Debes aceptar los terminos para poder registrarte.'
+			errors.terms = 'Debes aceptar los terminos para poder registrarte.';
 		}
 
 		return $.isEmptyObject(errors) ? null : errors;
@@ -166,7 +166,7 @@ jQuery(function($){
 			passwordCheck: $('#input-passwordCheck').val(),
 			captcha: $('#input-captcha').val(),
 			terms: ~~$('#input-terms:checked').val()
-		}
+		};
 		return data;
 	}
 
