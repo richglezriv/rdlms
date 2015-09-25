@@ -5,20 +5,16 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Acceso al sistema - LMS</title>
 	<link rel="stylesheet" href="components/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/frontend.css">
+	<link rel="stylesheet" href="branding/branding.css">
 	<script>browser={'sucks':false};(function(){var method;var noop=function noop(){};var methods=['assert','clear','count','debug','dir','dirxml','error','exception','group','groupCollapsed','groupEnd','info','log','markTimeline','profile','profileEnd','table','time','timeEnd','timeStamp','trace','warn'];var length = methods.length;var console=(window.console=window.console||{});while(length--){method=methods[length];if(!console[method]){console[method]=noop;}}}());</script>
 	<!--[if lt IE 9]><script>browser.sucks = true;</script><![endif]-->
 </head>
-<body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" id="branded-header">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">LMS</a>
-				<div class="navbar-branding"></div>
-			</div>
-		</div>
-	</nav>
+<body class="logged-out">
+	
 
+	<div id="branded-header"></div>
 
 
 	<div class="container">
@@ -31,14 +27,37 @@
 		<form id="login-form" class="row">
 			<div class="col-sm-6">
 				<div class="form-group">
-					<label for="input-username">Nombre de usuario</label>
-					<input type="text" class="form-control" id="input-username" placeholder="">
+					<label for="input-email">Correo electrónico</label>
+					<input type="text" class="form-control" id="input-email" placeholder="">
 				</div>
 				<div class="form-group">
 					<label for="input-password">Contraseña</label>
 					<input type="password" class="form-control" id="input-password" placeholder="">
 				</div>
 				<button type="submit" class="btn btn-primary">Ingresar</button>
+				<br><br>
+				<p><a class="forgot-btn" href="#forgot">Olvidé mi contraseña</a></p>
+			</div>
+		</form>
+
+
+
+		<form id="forgot-form" class="row">
+			<div class="col-sm-6">
+
+				<p>
+					Proporciona la dirección de correo electrónico que usaste para registrarte y
+					enseguida te enviaremos un correo con las instrucciones necesarias para 
+					restablecer tu contraseña.
+				</p>
+				
+				<div class="form-group">
+					<label for="input-email">Correo electrónico</label>
+					<input type="text" class="form-control" id="input-email1" placeholder="">
+				</div>
+				<button type="submit" class="btn btn-primary">Restablecer contraseña</button>
+				<br><br>
+				<p><a class="forgot-btn" href="#login">Deseo ingresar al sistema</a></p>
 			</div>
 		</form>
 
@@ -57,6 +76,10 @@
 		</p>
 
 	</div>
+
+
+
+	<div id="branded-footer"></div>
 	
 
 

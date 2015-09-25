@@ -45,8 +45,6 @@ namespace RD.LMS.Controllers
                 model.status = "fail";
                 model.data = new Models.MessageData() { reason = ex.Message };
             }
-
-
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
@@ -66,6 +64,25 @@ namespace RD.LMS.Controllers
 
             return model;
 
+        }
+
+        public ActionResult Confirmation(int confirm, string ser)
+        {
+            Models.JSonModel model = new Models.JSonModel();
+
+            try
+            {
+                string hashstring = Business.Utilities.GetSerialHash(confirm.ToString());
+                if (!hashstring.Equals(ser))
+                    throw new Exception("No coincide el usuario a confirmar");
+                Business.UserController.ConfirmUserAccount(confirm);
+            }
+            catch (Exception ex)
+            {
+                model.status = "fail: " + ex.Message;
+            }
+
+            return View();
         }
     }
 }

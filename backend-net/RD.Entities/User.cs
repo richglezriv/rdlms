@@ -26,9 +26,16 @@ namespace RD.Entities
         public string Password { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string SecondLastName { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsLogged { get; set; }
         public Nullable<System.DateTime> LastLogged { get; set; }
+        public string Email { get; set; }
+        public Nullable<System.DateTime> BirthDay { get; set; }
+        public string Gender { get; set; }
+        public short Ocupation { get; set; }
+        public short Organization { get; set; }
+        public bool IsActive { get; set; }
     
         public virtual ICollection<UserCourse> UserCourses { get; set; }
     }

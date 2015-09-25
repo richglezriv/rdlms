@@ -49,12 +49,9 @@ namespace RD.LMS.Controllers
             Models.ResetPasswordModel model = new ResetPasswordModel();
             string serial = Request.QueryString["ser"] != null ? Request.QueryString["ser"].ToString(): null;
             model.Id = Request.QueryString["id"] != null ? Request.QueryString["id"] : null;
-            const String KEY = "ZaZaCruREcHA8a7*as";
             if (serial != null && model.Id != null)
             {
-                System.Security.Cryptography.SHA1 hashKey = System.Security.Cryptography.SHA1.Create();
-                hashKey.ComputeHash(Encoding.UTF8.GetBytes(KEY));
-                string hashString = BitConverter.ToString(hashKey.Hash).Replace("-", String.Empty).ToLower();
+                string hashString = Business.Utilities.GetSerialHash(model.Id);
                 model.Message = String.Empty;
 
                 if (!hashString.Equals(serial))
@@ -68,6 +65,7 @@ namespace RD.LMS.Controllers
                         if (!model.NewPassword.Equals(fc["input-retype-password"].ToString()))
                             throw new Exception("Error: Las contraseñas deben coincidir");
                         model.UpdatePassword();
+                        model.Message = "Contraseña actualizada con éxito.";
                     }
                 }
                 catch (Exception ex)
@@ -124,6 +122,16 @@ namespace RD.LMS.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult ForgotPassword(string data)
+        {
+            JSonModel model = new JSonModel();
+            LMSUser user = new LMSUser();
+            Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+            user.RestablishPassword(toFetch["username"].ToString());
+
+            return Json(model);
         }
     }
 }

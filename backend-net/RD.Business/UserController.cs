@@ -14,14 +14,17 @@ namespace RD.Business
         public enum SessionState { LoggedIn = 0, LoggedOut = 1 }
         private static RD.Entities.UserDAO _dao;
 
-        public static RD.Entities.User GetUser(string login, string password)
+        public static RD.Entities.User GetUser(string login, string password, string email = null)
         {
-            RD.Entities.User user;
+            RD.Entities.User user = null;
 
             try
             {
                 _dao = new RD.Entities.UserDAO(string.Empty);
-                user = _dao.Validate(login, GetStringHashed(password));
+                if (login != null)
+                    user = _dao.Validate(login, Utilities.GetStringHashed(password));
+                else if (email != null)
+                    user = _dao.ValidateByMail(email, Utilities.GetStringHashed(password));
                 return user;
             }
             catch (Exception)
@@ -47,6 +50,19 @@ namespace RD.Business
             }
         }
 
+        public static Entities.User GetUserByMail(string email)
+        {
+            try
+            {
+                _dao = new RD.Entities.UserDAO(string.Empty);
+                return _dao.GetByMail(email);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public static List<Entities.User> GetUsers(string nameLike)
         {
             List<Entities.User> result = new List<Entities.User>();
@@ -55,7 +71,7 @@ namespace RD.Business
 
             _dao = new RD.Entities.UserDAO(string.Empty);
             result = _dao.GetBy(nameLike);
-
+            
             return result;
 
         }
@@ -174,7 +190,18 @@ namespace RD.Business
 
         public static void SaveUser(Entities.User user)
         {
-            throw new NotImplementedException();
+            Entities.IDAO dao = new Entities.UserDAO(string.Empty, user);
+            if (user.Id.Equals(0)){
+                if (user.Password != null)
+                {
+                    user.Password = Utilities.GetStringHashed(user.Password);
+                }
+                
+                dao.Save();
+            }
+            else
+                dao.Update();
+            
         }
 
         public static void Delete(Entities.User user)
@@ -183,25 +210,14 @@ namespace RD.Business
             dao.Delete();
         }
 
-        private static string GetStringHashed(string toHash)
-        {
-            System.Security.Cryptography.SHA1 hashKey = System.Security.Cryptography.SHA1.Create();
-            hashKey.ComputeHash(Encoding.UTF8.GetBytes(toHash));
-            string hashString = BitConverter.ToString(hashKey.Hash).Replace("-", String.Empty).ToLower();
-
-            return hashString;
-        }
-
         public static void UpdateUserPassword(int id, string newPassword)
         {
             Entities.UserDAO dao = new Entities.UserDAO(string.Empty);
             Entities.User user = dao.GetBy(id);
-            if (!user.IsAdmin)
-                throw new Exception("Error: No es un usuario administrador.");
 
             try
             {
-                user.Password = GetStringHashed(newPassword);
+                user.Password = Utilities.GetStringHashed(newPassword);
                 Entities.IDAO control = new Entities.UserDAO(string.Empty, user);
                 control.Update();
             }
@@ -212,6 +228,14 @@ namespace RD.Business
             
         }
 
-        
+
+        public static void ConfirmUserAccount(int userId)
+        {
+            Entities.UserDAO dao = new Entities.UserDAO(string.Empty);
+            Entities.User user = dao.GetBy(userId);
+            user.IsActive = true;
+            Entities.IDAO control = new Entities.UserDAO(string.Empty, user);
+            control.Update();
+        }
     }
 }

@@ -10,8 +10,6 @@ namespace RD.LMS.Controllers
 {
     public class ProcessController : Controller
     {
-        
-
         public ActionResult UploadThumbnail(String qqfile)
         {
             List<String> thumbs = Session[Utilities.THUMBS] == null ? new List<string>() : (List<String>)Session[Utilities.THUMBS];
@@ -95,5 +93,9 @@ namespace RD.LMS.Controllers
             System.IO.File.Delete(path);
         }
 
+        public ActionResult DoSomething()
+        {
+            return View();
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace RD.LMS.Controllers
 
             LMSUser user = new LMSUser()
             {
-                login = json["username"].ToString(),
+                email = json["email"].ToString(),
                 password = json["password"].ToString(),
                 TryOuts = Convert.ToInt32(Session["TRYOUTS"])
             };
@@ -31,7 +31,7 @@ namespace RD.LMS.Controllers
                 tryouts = GetTryouts();
                 ReviewTryouts();
 
-                if (tryouts.Any(u => u.login.Equals(user.login)))
+                if (tryouts.Any(u => u.login.Equals(user.email)))
                 {
                     model.status = Utilities.FAIL;
                     user.SetReason();
@@ -48,7 +48,7 @@ namespace RD.LMS.Controllers
                         model.status = Utilities.FAIL;
                         user.SetReason();
                         if (!tryouts.Any(u => u.login.Equals(user.login)))
-                            tryouts.Add(new UserTryout() { login = user.login, lastTry = DateTime.Now });
+                            tryouts.Add(new UserTryout() { login = user.email, lastTry = DateTime.Now });
                         this.HttpContext.Application[TRYOUTS] = tryouts;
                     }
                     
@@ -60,8 +60,6 @@ namespace RD.LMS.Controllers
             {
 
             }
-
-
 
             return Json(model);
         }
@@ -191,19 +189,27 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        public ActionResult SessionEnabled()
+        public ActionResult UserSessionState()
         {
             Models.JSonModel model = new JSonModel();
-            Models.MessageData message = new MessageData();
             if (Session[Utilities.USER] != null){
-                message.id = ((LMSUser)Session[Utilities.USER]).id;
+                LMSUser user = (LMSUser)Session[Utilities.USER];
+                model.data = new JSonUserModel()
+                {
+                    sessionType = user.GetSessionType(),
+                    user = user
+                };
                 model.status = "success";
             }
             else
             {
-                model.status = "fail";
+                model.status = "success";
+                model.data = new JSonUserModel()
+                {
+                    sessionType = "logged-out",
+                    user = null
+                };
             }
-            model.data = message;
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }

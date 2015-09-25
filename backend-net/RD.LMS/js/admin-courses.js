@@ -14,9 +14,6 @@ jQuery(function($){
 		courses = null
 	;
 
-	$('a[href="#logout"]').on('click', function(e){ e.preventDefault(); RDLMS.logout(); });
-
-
 
 	// Utils ______________________________________________________________________
 
@@ -50,7 +47,14 @@ jQuery(function($){
 
 	// Courses loading ____________________________________________________________
 
-	function onLMSInitialized(){
+	function onLMSInitialized(session){
+
+		if(session.type != 'admin'){
+			if(session.type == 'student') RDLMS.handleFailure('admins-only');
+			else RDLMS.handleFailure('session-expired');
+			return false;
+		}
+
 		// Init
 		add.on('click', function(e){ e.preventDefault(); if(!loading) addCourse(); });
 		uploadThumb = new SimpleUploader('#input-thumbnail', { uploadPath: RDLMS.settings.lms.uploadPath, action: RDLMS.settings.admin.course.uploadThumb, type: 'image' });

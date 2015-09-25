@@ -42,6 +42,22 @@ namespace RD.Entities
                 return null;
         }
 
+        public User ValidateByMail(string email, string password)
+        {
+            RDModelContainer model = Context.SetContext(_password).model;
+
+            if (!model.Users.Any(u => u.Email.Equals(email)))
+                return null;
+
+            var user = model.Users.Single(u => u.Email.Equals(email));
+
+            if (user.Password.Equals(password))
+                return user;
+            else
+                return null;
+
+        }
+
         public User GetBy(int id)
         {
             RDModelContainer model = Context.SetContext(_password).model;
@@ -73,6 +89,14 @@ namespace RD.Entities
             return users;
         }
 
+        public User GetByMail(String email)
+        {
+            RDModelContainer model = Context.SetContext(_password).model;
+            User result = model.Users.SingleOrDefault(u => u.Email.Equals(email));
+
+            return result;
+        }
+
         void IDAO.Save()
         {
             RDModelContainer model = Context.SetContext(_password).model;
@@ -90,6 +114,12 @@ namespace RD.Entities
             result.LastName = _persist.LastName;
             result.Login = _persist.Login;
             result.Password = _persist.Password;
+            result.SecondLastName = _persist.SecondLastName;
+            result.BirthDay = _persist.BirthDay;
+            result.Email = _persist.Email;
+            result.Gender = _persist.Gender;
+            result.Ocupation = _persist.Ocupation;
+            result.Organization = _persist.Organization;
 
             model.SaveChanges();
         }

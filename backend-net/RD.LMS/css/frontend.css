@@ -112,18 +112,18 @@ body {
 
 .navbar-inverse .navbar-toggle:focus,
 .navbar-inverse .navbar-toggle:hover {
-	background-color: rgba(255,255,255,0.3);
+	background-color:rgba(255,255,255,0.3);**/
 }
 
-#branded-header {
+#branded-header > nav {
 	box-shadow: 0 0 8px rgba(0,0,0,0.2);
 }
-#branded-header .navbar-branding {
+#branded-header .logo {
 	height: 52px;
 	line-height: 52px;
 	overflow: hidden;
 }
-#branded-header .navbar-branding img {
+#branded-header .logo img {
 	display: block;
 	height: 100%;
 	width: auto;

@@ -6,8 +6,8 @@
     },
     "lms": {
         "courses": "User/Get",
-        "registration": "",
-        "account": "",
+        "registration": "Admin/RegisterUser",
+        "profile": "Admin/SaveUser",
         "uploadPath": "uploads/"
     },
     "admin": {
@@ -21,16 +21,24 @@
         },
         "user": {
             "find": "Admin/FindUsers",
+            "save": "Admin/SaveUser",
+            "delete": "Admin/DeleteUser",
             "stats": "Admin/GetUserStats",
-            "clearScorm": "Admin/ClearUserScorm",
-            "delete": "Admin/DeleteUser"
+            "clearScorm": "Admin/ClearUserScorm"
         }
     },
     "session": {
         "login": "User/Login",
         "logout": "User/Logout",
-        "validate": "User/SessionEnabled",
-        "user": "/rdlms/backend-php/user.php",
-        "logoutRedirect": "login.html"
-    }
+        "validate": "User/UserSessionState",
+        "user": "User/UserSessionState",
+        "logoutRedirect": "login.html",
+        "resetPassword": "Home/ResetPassword",
+        "forgot": "Home/ForgotPassword"
+    },
+    "branding": {
+		"headerLoggedIn": "branding/header-logged-in.html",
+		"headerLoggedOut": "branding/header-logged-out.html",
+		"footer": "branding/footer.html"
+	}
 }

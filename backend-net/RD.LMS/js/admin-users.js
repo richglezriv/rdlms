@@ -13,9 +13,6 @@ jQuery(function($){
 		searchForm = $('#user-search').hide()
 	;
 
-	$('a[href="#logout"]').on('click', function(e){ e.preventDefault(); RDLMS.logout(); });
-
-
 
 	// Utils ______________________________________________________________________
 
@@ -49,7 +46,14 @@ jQuery(function($){
 
 	// Users loading ____________________________________________________________
 
-	function onLMSInitialized(){
+	function onLMSInitialized(session){
+
+		if(session.type != 'admin'){
+			if(session.type == 'student') RDLMS.handleFailure('admins-only');
+			else RDLMS.handleFailure('session-expired');
+			return false;
+		}
+		
 		//add.on('click', function(e){ e.preventDefault(); if(!loading) addUser(); });
 
 		// Fetch users

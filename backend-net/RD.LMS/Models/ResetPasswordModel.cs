@@ -16,14 +16,14 @@ namespace RD.LMS.Models
         {
             if (!IsStrongPassword())
             {
-                Message = "La contraseña no es segura, intente nuevamente";
+                Message = "La contraseña no cumple con los lineamientos especificados";
                 return;
             }
             Business.UserController.UpdateUserPassword(Convert.ToInt32(this.Id), this.NewPassword);
-            Message = "Contraseña actualizada.";
+            Message = String.Empty;
         }
 
-        private Boolean IsStrongPassword()
+        internal Boolean IsStrongPassword()
         {
             Boolean success = true;
             string[] blackList = new string[] { "password", "contrasena", "senha", "passw0rd","pa55w0rd"

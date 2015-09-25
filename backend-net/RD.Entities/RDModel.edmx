@@ -4,245 +4,146 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="RDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AppUsers">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StateId" Type="bigint" Nullable="false" />
-          <Property Name="FbId" Type="varchar" MaxLength="500" />
-          <Property Name="Audience" Type="int" Nullable="false" />
-          <Property Name="IsInterested" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="LastNames" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Mail" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="64" />
-          <Property Name="Extension" Type="varchar" MaxLength="10" />
-          <Property Name="ChildrenCount" Type="int" Nullable="false" />
-          <Property Name="LocationCount" Type="int" Nullable="false" />
-          <Property Name="LockedAt" Type="datetime" />
-          <Property Name="FechaRegistro" Type="datetime" />
-          <Property Name="FechaAviso" Type="datetime" />
-        </EntityType>
-        <EntityType Name="Courses">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Thumbnail" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ScormPackage" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ParentCourses" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ScoIndex" Type="nvarchar(max)" />
-          <Property Name="IsEnabled" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="rd_Courses">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Thumbnail" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ScormPackage" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ParentCourses" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ScoIndex" Type="nvarchar(max)" />
-          <Property Name="IsEnabled" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="rd_Scorms">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LessonLocation" Type="nvarchar(max)" />
-          <Property Name="Credit" Type="nvarchar(max)" />
-          <Property Name="ScoreRaw" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ScoreMin" Type="nvarchar(max)" />
-          <Property Name="ScoreMax" Type="nvarchar(max)" />
-          <Property Name="TotalTime" Type="nvarchar(max)" />
-          <Property Name="SessionTime" Type="nvarchar(max)" />
-          <Property Name="SuspendData" Type="nvarchar(max)" />
-          <Property Name="LaunchData" Type="nvarchar(max)" />
-          <Property Name="DataMasteryScore" Type="nvarchar(max)" />
-          <Property Name="Entry" Type="nvarchar(max)" />
-          <Property Name="Exit" Type="nvarchar(max)" />
-          <Property Name="Version" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="rd_UserCourses">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="CourseId" Type="int" Nullable="false" />
-          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ScormId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="rd_Users">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Login" Type="nvarchar(max)" />
-          <Property Name="Password" Type="nvarchar(max)" />
-          <Property Name="FirstName" Type="nvarchar(max)" />
-          <Property Name="LastName" Type="nvarchar(max)" />
-          <Property Name="IsAdmin" Type="bit" Nullable="false" />
-          <Property Name="IsLogged" Type="bit" Nullable="false" />
-          <Property Name="LastLogged" Type="datetime" />
-        </EntityType>
-        <EntityType Name="Scorms">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LessonLocation" Type="nvarchar(max)" />
-          <Property Name="Credit" Type="nvarchar(max)" />
-          <Property Name="ScoreRaw" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ScoreMin" Type="nvarchar(max)" />
-          <Property Name="ScoreMax" Type="nvarchar(max)" />
-          <Property Name="TotalTime" Type="nvarchar(max)" />
-          <Property Name="SessionTime" Type="nvarchar(max)" />
-          <Property Name="SuspendData" Type="nvarchar(max)" />
-          <Property Name="LaunchData" Type="nvarchar(max)" />
-          <Property Name="DataMasteryScore" Type="nvarchar(max)" />
-          <Property Name="Entry" Type="nvarchar(max)" />
-          <Property Name="Exit" Type="nvarchar(max)" />
-          <Property Name="Version" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="UserCourses">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="CourseId" Type="int" Nullable="false" />
-          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ScormId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Users">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar(max)" />
-          <Property Name="IsAdmin" Type="bit" Nullable="false" />
-          <Property Name="IsLogged" Type="bit" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_CourseUserCourse">
-          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
-          <End Role="UserCourses" Type="Self.UserCourses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Courses">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserCourses">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rd_CourseUserCourse">
-          <End Role="rd_Courses" Type="Self.rd_Courses" Multiplicity="1" />
-          <End Role="rd_UserCourses" Type="Self.rd_UserCourses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="rd_Courses">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="rd_UserCourses">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rd_ScormUserCourse">
-          <End Role="rd_Scorms" Type="Self.rd_Scorms" Multiplicity="1" />
-          <End Role="rd_UserCourses" Type="Self.rd_UserCourses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="rd_Scorms">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="rd_UserCourses">
-              <PropertyRef Name="ScormId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rd_UserUserCourse">
-          <End Role="rd_Users" Type="Self.rd_Users" Multiplicity="1" />
-          <End Role="rd_UserCourses" Type="Self.rd_UserCourses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="rd_Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="rd_UserCourses">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ScormUserCourse">
-          <End Role="Scorms" Type="Self.Scorms" Multiplicity="1" />
-          <End Role="UserCourses" Type="Self.UserCourses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Scorms">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserCourses">
-              <PropertyRef Name="ScormId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserUserCourse">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="UserCourses" Type="Self.UserCourses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserCourses">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="RDModelStoreContainer">
-          <EntitySet Name="AppUsers" EntityType="Self.AppUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="rd_Courses" EntityType="Self.rd_Courses" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="rd_Scorms" EntityType="Self.rd_Scorms" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="rd_UserCourses" EntityType="Self.rd_UserCourses" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="rd_Users" EntityType="Self.rd_Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Scorms" EntityType="Self.Scorms" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserCourses" EntityType="Self.UserCourses" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_CourseUserCourse" Association="Self.FK_CourseUserCourse">
-            <End Role="Courses" EntitySet="Courses" />
-            <End Role="UserCourses" EntitySet="UserCourses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rd_CourseUserCourse" Association="Self.FK_rd_CourseUserCourse">
-            <End Role="rd_Courses" EntitySet="rd_Courses" />
-            <End Role="rd_UserCourses" EntitySet="rd_UserCourses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rd_ScormUserCourse" Association="Self.FK_rd_ScormUserCourse">
-            <End Role="rd_Scorms" EntitySet="rd_Scorms" />
-            <End Role="rd_UserCourses" EntitySet="rd_UserCourses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rd_UserUserCourse" Association="Self.FK_rd_UserUserCourse">
-            <End Role="rd_Users" EntitySet="rd_Users" />
-            <End Role="rd_UserCourses" EntitySet="rd_UserCourses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ScormUserCourse" Association="Self.FK_ScormUserCourse">
-            <End Role="Scorms" EntitySet="Scorms" />
-            <End Role="UserCourses" EntitySet="UserCourses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserUserCourse" Association="Self.FK_UserUserCourse">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="UserCourses" EntitySet="UserCourses" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="RDModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="RDModelStoreContainer">
+    <EntitySet Name="Courses" EntityType="RDModel.Store.Courses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="RDModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserCourses" EntityType="RDModel.Store.UserCourses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Scorms" EntityType="RDModel.Store.Scorms" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BnnAppUsers" EntityType="RDModel.Store.BnnAppUsers" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserUserCourse" Association="RDModel.Store.UserUserCourse">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserCourse" EntitySet="UserCourses" />
+    </AssociationSet>
+    <AssociationSet Name="CourseUserCourse" Association="RDModel.Store.CourseUserCourse">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="UserCourse" EntitySet="UserCourses" />
+    </AssociationSet>
+    <AssociationSet Name="ScormUserCourse" Association="RDModel.Store.ScormUserCourse">
+      <End Role="Scorm" EntitySet="Scorms" />
+      <End Role="UserCourse" EntitySet="UserCourses" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Thumbnail" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ScormPackage" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ParentCourses" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ScoIndex" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="IsEnabled" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SecondLastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsAdmin" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="IsLogged" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="LastLogged" Type="datetime" Nullable="true" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="BirthDay" Type="datetime" Nullable="true" />
+    <Property Name="Gender" Type="nvarchar" Nullable="false" MaxLength="1" />
+    <Property Name="Ocupation" Type="smallint" Nullable="false" />
+    <Property Name="Organization" Type="smallint" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserCourses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="CourseId" Type="int" Nullable="false" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ScormId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Scorms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LessonLocation" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Credit" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ScoreRaw" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ScoreMin" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ScoreMax" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="TotalTime" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SessionTime" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SuspendData" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="LaunchData" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="DataMasteryScore" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Entry" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Exit" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Version" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="BnnAppUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StateId" Type="bigint" Nullable="false" />
+    <Property Name="FbId" Type="varchar" Nullable="true" MaxLength="500" />
+    <Property Name="Audience" Type="int" Nullable="false" />
+    <Property Name="IsInterested" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="LastNames" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="Mail" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Password" Type="varchar" Nullable="true" MaxLength="64" />
+    <Property Name="Extension" Type="varchar" Nullable="true" MaxLength="10" />
+    <Property Name="ChildrenCount" Type="int" Nullable="false" />
+    <Property Name="LocationCount" Type="int" Nullable="false" />
+    <Property Name="LockedAt" Type="datetime" Nullable="true" />
+    <Property Name="FechaRegistro" Type="datetime" Nullable="true" />
+    <Property Name="FechaAviso" Type="datetime" Nullable="true" />
+  </EntityType>
+  <Association Name="UserUserCourse">
+    <End Role="User" Type="RDModel.Store.Users" Multiplicity="1" />
+    <End Role="UserCourse" Type="RDModel.Store.UserCourses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserCourse">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CourseUserCourse">
+    <End Role="Course" Type="RDModel.Store.Courses" Multiplicity="1" />
+    <End Role="UserCourse" Type="RDModel.Store.UserCourses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserCourse">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ScormUserCourse">
+    <End Role="Scorm" Type="RDModel.Store.Scorms" Multiplicity="1" />
+    <End Role="UserCourse" Type="RDModel.Store.UserCourses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Scorm">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserCourse">
+        <PropertyRef Name="ScormId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="RDModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -282,15 +183,22 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="UserCourses" Relationship="RDModel.UserUserCourse" FromRole="User" ToRole="UserCourse" />
           <Property Name="Login" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Password" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="FirstName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="LastName" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="SecondLastName" Type="String" Nullable="false" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" DefaultValue="False" />
           <Property Name="IsLogged" Type="Boolean" Nullable="false" DefaultValue="False" />
           <Property Name="LastLogged" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="BirthDay" Type="DateTime" Nullable="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" />
+          <Property Name="Ocupation" Type="Int16" Nullable="false" />
+          <Property Name="Organization" Type="Int16" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="UserCourse">
           <Key>
@@ -386,87 +294,94 @@
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="RDModelStoreContainer" CdmEntityContainer="RDModelContainer">
-          <EntitySetMapping Name="Courses">
-            <EntityTypeMapping TypeName="IsTypeOf(RDModel.Course)">
-              <MappingFragment StoreEntitySet="rd_Courses">
-                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
-                <ScalarProperty Name="ScoIndex" ColumnName="ScoIndex" />
-                <ScalarProperty Name="ParentCourses" ColumnName="ParentCourses" />
-                <ScalarProperty Name="ScormPackage" ColumnName="ScormPackage" />
-                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="IsTypeOf(RDModel.User)">
-              <MappingFragment StoreEntitySet="rd_Users">
-                <ScalarProperty Name="LastLogged" ColumnName="LastLogged" />
-                <ScalarProperty Name="IsLogged" ColumnName="IsLogged" />
-                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Scorms">
-            <EntityTypeMapping TypeName="IsTypeOf(RDModel.Scorm)">
-              <MappingFragment StoreEntitySet="rd_Scorms">
-                <ScalarProperty Name="Version" ColumnName="Version" />
-                <ScalarProperty Name="Exit" ColumnName="Exit" />
-                <ScalarProperty Name="Entry" ColumnName="Entry" />
-                <ScalarProperty Name="DataMasteryScore" ColumnName="DataMasteryScore" />
-                <ScalarProperty Name="LaunchData" ColumnName="LaunchData" />
-                <ScalarProperty Name="SuspendData" ColumnName="SuspendData" />
-                <ScalarProperty Name="SessionTime" ColumnName="SessionTime" />
-                <ScalarProperty Name="TotalTime" ColumnName="TotalTime" />
-                <ScalarProperty Name="ScoreMax" ColumnName="ScoreMax" />
-                <ScalarProperty Name="ScoreMin" ColumnName="ScoreMin" />
-                <ScalarProperty Name="ScoreRaw" ColumnName="ScoreRaw" />
-                <ScalarProperty Name="Credit" ColumnName="Credit" />
-                <ScalarProperty Name="LessonLocation" ColumnName="LessonLocation" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserCourses">
-            <EntityTypeMapping TypeName="IsTypeOf(RDModel.UserCourse)">
-              <MappingFragment StoreEntitySet="rd_UserCourses">
-                <ScalarProperty Name="ScormId" ColumnName="ScormId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BnnAppUsers">
-            <EntityTypeMapping TypeName="RDModel.BnnAppUser">
-              <MappingFragment StoreEntitySet="AppUsers">
-                <ScalarProperty Name="FechaAviso" ColumnName="FechaAviso" />
-                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-                <ScalarProperty Name="LockedAt" ColumnName="LockedAt" />
-                <ScalarProperty Name="LocationCount" ColumnName="LocationCount" />
-                <ScalarProperty Name="ChildrenCount" ColumnName="ChildrenCount" />
-                <ScalarProperty Name="Extension" ColumnName="Extension" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Mail" ColumnName="Mail" />
-                <ScalarProperty Name="LastNames" ColumnName="LastNames" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="IsInterested" ColumnName="IsInterested" />
-                <ScalarProperty Name="Audience" ColumnName="Audience" />
-                <ScalarProperty Name="FbId" ColumnName="FbId" />
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="IsTypeOf(RDModel.Course)">
+        <MappingFragment StoreEntitySet="Courses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+          <ScalarProperty Name="ScormPackage" ColumnName="ScormPackage" />
+          <ScalarProperty Name="ParentCourses" ColumnName="ParentCourses" />
+          <ScalarProperty Name="ScoIndex" ColumnName="ScoIndex" />
+          <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(RDModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="SecondLastName" ColumnName="SecondLastName" />
+          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+          <ScalarProperty Name="IsLogged" ColumnName="IsLogged" />
+          <ScalarProperty Name="LastLogged" ColumnName="LastLogged" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Ocupation" ColumnName="Ocupation" />
+          <ScalarProperty Name="Organization" ColumnName="Organization" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserCourses">
+      <EntityTypeMapping TypeName="IsTypeOf(RDModel.UserCourse)">
+        <MappingFragment StoreEntitySet="UserCourses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ScormId" ColumnName="ScormId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Scorms">
+      <EntityTypeMapping TypeName="IsTypeOf(RDModel.Scorm)">
+        <MappingFragment StoreEntitySet="Scorms">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LessonLocation" ColumnName="LessonLocation" />
+          <ScalarProperty Name="Credit" ColumnName="Credit" />
+          <ScalarProperty Name="ScoreRaw" ColumnName="ScoreRaw" />
+          <ScalarProperty Name="ScoreMin" ColumnName="ScoreMin" />
+          <ScalarProperty Name="ScoreMax" ColumnName="ScoreMax" />
+          <ScalarProperty Name="TotalTime" ColumnName="TotalTime" />
+          <ScalarProperty Name="SessionTime" ColumnName="SessionTime" />
+          <ScalarProperty Name="SuspendData" ColumnName="SuspendData" />
+          <ScalarProperty Name="LaunchData" ColumnName="LaunchData" />
+          <ScalarProperty Name="DataMasteryScore" ColumnName="DataMasteryScore" />
+          <ScalarProperty Name="Entry" ColumnName="Entry" />
+          <ScalarProperty Name="Exit" ColumnName="Exit" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BnnAppUsers">
+      <EntityTypeMapping TypeName="IsTypeOf(RDModel.BnnAppUser)">
+        <MappingFragment StoreEntitySet="BnnAppUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="FbId" ColumnName="FbId" />
+          <ScalarProperty Name="Audience" ColumnName="Audience" />
+          <ScalarProperty Name="IsInterested" ColumnName="IsInterested" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LastNames" ColumnName="LastNames" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Extension" ColumnName="Extension" />
+          <ScalarProperty Name="ChildrenCount" ColumnName="ChildrenCount" />
+          <ScalarProperty Name="LocationCount" ColumnName="LocationCount" />
+          <ScalarProperty Name="LockedAt" ColumnName="LockedAt" />
+          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+          <ScalarProperty Name="FechaAviso" ColumnName="FechaAviso" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

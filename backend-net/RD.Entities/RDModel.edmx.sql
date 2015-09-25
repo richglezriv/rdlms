@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/01/2015 20:23:19
+-- Date Created: 09/21/2015 11:30:48
 -- Generated from EDMX file: C:\Users\rgonzalez\Documents\Proyectos\Reaccion Digital\rdlms\backend-net\RD.Entities\RDModel.edmx
 -- --------------------------------------------------
 
@@ -17,23 +17,14 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_UserUserCourse]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserCourses] DROP CONSTRAINT [FK_UserUserCourse];
+GO
 IF OBJECT_ID(N'[dbo].[FK_CourseUserCourse]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserCourses] DROP CONSTRAINT [FK_CourseUserCourse];
 GO
-IF OBJECT_ID(N'[dbo].[FK_rd_CourseUserCourse]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[rd_UserCourses] DROP CONSTRAINT [FK_rd_CourseUserCourse];
-GO
-IF OBJECT_ID(N'[dbo].[FK_rd_ScormUserCourse]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[rd_UserCourses] DROP CONSTRAINT [FK_rd_ScormUserCourse];
-GO
-IF OBJECT_ID(N'[dbo].[FK_rd_UserUserCourse]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[rd_UserCourses] DROP CONSTRAINT [FK_rd_UserUserCourse];
-GO
 IF OBJECT_ID(N'[dbo].[FK_ScormUserCourse]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserCourses] DROP CONSTRAINT [FK_ScormUserCourse];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserUserCourse]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserCourses] DROP CONSTRAINT [FK_UserUserCourse];
 GO
 
 -- --------------------------------------------------
@@ -43,26 +34,17 @@ GO
 IF OBJECT_ID(N'[dbo].[Courses]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Courses];
 GO
-IF OBJECT_ID(N'[dbo].[rd_Courses]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[rd_Courses];
-GO
-IF OBJECT_ID(N'[dbo].[rd_Scorms]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[rd_Scorms];
-GO
-IF OBJECT_ID(N'[dbo].[rd_UserCourses]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[rd_UserCourses];
-GO
-IF OBJECT_ID(N'[dbo].[rd_Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[rd_Users];
-GO
-IF OBJECT_ID(N'[dbo].[Scorms]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Scorms];
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
 GO
 IF OBJECT_ID(N'[dbo].[UserCourses]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserCourses];
 GO
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
+IF OBJECT_ID(N'[dbo].[Scorms]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Scorms];
+GO
+IF OBJECT_ID(N'[dbo].[BnnAppUsers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BnnAppUsers];
 GO
 
 -- --------------------------------------------------
@@ -84,14 +66,21 @@ GO
 
 -- Creating table 'Users'
 CREATE TABLE [dbo].[Users] (
-    [Id] int  NOT NULL,
-    [Login] nvarchar(max)  NOT NULL,
-    [Password] nvarchar(max)  NOT NULL,
-    [FirstName] nvarchar(max)  NOT NULL,
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Login] nvarchar(max)  NULL,
+    [Password] nvarchar(max)  NULL,
+    [FirstName] nvarchar(max)  NULL,
     [LastName] nvarchar(max)  NULL,
+    [SecondLastName] nvarchar(max)  NOT NULL,
     [IsAdmin] bit  NOT NULL,
     [IsLogged] bit  NOT NULL,
-    [LastLogged] datetime  NULL
+    [LastLogged] datetime  NULL,
+    [Email] nvarchar(max)  NOT NULL,
+    [BirthDay] datetime  NULL,
+    [Gender] nvarchar(1)  NOT NULL,
+    [Ocupation] smallint  NOT NULL,
+    [Organization] smallint  NOT NULL,
+    [IsActive] bit  NOT NULL
 );
 GO
 
@@ -124,6 +113,27 @@ CREATE TABLE [dbo].[Scorms] (
 );
 GO
 
+-- Creating table 'BnnAppUsers'
+CREATE TABLE [dbo].[BnnAppUsers] (
+    [Id] bigint IDENTITY(1,1) NOT NULL,
+    [StateId] bigint  NOT NULL,
+    [FbId] varchar(500)  NULL,
+    [Audience] int  NOT NULL,
+    [IsInterested] int  NOT NULL,
+    [UserName] varchar(200)  NOT NULL,
+    [Name] varchar(100)  NOT NULL,
+    [LastNames] varchar(100)  NOT NULL,
+    [Mail] varchar(50)  NOT NULL,
+    [Password] varchar(64)  NULL,
+    [Extension] varchar(10)  NULL,
+    [ChildrenCount] int  NOT NULL,
+    [LocationCount] int  NOT NULL,
+    [LockedAt] datetime  NULL,
+    [FechaRegistro] datetime  NULL,
+    [FechaAviso] datetime  NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -149,6 +159,12 @@ GO
 -- Creating primary key on [Id] in table 'Scorms'
 ALTER TABLE [dbo].[Scorms]
 ADD CONSTRAINT [PK_Scorms]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'BnnAppUsers'
+ALTER TABLE [dbo].[BnnAppUsers]
+ADD CONSTRAINT [PK_BnnAppUsers]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

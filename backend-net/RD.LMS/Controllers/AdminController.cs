@@ -131,7 +131,57 @@ namespace RD.LMS.Controllers
         public ActionResult SaveUser(String data)
         {
             Models.JSonModel model = new JSonModel();
-            
+            try
+            {
+                Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+                Models.LMSUser user = (LMSUser)Session[Utilities.USER];
+                user.occupation = Convert.ToInt16(toFetch["occupation"].ToString());
+                user.organization = Convert.ToInt16(toFetch["organization"].ToString());
+                user.gender = toFetch["gender"].ToString();
+                user.birthday = toFetch["birthday"].ToString();
+                user.password = toFetch["oldPassword"].ToString();
+                user.newPassword = toFetch["newPassword"].ToString();
+                user.newPasswordCheck = toFetch["newPasswordCheck"].ToString();
+                user.UpdateUser();
+
+                Session[Utilities.USER] = user;
+            }
+            catch (Exception ex)
+            {
+                model.status = "fail";
+            }
+
+            return Json(model);
+        }
+
+        public ActionResult RegisterUser(String data)
+        {
+            Models.JSonModel model = new JSonModel();
+            Models.LMSUser user = new LMSUser();
+
+            try
+            {
+                Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+                user.occupation = Convert.ToInt16(toFetch["occupation"].ToString());
+                user.organization = Convert.ToInt16(toFetch["organization"].ToString());
+                user.gender = toFetch["gender"].ToString();
+                user.birthday = toFetch["birthday"].ToString();
+                user.password = toFetch["password"].ToString();
+                user.newPasswordCheck = toFetch["passwordCheck"].ToString();
+                user.email = toFetch["email"].ToString();
+                user.name = toFetch["name"].ToString();
+                user.lastName = toFetch["lastName"].ToString();
+                user.secondLastName = toFetch["secondLastName"].ToString();
+                //"captcha":"","terms":1}
+                user.Register();
+
+            }
+            catch (Exception)
+            {
+                model.status = "fail";
+                model.data = user;
+            }
+
             return Json(model);
         }
 
