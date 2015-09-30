@@ -6,7 +6,7 @@ using System.Web;
 
 namespace RD.LMS.Models
 {
-    public class ResetPasswordModel
+    public class ResetPasswordModel: IDisposable
     {
         public String Id { get; set; }
         public String NewPassword { get; set; }
@@ -73,9 +73,25 @@ namespace RD.LMS.Models
                 success = false;
             if (NewPassword.Length < 8)
                 success = false;
-            success = blackList.Any(b => NewPassword.Trim().ToLower().Contains(b)) ? false : success;
+
+            for (int i = 0; i < blackList.Length; i++)
+            {
+                if (NewPassword.Trim().ToLower().Contains(blackList[i]))
+                {
+                    success = false;
+                    break;
+                }
+
+            }
 
             return success;
+        }
+
+        public void Dispose()
+        {
+            this.Id = null;
+            this.Message = null;
+            this.NewPassword = null;
         }
     }
 }

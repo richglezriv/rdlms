@@ -44,42 +44,75 @@ namespace RD.LMS.Controllers
             return View();
         }
 
-        public ActionResult ResetPassword(FormCollection fc)
+        public ActionResult ResetPassword(string ser, string id)
         {
-            Models.ResetPasswordModel model = new ResetPasswordModel();
-            string serial = Request.QueryString["ser"] != null ? Request.QueryString["ser"].ToString(): null;
-            model.Id = Request.QueryString["id"] != null ? Request.QueryString["id"] : null;
-            if (serial != null && model.Id != null)
+            Models.JSonModel model = new Models.JSonModel();
+            if (ser != null && id != null)
             {
-                string hashString = Business.Utilities.GetSerialHash(model.Id);
-                model.Message = String.Empty;
+                
+                string hashString = Business.Utilities.GetSerialHash(id);
+                int userId = Convert.ToInt32(id);
 
-                if (!hashString.Equals(serial))
-                    model.Message = "Denegado: Acceso invalido";
-
-                try
+                if (!hashString.Equals(ser))
+                    model.status = "fail";
+                else
                 {
-                    if (fc.Keys.Count > 0)
+                    Models.LMSUser user = new LMSUser();
+                    model.status = user.BeginSession(userId);
+
+                    if (model.status.Equals(Utilities.SUCCESS))
                     {
-                        model.NewPassword = fc["input-password"].ToString();
-                        if (!model.NewPassword.Equals(fc["input-retype-password"].ToString()))
-                            throw new Exception("Error: Las contraseñas deben coincidir");
-                        model.UpdatePassword();
-                        model.Message = "Contraseña actualizada con éxito.";
+                        model.data = new JSonUserModel()
+                        {
+                            sessionType = "restore-password",
+                            user = user
+                        };
+                        Session.Add(Utilities.USER, user);
                     }
                 }
-                catch (Exception ex)
-                {
-                    model.Message = ex.Message;
-                }
-                
-
             }
-            else
-                model.Message = "Denegado: Acceso invalido";
-                
             
-            return View(model);
+
+            return View();
+        }
+
+        public ActionResult ReestablishPassword(string data)
+        {
+            Models.LMSUser user = (Models.LMSUser)Session[Utilities.USER];
+            Models.JSonModel model = new JSonModel();
+            Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+
+            try
+            {
+                Models.ResetPasswordModel resetPasswordModel = new ResetPasswordModel();
+                resetPasswordModel.Id = user.id;
+                resetPasswordModel.NewPassword = toFetch["password"].ToString();
+                if (!resetPasswordModel.NewPassword.Equals(toFetch["passwordCheck"].ToString())){
+                    user = new LMSUser();
+                    user.fields = new Dictionary<string, string>();
+                    user.fields.Add("passwordCheck","Las contraseñas deben coincidir");
+                    user.SetReason("validation-error");
+                    throw new Exception("Error: Las contraseñas deben coincidir");
+                }
+
+                if (!resetPasswordModel.IsStrongPassword())
+                {
+                    user = new LMSUser();
+                    user.fields = new Dictionary<string, string>();
+                    user.fields.Add("password", "La contraseña no cumple con los lineamientos especificados");
+                    user.SetReason("validation-error");
+                    throw new Exception("La contraseña no cumple con los lineamientos especificados");
+                }
+                resetPasswordModel.UpdatePassword();
+                
+            }
+            catch (Exception)
+            {
+                model.status = "fail";
+                model.data = user;
+            }
+
+            return Json(model);
         }
 
         public ActionResult Profile(FormCollection fc)

@@ -171,7 +171,8 @@ jQuery(function($){
 			organization: $.trim($('#input-organization').val()),
 			oldPassword: $('#input-oldPassword').val(),
 			newPassword: $('#input-newPassword').val(),
-			newPasswordCheck: $('#input-newPasswordCheck').val()
+			newPasswordCheck: $('#input-newPasswordCheck').val(),
+			birthday: $('#input-birthday').val()
 		};
 		return data;
 	}

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -6,7 +6,7 @@
 	<title>Registro - LMS</title>
 	<link rel="stylesheet" href="components/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"></script>
+	<link rel="stylesheet" href="components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
 	<link rel="stylesheet" href="css/frontend.css">
 	<link rel="stylesheet" href="branding/branding.css">
 	<script>browser={'sucks':false};(function(){var method;var noop=function noop(){};var methods=['assert','clear','count','debug','dir','dirxml','error','exception','group','groupCollapsed','groupEnd','info','log','markTimeline','profile','profileEnd','table','time','timeEnd','timeStamp','trace','warn'];var length = methods.length;var console=(window.console=window.console||{});while(length--){method=methods[length];if(!console[method]){console[method]=noop;}}}());</script>
@@ -142,25 +142,7 @@
 
 		<div class="row">
 			<div class="col-sm-6">
-				<div class="form-group">
-					<label for="input-captcha">Ingresa el texto de la imagen</label>
-
-					<div class="form-group">
-						<div class="captcha panel panel-default">
-							<div id="recaptcha_image" style="width: 300px; height: 57px;">
-								<img id="recaptcha_challenge_image" alt="reCAPTCHA challenge image" height="57" width="300" src="http://www.google.com/recaptcha/api/image?c=03AHJ_Vuu3galGhTqG0eJwTlqiCekzBQWeqbtjVaWQaCKMPlBTIoekjC_Bv8aptD3ZmbvpemvXVqWNcVPEJoDVpyhVRfVKDxqdqtvCTV6vml_vIB2ibM3AHrLC3kXqfsI6VazbUNepc-y4j6TMbD_EfQyGp_nXLxSYsWRJI0SibYWg2tDKxZ_kE_7TPKdLkj5M04Q01q9VexvFDPV5OS7XOh9tKoQlqDzjK1464qMkd0eBELoZsmObqVC8APt8IvuvrjJFujPfIrOAfrH86Ockv_wBFNY0IGSBVQ&amp;th=,EeCwDkLMFa0DgaC2L82S6Jd8-evwAAAAJKAAAAAE2ADDXc3CrjQbkYft_PAYoKjkLDXsAHng8INxN-T48RRqc2JAegss91ySec84ollGU2mJEAd8fOLu5IM1sF4BN4Yt5KLxtdE07vcyrZ31SiBIlDEP3QCa34r0AMtwHodVMEQFpb5QDNMuuGspX4Bhu-FRX4m8pXuytxcRFjckMPM2Q56U4Y8ztCG-V0FjWCBm3UCEzQ6j30LiLhn5Qr6u2ZbVquOz_RNU0ih94rSZeRRowYrdYtYKJ3Jz6uI8J7BroTwMJdUu">
-							</div>
-						</div>
-					</div>
-					
-					<div class="input-group">
-						<input type="text" id="input-captcha" class="form-control" />
-						<a class="btn btn-default input-group-addon" href="javascript:Recaptcha.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
-						<!-- <a class="btn btn-default input-group-addon recaptcha_only_if_image" href="javascript:Recaptcha.switch_type('audio')"><span class="glyphicon glyphicon-volume-up"></span></a> -->
-						<!-- <a class="btn btn-default input-group-addon recaptcha_only_if_audio" href="javascript:Recaptcha.switch_type('image')"><span class="glyphicon glyphicon-picture"></span></a> -->
-						<!-- <a class="btn btn-default input-group-addon" href="javascript:Recaptcha.showhelp()"><span class="glyphicon glyphicon-info-sign"></span></a> -->
-					</div>
-				</div>
+				<div class="form-group" id="captcha-form"></div>
 			</div>
 		</div>
 
@@ -209,5 +191,14 @@
 	<script src="components/zxcvbn/zxcvbn.min.js"></script>
 	<script src="js/rdlms.js"></script>
 	<script src="js/registration.js"></script>
+    <script>
+        
+        var posting = $.post('/Captcha/');
+        posting.done(function (data) {
+            $('#captcha-form').html(data);
+        });
+        
+        
+    </script>
 </body>
 </html>

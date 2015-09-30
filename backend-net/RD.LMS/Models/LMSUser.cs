@@ -49,6 +49,10 @@ namespace RD.LMS.Models
         public short occupation { get; set; }
 
         public short organization { get; set; }
+        /// <summary>
+        /// This property is used for password reset
+        /// </summary>
+        public DateTime LastLogged { get; set; }
 
         public IDictionary<string, string> fields { get; set; }
         #endregion
@@ -64,7 +68,7 @@ namespace RD.LMS.Models
         internal string BeginSession(int id)
         {
             RD.Entities.User daoUser = RD.Business.UserController.GetUserById(id);
-            if (daoUser == null || !daoUser.IsLogged)
+            if (daoUser == null)
             {
                 this.reason = "credentials-error";
                 return "fail";
@@ -88,6 +92,7 @@ namespace RD.LMS.Models
             this.gender = daoUser.Gender;
             this.occupation = daoUser.Ocupation;
             this.organization = daoUser.Organization;
+            this.LastLogged = daoUser.LastLogged.HasValue ? daoUser.LastLogged.Value : new DateTime(1899, 11, 30);
         }
 
         internal String Validate()
@@ -140,6 +145,9 @@ namespace RD.LMS.Models
 
         internal string GetSessionType()
         {
+            if (this.LastLogged.Date.Equals(DateTime.Now.Date))
+                return "reset-password";
+
             switch (this.isAdmin)
             {
                 case true:
@@ -150,7 +158,7 @@ namespace RD.LMS.Models
                     break;
             }
 
-            return "restore-password";
+            return string.Empty;
         }
 
         internal void UpdateUser()
@@ -159,23 +167,53 @@ namespace RD.LMS.Models
             user.Ocupation = this.occupation;
             user.Organization = this.organization;
             user.Gender = this.gender;
+            user.FirstName = this.name;
+            user.LastName = this.lastName;
+            user.SecondLastName = this.secondLastName;
             string[] date = this.birthday.Split(Char.Parse("-"));
             user.BirthDay = new DateTime(int.Parse(date[0]), int.Parse(date[1]), int.Parse(date[2]));
 
             Business.UserController.SaveUser(user);
 
             if (this.password != String.Empty)
+                UpdateUserPassword(user);
+        }
+
+        private void UpdateUserPassword(Entities.User user)
+        {
+            try
             {
                 if (Business.UserController.GetUser(null, this.password, user.Email) != null)
                 {
+
                     if (this.newPassword.Equals(this.newPasswordCheck))
                     {
-                        ResetPasswordModel pwdModel = new ResetPasswordModel();
-                        pwdModel.Id = this.id;
-                        pwdModel.NewPassword = this.newPassword;
-                        pwdModel.UpdatePassword();
+                        using (ResetPasswordModel passwordModel = new ResetPasswordModel())
+                        {
+                            passwordModel.Id = this.id;
+                            passwordModel.NewPassword = this.newPassword;
+                            if (!passwordModel.IsStrongPassword())
+                            {
+                                this.fields = new Dictionary<string, string>();
+                                this.fields.Add("newPassword", "La contraseña no cumple con los lineamientos especificados");
+                                throw new Exception("La contraseña no cumple con los lineamientos especificados");
+                            }
+
+                            passwordModel.UpdatePassword();
+                        }
                     }
                 }
+                else
+                {
+                    this.fields = new Dictionary<string, string>();
+                    this.fields.Add("oldPassword", "La contraseña anterior es incorrecta");
+                    throw new Exception("La contraseña anterior es incorrecta");
+                }
+            }
+            catch (Exception)
+            {
+                this.reason = "validation-error";
+                throw;
             }
         }
 
@@ -236,6 +274,8 @@ namespace RD.LMS.Models
                 Entities.User user = Business.UserController.GetUserByMail(userEmail);
                 if (user != null)
                 {
+                    user.LastLogged = DateTime.Now.Date;
+                    Business.UserController.SaveUser(user);
                     Business.NotificationController notification = new Business.NotificationController();
                     notification.SendPasswordRecoveryMail(user);
                 }

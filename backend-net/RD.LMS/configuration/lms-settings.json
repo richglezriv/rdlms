@@ -33,7 +33,7 @@
         "validate": "User/UserSessionState",
         "user": "User/UserSessionState",
         "logoutRedirect": "login.html",
-        "resetPassword": "Home/ResetPassword",
+        "resetPassword": "Home/ReestablishPassword",
         "forgot": "Home/ForgotPassword"
     },
     "branding": {

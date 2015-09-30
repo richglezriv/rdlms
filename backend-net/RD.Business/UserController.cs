@@ -218,6 +218,7 @@ namespace RD.Business
             try
             {
                 user.Password = Utilities.GetStringHashed(newPassword);
+                user.LastLogged = new DateTime(1899, 11, 30);
                 Entities.IDAO control = new Entities.UserDAO(string.Empty, user);
                 control.Update();
             }

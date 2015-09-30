@@ -140,6 +140,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Controllers\ExternalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -319,6 +320,8 @@
     <Content Include="Views\Home\ResetPassword.cshtml" />
     <Content Include="Views\Home\Profile.cshtml" />
     <Content Include="Views\External\Confirmation.cshtml" />
+    <Content Include="Views\Captcha\Index.cshtml" />
+    <Content Include="Views\Captcha\_PartialCaptcha.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RD.Business\RD.Business.csproj">

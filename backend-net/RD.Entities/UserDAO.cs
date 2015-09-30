@@ -66,27 +66,13 @@ namespace RD.Entities
 
         }
 
-        public List<User> GetBy(String nameLike)
+        public List<User> GetBy(String mailLike)
         {
             RDModelContainer model = Context.SetContext(_password).model;
 
-            List<BnnAppUser> result = model.BnnAppUsers.Where(u => u.Name.Contains(nameLike) || u.LastNames.Contains(nameLike)).ToList<BnnAppUser>();
-            IEnumerable<long> ids = result.Select(r => r.Id);
-            List<Int32> sIds = new List<Int32>();
-            foreach (long item in ids)
-            {
-                sIds.Add(Convert.ToInt32(item));
-            }
-            List<User> users = model.Users.Where(u => ids.Contains(u.Id)).ToList();
-            
+            List<User> result = model.Users.Where(u => u.Email.Contains(mailLike)).ToList();
 
-            users.ForEach(u =>
-            {
-                u.FirstName = result.Single(r => r.Id.Equals(u.Id)).Name;
-                u.LastName = result.Single(r => r.Id.Equals(u.Id)).LastNames;
-            });
-
-            return users;
+            return result;
         }
 
         public User GetByMail(String email)

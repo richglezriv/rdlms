@@ -20,6 +20,8 @@ namespace RD.LMS
 
         protected void Application_Start()
         {
+            CaptchaMvc.Infrastructure.CaptchaUtils.CaptchaManager.StorageProvider = new CaptchaMvc.Infrastructure.SessionStorageProvider();
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);

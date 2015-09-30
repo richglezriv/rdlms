@@ -131,10 +131,11 @@ namespace RD.LMS.Controllers
         public ActionResult SaveUser(String data)
         {
             Models.JSonModel model = new JSonModel();
+            Models.LMSUser user = (LMSUser)Session[Utilities.USER];
+
             try
             {
                 Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
-                Models.LMSUser user = (LMSUser)Session[Utilities.USER];
                 user.occupation = Convert.ToInt16(toFetch["occupation"].ToString());
                 user.organization = Convert.ToInt16(toFetch["organization"].ToString());
                 user.gender = toFetch["gender"].ToString();
@@ -142,6 +143,9 @@ namespace RD.LMS.Controllers
                 user.password = toFetch["oldPassword"].ToString();
                 user.newPassword = toFetch["newPassword"].ToString();
                 user.newPasswordCheck = toFetch["newPasswordCheck"].ToString();
+                user.name = toFetch["name"].ToString();
+                user.lastName = toFetch["lastName"].ToString();
+                user.secondLastName = toFetch["secondLastName"].ToString();
                 user.UpdateUser();
 
                 Session[Utilities.USER] = user;
@@ -149,6 +153,7 @@ namespace RD.LMS.Controllers
             catch (Exception ex)
             {
                 model.status = "fail";
+                model.data = user;
             }
 
             return Json(model);
