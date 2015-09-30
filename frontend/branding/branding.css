@@ -5,7 +5,7 @@ html {
 }
 body {
 	min-height: 100%;
-	padding-bottom: 150px;
+	padding-bottom: 200px;
 	position: relative;
 }
 
@@ -37,34 +37,56 @@ body {
 
 
 #branded-footer {
-	background-color: #000;
 	overflow: hidden;
 	color: #ddd;
 	position: absolute;
-	bottom: 0px;
+	bottom: 0;
 	left: 0;
 	right: 0;
 }
 
-#branded-footer .social {
-	margin: 0;
-	padding: 0.25em 1em 0.25em 0;
-	list-style: none;
-	text-align: left;
-	font-size: 1.5em;
-}
-
-#branded-footer .social li {
+#branded-footer ul {
 	margin: 0;
 	padding: 0;
+}
+
+#branded-footer li {
 	list-style: none;
 	display: inline;
 }
 
+#branded-footer .links a {
+	color: #666;
+	font-weight: bold;
+	padding-right: 1em;
+}
+#branded-footer .social {
+	text-align: right;
+}
+#branded-footer .social a {
+	color: #666;
+	font-size: 1.5em;
+	padding-left: 0.75em;
+	text-align: right;
+	position: relative;
+	top: -0.25em;
+}
+#branded-footer .copyright {
+	color: #eee;
+	background: #000;
+	padding: 1em;
+	text-align: center;
+}
+
+@media (max-width: 767px){
+	#branded-footer * { text-align: center; }
+}
 
 
 
-.page-header { color: #1ABC9C; }
+
+.page-header, label { color: #1ABC9C; }
+.checkbox label, .radio label { color: #333; }
 h1, h2, .btn { font-family: 'Populaire Light1263935', Arial, sans-serif; }
 h1 {font-size: 5em;}
 h2 {font-size: 3.5em;}
@@ -72,7 +94,7 @@ h2 {font-size: 3.5em;}
 .btn {
 	font-size: 2em;
 	letter-spacing: 1px;
-	padding: 4px 2em 0px;
+	padding: 4px 1.7em 0px;
 	margin-top: 0.25em;
 }
 
