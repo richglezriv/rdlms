@@ -128,7 +128,7 @@ jQuery(function($){
 		startLoading();
 		
 		var jsonData = {
-			username: $('#input-email1').val()
+		    username: $('#input-email-forgot').val()
 		};
 		$.ajax({
 			url: settings.session.forgot,
