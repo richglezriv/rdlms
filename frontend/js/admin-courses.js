@@ -210,13 +210,16 @@ jQuery(function($){
 		if(loading) return;
 		startLoading();
 		
-		var jsonData = {
-			name: modal.find('#input-name').val(),
-			description: modal.find('#input-description').val(),
-			thumbnail: uploadThumb.val(),
-			scorm: uploadScorm.val(),
-			conditions: modal.find('#input-conditions').val() || []
-		};
+		var jsonData = getFormData();
+
+		var validationErrors = validateData(jsonData);
+		if(validationErrors){
+			showFeedback('Algunos de los datos que especificaste son inválidos. Por favor revisa los campos marcados.');
+			stopLoading();
+			showErrors(validationErrors);
+			return false;
+		}
+
 		if(modal.data('id')) jsonData.courseId = modal.data('id');
 		
 		$.ajax({
@@ -260,6 +263,43 @@ jQuery(function($){
 	function hideErrors(){
 		modal.find('.has-error').removeClass('has-error');
 		modal.find('.error-feedback').remove();
+	}
+
+	function getFormData(){
+		var data = {
+			name: modal.find('#input-name').val(),
+			description: modal.find('#input-description').val(),
+			thumbnail: uploadThumb.val(),
+			scorm: uploadScorm.val(),
+			conditions: modal.find('#input-conditions').val() || []
+		};
+		return data;
+	}
+
+	function validateData(data){
+		var errors = {};
+		var patterns = {
+			notEmpty: /[^\s]+/,
+			name: /^[^0-9!\@\#\$\%\*\+=\\\/\?<>\{\}\[\]:;]{2,60}$/i,
+			email: /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
+			birthday: /^((19[0-9]{2})|(20[0-2][0-9]))\-((0\d)|(1[0-2]))\-(([0-2]\d)|(3[0-1]))$/, //1900-2029
+			gender: /^[mf]$/i,
+			integer: /^\d+$/,
+			bool: /^[01]$/,
+			password: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
+		};
+		
+		if(!(patterns.notEmpty).test(data.name)){
+			errors.name = 'El nombre proporcionado es inválido.';
+		}
+		if(!(patterns.notEmpty).test(data.description)){
+			errors.description = 'La descripción proporcionada es inválida.';
+		}
+		if(!(patterns.notEmpty).test(data.scorm)){
+			errors.scorm = 'Por favor agrega un paquete SCORM para continuar.';
+		}
+
+		return $.isEmptyObject(errors) ? null : errors;
 	}
 
 
