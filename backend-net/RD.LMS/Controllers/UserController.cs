@@ -58,7 +58,9 @@ namespace RD.LMS.Controllers
             }
             catch (Exception ex)
             {
-
+                model.status = "fail";
+                user.SetReason("exception " + ex.Message + ex.InnerException.Message);
+                model.data = user;
             }
 
             return Json(model);

@@ -191,7 +191,7 @@ namespace RD.Business
         public static void SaveUser(Entities.User user)
         {
             Entities.IDAO dao = new Entities.UserDAO(string.Empty, user);
-            if (user.Id.Equals(0)){
+            if (user.Id.Equals(0) && !user.IsAdmin){
                 if (user.Password != null)
                 {
                     user.Password = Utilities.GetStringHashed(user.Password);
