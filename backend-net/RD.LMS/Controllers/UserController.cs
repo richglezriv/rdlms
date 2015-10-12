@@ -13,6 +13,13 @@ namespace RD.LMS.Controllers
         // GET: /User/
         private string USER_COURSE = "USER_COURSE";
 
+        public ActionResult Index()
+        {
+            Response.Redirect("~/login.html");
+
+            return View();
+        }
+
         public ActionResult Login(string data)
         {
             Models.JSonModel model = new Models.JSonModel();

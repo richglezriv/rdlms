@@ -10,7 +10,12 @@ namespace RD.LMS.Controllers
 {
     public class ProcessController : Controller
     {
-        
+        public ActionResult Index()
+        {
+            Response.Redirect("~/login.html");
+
+            return View();
+        }
 
         public ActionResult UploadThumbnail(String qqfile)
         {

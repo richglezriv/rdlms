@@ -14,6 +14,8 @@ namespace RD.LMS.Controllers
 
         public ActionResult Index()
         {
+            Response.Redirect("~/login.html");
+
             return View();
         }
 
