@@ -8,7 +8,7 @@
         "courses": "User/Get",
         "registration": "Admin/RegisterUser",
         "profile": "Admin/SaveUser",
-        "uploadPath": "uploads/"
+        "uploadPath": "scorm-images/"
     },
     "admin": {
         "course": {

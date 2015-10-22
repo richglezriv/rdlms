@@ -15,8 +15,8 @@ namespace RD.LMS.Controllers
             List<String> thumbs = Session[Utilities.THUMBS] == null ? new List<string>() : (List<String>)Session[Utilities.THUMBS];
             JSonModel model = new JSonModel() { status = "success" };
             HttpRequestBase hfc = Request;
-            string path = Server.MapPath("~/uploads/" + qqfile);
-
+            string path = Server.MapPath("~/uploads/" + qqfile).Replace("home", "FileUp");
+            
             try
             {
                 if (hfc.ContentLength > 500000)
@@ -55,7 +55,7 @@ namespace RD.LMS.Controllers
             {
                 HttpRequestBase hfc = Request;
                 System.IO.Stream stream = hfc.InputStream;
-                string path = Server.MapPath("~/uploads/" + qqfile);
+                string path = Server.MapPath("~/uploads/" + qqfile).Replace("home", "FileUp"); ;
                 System.IO.FileStream newFile = System.IO.File.Create(path);
                 stream.CopyTo(newFile);
 

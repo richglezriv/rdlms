@@ -102,7 +102,9 @@ jQuery(function($){
 				}else if(r.status && r.status == "fail" && r.data.reason === 'validation-error'){
 					showErrors(r.data.fields);
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "credentials-error"){
-					showFeedback('Nombre de usuario o contraseña incorrectos');
+				    showFeedback('Nombre de usuario o contraseña incorrectos');
+				} else if (r.status && r.status == "fail" && r.data && r.data.reason == "user-inactive") {
+				    showFeedback('Usuario no activo');
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "too-many-tries"){
 					showFeedback('Demasiados intentos fallidos. Tu acceso se ha bloqueado por una hora.');
 				}else{

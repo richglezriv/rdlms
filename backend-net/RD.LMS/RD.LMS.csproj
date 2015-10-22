@@ -294,6 +294,7 @@
     <Content Include="_header-logged-out.html" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="scorm-images\" />
     <Folder Include="scorm-packages\" />
     <Folder Include="uploads\" />
   </ItemGroup>
@@ -331,6 +332,10 @@
     <ProjectReference Include="..\RD.Entities\RD.Entities.csproj">
       <Project>{fa8dd968-901f-4d07-8d99-d9397c5cdde6}</Project>
       <Name>RD.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Projects\BSoft.MailProvider\BSoft.MailProvider.csproj">
+      <Project>{373cc07c-9c4f-4fb8-b277-baba76683ed1}</Project>
+      <Name>BSoft.MailProvider</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

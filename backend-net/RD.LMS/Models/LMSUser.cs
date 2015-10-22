@@ -245,6 +245,7 @@ namespace RD.LMS.Models
                 {
                     this.fields = new Dictionary<string, string>();
                     this.fields.Add("password", "La contraseña no cumple con los lineamientos especificados");
+                    this.reason = "validation-error";
                     throw new Exception("La contraseña no cumple con los lineamientos especificados");
                 }
 
@@ -252,6 +253,7 @@ namespace RD.LMS.Models
                 {
                     this.fields = new Dictionary<string, string>();
                     this.fields.Add("email", "El email especificado ya existe");
+                    this.reason = "validation-error";
                     throw new Exception("El email especificado ya existe");
                 }
                     
@@ -259,10 +261,13 @@ namespace RD.LMS.Models
                 Business.UserController.SaveUser(newUSer);
                 Business.NotificationController notify = new Business.NotificationController();
                 notify.SendConfirmationMail(newUSer);
+                
             }
-            catch (Exception)
+            catch (BSoft.MailProvider.MailControlException ex)
             {
-                this.reason = "validation-error";
+                this.fields = new Dictionary<string, string>();
+                this.reason = "fail";
+                this.fields.Add("notification", ex.Message);
                 throw;
             }
         }

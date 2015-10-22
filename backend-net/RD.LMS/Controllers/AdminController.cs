@@ -39,18 +39,18 @@ namespace RD.LMS.Controllers
             course.LoadValues(toFetch);
             //course thumbnail
             string source = Server.MapPath("~/uploads/") + course.thumbnail;
+            source = source.Replace("home", "FileUp");
             //string extension = course.thumbnail.Remove(0, course.thumbnail.Length - 4);
             //course.thumbnail = course.name + extension;
-            string destination = source;//Server.MapPath("/uploads/") + course.thumbnail;
+            string destination = Server.MapPath("~/scorm-images/") + course.thumbnail;
             //copy file
-            //if (System.IO.File.Exists(source)) {
-            //    System.IO.File.Copy(source, destination, true);
-            //}
+            if (System.IO.File.Exists(source))
+            {
+                System.IO.File.Copy(source, destination, true);
+            }
             
             //scorm course zip
-            source = Server.MapPath("~/uploads/" + course.scorm);
-            string extension = course.scorm.Remove(0, course.scorm.Length - 4);
-            //course.scorm = course.name + extension;
+            source = Server.MapPath("~/uploads/" + course.scorm).Replace("home", "FileUp"); ;
             destination = Server.MapPath("~/scorm-packages/") + course.scorm;
             if (System.IO.File.Exists(source))
             {
@@ -60,7 +60,6 @@ namespace RD.LMS.Controllers
                 course.SetManifest(Server.MapPath("~/scorm-packages/"));
             }
 
-            //register course
             course.Save();
 
             return Json(model);
@@ -163,7 +162,7 @@ namespace RD.LMS.Controllers
         {
             Models.JSonModel model = new JSonModel();
             Models.LMSUser user = new LMSUser();
-            
+
             try
             {
                 Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);

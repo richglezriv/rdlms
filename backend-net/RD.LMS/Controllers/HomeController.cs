@@ -115,46 +115,21 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        public ActionResult Profile(FormCollection fc)
+        public ActionResult Profile()
         {
-            Models.JSonModel model = new Models.JSonModel();
+            System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("localhost", 25);
+            System.Net.Mail.MailAddress from_ = new System.Net.Mail.MailAddress("noreply@uxns.com.mx",
+                "UNXS Demo");
+            System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
+            msg.From = from_;
 
-            if (Session[Utilities.USER] != null)
-            {
-                model.data = (Models.LMSUser)Session[Utilities.USER];
-            }
+            msg.Subject = "Test mail";
+            msg.IsBodyHtml = false;
+            msg.Body = "This is a test mail";
+            msg.To.Add(new System.Net.Mail.MailAddress("ricardo@reacciondigital.com","RAGR Demo"));
+            client.Send(msg);
 
-            if (fc.Keys.Count > 0)
-            {
-                Models.LMSUser user = (Models.LMSUser)Session[Utilities.USER];
-                if (!fc["input-old-password"].Equals(user.password))
-                    user.SetReason("La contraseña actual no coincide");
-                else
-                {
-                    Models.ResetPasswordModel resetPass = new ResetPasswordModel();
-                    resetPass.Id = user.id;
-                    try
-                    {
-                        resetPass.NewPassword = fc["input-password"].ToString();
-                        if (!resetPass.NewPassword.Equals(fc["input-retype-password"].ToString()))
-                            user.SetReason("Error: Las contraseñas deben coincidir");
-                        else
-                        {
-                            resetPass.UpdatePassword();
-                            user.SetReason(resetPass.Message);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        user.SetReason("No se pudo actualizar la contraseña");
-                    }
-                }
-
-                model.data = user;
-                Session[Utilities.USER] = user;
-            }
-
-            return View(model);
+            return View();
         }
 
         public ActionResult ForgotPassword(string data)
