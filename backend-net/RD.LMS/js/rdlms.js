@@ -38,9 +38,47 @@ RDLMS = (function($){
 		self.settings = response;
 		// TODO: Check if lms-settings has all the required attributes.
 		setBranding(self.settings);
-		if(initSuccessCallback) initSuccessCallback();
+		loadLMSUser();
+		//if(initSuccessCallback) initSuccessCallback();
 	}
 
+	function loadLMSUser() {
+	    $.ajax({
+	        url: settings.session.user,
+	        dataType: "json", method: 'POST',
+	        cache: false // No necessary but just in case (IE)
+	    })
+			.done(onLMSUserLoaded)
+			.fail(onLMSUserError)
+	    //.always()
+	    ;
+	}
+
+
+	function onLMSUserError() {
+	    self.showFeedback('No se pudo cargar la información de la sesión. Por favor, intenta más tarde.');
+	    console.error('Unable to load session info.');
+	    if (initErrorCallback) initErrorCallback();
+	}
+
+
+	function onLMSUserLoaded(response) {
+	    if (response.status && response.status === 'success') {
+	        var session = {
+	            type: response.data.sessionType,
+	            user: response.data.user
+	        };
+
+	        self.session = session;
+	        setBranding(self.settings, self.session);
+	        $(window).on('hashchange', onHashChange);
+
+	        if (initSuccessCallback) initSuccessCallback(session); // sending `sessionType` and `user`
+
+	    } else {
+	        onLMSUserError();
+	    }
+	}
 
 	function showFeedback(message){
 		console.log(message);
