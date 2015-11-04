@@ -192,18 +192,27 @@ namespace RD.LMS.Controllers
         }
 
         public ActionResult SessionEnabled()
+        public ActionResult UserSessionState()
         {
             Models.JSonModel model = new JSonModel();
-            Models.MessageData message = new MessageData();
             if (Session[Utilities.USER] != null){
-                message.id = ((LMSUser)Session[Utilities.USER]).id;
+                LMSUser user = (LMSUser)Session[Utilities.USER];
+                model.data = new JSonUserModel()
+                {
+                    sessionType = user.GetSessionType(),
+                    user = user
+                };
                 model.status = "success";
             }
             else
             {
-                model.status = "fail";
+                model.status = "success";
+                model.data = new JSonUserModel()
+                {
+                    sessionType = "logged-out",
+                    user = null
+                };
             }
-            model.data = message;
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
