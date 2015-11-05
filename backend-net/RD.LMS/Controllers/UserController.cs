@@ -192,14 +192,13 @@ namespace RD.LMS.Controllers
         }
 
         public ActionResult SessionEnabled()
-        public ActionResult UserSessionState()
         {
             Models.JSonModel model = new JSonModel();
             if (Session[Utilities.USER] != null){
                 LMSUser user = (LMSUser)Session[Utilities.USER];
                 model.data = new JSonUserModel()
                 {
-                    sessionType = user.GetSessionType(),
+                    sessionType = "admin",
                     user = user
                 };
                 model.status = "success";

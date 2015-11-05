@@ -39,4 +39,17 @@ namespace RD.LMS.Models
         public String reason { get; set; }
     }
 
+    public class JSonUserModel : IDataModel
+    {
+        public string sessionType { get; set; }
+
+        public IDataModel user { get; set; }
+
+        public string id
+        { get; set; }
+
+        public string name
+        { get; set; }
+    }
+
 }

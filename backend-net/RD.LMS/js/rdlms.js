@@ -80,6 +80,17 @@ RDLMS = (function($){
 	    }
 	}
 
+	function onHashChange(e) {
+	    var hash = location.hash;
+	    if (hash === '#lms-logout') {
+	        logout();
+	    }
+	    if (hash === '#lms-profile') {
+	        location.href = 'profile.html';
+	    }
+	    location.hash = '';
+	}
+
 	function showFeedback(message){
 		console.log(message);
 	}
