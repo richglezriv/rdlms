@@ -161,7 +161,7 @@ RDLMS = (function($){
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){
-					document.location.href = self.settings.logoutRedirect || 'login.html';
+					document.location.href = self.settings.session.logoutRedirect || 'login.html';
 				}else{
 					console.error('Could not logout.');
 				}

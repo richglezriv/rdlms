@@ -31,6 +31,6 @@
         "logout": "User/Logout",
         "validate": "User/SessionEnabled",
         "user": "User/SessionEnabled",
-        "logoutRedirect": "login.html"
+        "logoutRedirect": "/"
     }
 }
