@@ -1,4 +1,7 @@
 ﻿@model CaptchaMvc.Models.DefaultBuildInfoModel
+<div class="form-group">
+    <label for="input-passwordCheck">Ingresa el c&oacute;digo que se ve en la imagen</label>
+</div>
 <img id="@Model.ImageElementId" src="@Model.ImageUrl" />
 @Html.Hidden(Model.TokenElementId, Model.TokenValue)
 <br />
@@ -26,8 +29,6 @@
     <a href="#@Model.ImageElementId" id="@id" onclick="@functionName" style="display: none;">generar nuevo c&oacute;digo</a>
 }
 
-<br />
-<br />
 @if (Model.IsRequired)
 {
     @Html.TextBox(Model.InputElementId, null, new Dictionary<string, object>
