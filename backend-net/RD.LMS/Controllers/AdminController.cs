@@ -166,6 +166,8 @@ namespace RD.LMS.Controllers
             try
             {
                 Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+                System.Collections.Concurrent.ConcurrentDictionary<CaptchaMvc.Models.KeyTimeEntry<string>, CaptchaMvc.Interface.ICaptchaValue> values = (System.Collections.Concurrent.ConcurrentDictionary<CaptchaMvc.Models.KeyTimeEntry<string>, CaptchaMvc.Interface.ICaptchaValue>)Session["____________SessionValidateKey_____________"];
+                user.ValidateCaptcha(toFetch["captcha"].ToString(), values);
                 user.occupation = Convert.ToInt16(toFetch["occupation"].ToString());
                 user.organization = Convert.ToInt16(toFetch["organization"].ToString());
                 user.gender = toFetch["gender"].ToString();
@@ -176,7 +178,6 @@ namespace RD.LMS.Controllers
                 user.name = toFetch["name"].ToString();
                 user.lastName = toFetch["lastName"].ToString();
                 user.secondLastName = toFetch["secondLastName"].ToString();
-                //"captcha":"","terms":1}
                 user.Register();
 
             }

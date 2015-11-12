@@ -288,7 +288,31 @@ namespace RD.LMS.Models
             catch (Exception) { }
 
         }
+
+        internal void ValidateCaptcha(string captcha, System.Collections.Concurrent.ConcurrentDictionary<CaptchaMvc.Models.KeyTimeEntry<string>, CaptchaMvc.Interface.ICaptchaValue> captchaValues)
+        {
+            Boolean failCaptcha = true;
+
+            foreach (var captchaKey in captchaValues)
+            {
+                if (captchaKey.Value.Value.Equals(captcha))
+                {
+                    failCaptcha = false;
+                    break;
+                }
+            }
+
+            if (failCaptcha)
+            {
+                this.fields = new Dictionary<string, string>();
+                this.fields.Add("CaptchaInputText", "El c&oacute;digo no corresponde con el de la imagen");
+                this.reason = "validation-error";
+                throw new Exception("El c&oacute;digo no corresponde con el de la imagen");
+            }
+        }
         #endregion
+
+        
     }
 
     public struct UserTryout

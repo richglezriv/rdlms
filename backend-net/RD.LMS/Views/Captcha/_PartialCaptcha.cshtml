@@ -31,7 +31,7 @@
 
 @if (Model.IsRequired)
 {
-    @Html.TextBox(Model.InputElementId, null, new Dictionary<string, object>
+    @Html.TextBox(string.Format("input-{0}",Model.InputElementId), null, new Dictionary<string, object>
                                                   {
                                                       {"data-val", "true"},
                                                       {"data-val-required", Model.RequiredMessage},
@@ -40,6 +40,6 @@
 }
 else
 {
-    @Html.TextBox(Model.InputElementId, null, new { @class = "form-control" })
+    @Html.TextBox(string.Format("input-{0}", Model.InputElementId), null, new { @class = "form-control" })
 }
 @Html.ValidationMessage(Model.InputElementId)
