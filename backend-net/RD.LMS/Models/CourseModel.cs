@@ -81,7 +81,7 @@ namespace RD.LMS.Models
             this.name = userCourse.Course.Name;
             this.scoIndex = userCourse.Course.ScoIndex;
             this.scoPath = userCourse.Course.ScormPackage.Remove(userCourse.Course.ScormPackage.Length - 4, 4);
-            this.scorm = this.scoPath;
+            this.scorm = userCourse.Course.ScormPackage;
             this.status = userCourse.Status;
             this.thumbnail = userCourse.Course.Thumbnail;
             
