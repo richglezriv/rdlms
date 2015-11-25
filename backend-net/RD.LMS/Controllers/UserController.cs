@@ -139,8 +139,9 @@ namespace RD.LMS.Controllers
 
                 if (course == null)
                 {
-                    model.data = new MessageData(){
-                      message=  "No puede acceder todavía a la evaluación de este curso."
+                    model.data = new MessageData()
+                    {
+                        message = "No puede acceder todavía a la evaluación de este curso."
                     };
                     model.status = "fail";
                     return Json(model);
@@ -150,6 +151,9 @@ namespace RD.LMS.Controllers
                 CourseModel toCourse = new CourseModel();
 
                 toCourse.LoadCourse(course);
+                //set the index sco file
+                SetScoIndexFile(course.Course, toCourse);
+
                 lms.LoadCourse(course);
                 lms.StudentName = user.name;
                 toCourse.dataModel = lms.GenerateJSonString();
@@ -159,15 +163,39 @@ namespace RD.LMS.Controllers
 
                 Session.Add(USER_COURSE, course);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                model.data = new MessageData()
+
+                if (ex.Message.Contains("CourseLoad:"))
                 {
-                    message = "error al cargar el curso, verifique con el adminitrador"
-                };
+                    model.data = new MessageData()
+                    {
+                        message = ex.Message
+                    };
+                }
+                else
+                {
+                    model.data = new MessageData()
+                    {
+                        message = "error al cargar el curso, verifique con el adminitrador"
+                    };
+                }
                 model.status = "fail";
             }
             return Json(model);
+        }
+
+        private void SetScoIndexFile(Entities.Course course, CourseModel model)
+        {
+            try
+            {
+                model.SetManifest(Server.MapPath("~/scorm-packages/"));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("CourseLoad: " + ex.Message);
+            }
+            
         }
 
         public ActionResult Commit(string data)
