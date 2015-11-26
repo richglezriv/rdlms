@@ -9,14 +9,6 @@ namespace RD.LMS.Controllers
 {
     public class ExternalController : Controller
     {
-        //
-        // GET: /External/
-
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult LoginUser(string data)
         {
             Models.JSonModel model = new Models.JSonModel();

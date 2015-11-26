@@ -233,7 +233,7 @@ jQuery(function($){
 					showFeedback('Algunos de los datos que especificaste son inválidos. Por favor revisa los campos marcados.');
 					showErrors(r.status.data);
 				}else{
-					showFeedback('Ocurrió un error al intentar guardar. Por favor intenta más tarde.');
+				    showFeedback('Ocurrió un error al intentar guardar. Por favor intenta más tarde.' + r.status);
 				}
 			})
 			.fail(function(){

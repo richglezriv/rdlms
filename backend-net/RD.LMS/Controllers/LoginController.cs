@@ -8,14 +8,6 @@ namespace RD.LMS.Controllers
 {
     public class LoginController : Controller
     {
-        //
-        // GET: /Login/
-
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult Login(string jsonModel)
         {
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(jsonModel);

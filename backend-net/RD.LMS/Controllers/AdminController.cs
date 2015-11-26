@@ -11,13 +11,6 @@ namespace RD.LMS.Controllers
     public class AdminController : Controller
     {
 
-        private Boolean _sessionActive;
-
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult Get()
         {
             RD.LMS.Models.JSonModelCollection model = new RD.LMS.Models.JSonModelCollection();
@@ -32,9 +25,12 @@ namespace RD.LMS.Controllers
         }
 
         public ActionResult Save(String data) {
-            //TODO Read settings from json file
             JSonModel model = new JSonModel();
             CourseModel course = new CourseModel();
+            try
+            {
+                //TODO Read settings from json file
+            
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             course.LoadValues(toFetch);
             //course thumbnail
@@ -61,6 +57,11 @@ namespace RD.LMS.Controllers
             }
 
             course.Save();
+            }
+            catch (Exception ex)
+            {
+                model.status = ex.Message;
+            }
 
             return Json(model);
         }
