@@ -47,14 +47,14 @@ namespace RD.Business
             }
         }
 
-        public static List<Entities.User> GetUsers(string nameLike)
+        public static List<Entities.User> GetUsers(string mailLike)
         {
             List<Entities.User> result = new List<Entities.User>();
-            if (nameLike.Length < 3)
+            if (mailLike.Length < 3)
                 return result;
 
             _dao = new RD.Entities.UserDAO(string.Empty);
-            result = _dao.GetBy(nameLike);
+            result = _dao.GetBy(mailLike);
 
             return result;
 
