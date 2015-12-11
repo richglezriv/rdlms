@@ -217,17 +217,32 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        public ActionResult UserSessionState()
+        public ActionResult UserSessionState(string data)
         {
+            Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             Models.JSonModel model = new JSonModel();
-            if (Session[Utilities.USER] != null){
-                LMSUser user = (LMSUser)Session[Utilities.USER];
-                model.data = new JSonUserModel()
+            if (toFetch["InP"] != null)
+            {
+                LMSUser user = new LMSUser(toFetch["InP"].ToString());//(LMSUser)Session[Utilities.USER];
+
+                model.status = user.LoadUserSession();
+                if (user.reason != null && user.reason.Equals("logged-out"))
                 {
-                    sessionType = user.GetSessionType(),
-                    user = user
-                };
-                model.status = "success";
+                    model.data = new JSonUserModel()
+                    {
+                        sessionType = "logged-out",
+                        user = null
+                    };
+                }
+                else
+                {
+                    model.data = new JSonUserModel()
+                    {
+                        sessionType = user.GetSessionType(),
+                        user = user
+                    };
+                }
+                
             }
             else
             {
@@ -238,8 +253,28 @@ namespace RD.LMS.Controllers
                     user = null
                 };
             }
+            
+            //if (Session[Utilities.USER] != null){
+            //    LMSUser user = new LMSUser(toFetch["InP"].ToString());//(LMSUser)Session[Utilities.USER];
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+            //    model.data = new JSonUserModel()
+            //    {
+            //        sessionType = user.GetSessionType(),
+            //        user = user
+            //    };
+            //    model.status = "success";
+            //}
+            //else
+            //{
+            //    model.status = "success";
+            //    model.data = new JSonUserModel()
+            //    {
+            //        sessionType = "logged-out",
+            //        user = null
+            //    };
+            //}
+
+            return Json(model);
         }
 
         private List<UserTryout> GetTryouts()

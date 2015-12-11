@@ -201,6 +201,7 @@
     <Content Include="components\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="components\jquery\jquery-1.11.3.min.js" />
     <Content Include="components\jquery\jquery.min.js" />
+    <Content Include="components\jquery\URI.js" />
     <Content Include="components\json3\json3.min.js" />
     <Content Include="components\moment\locales\es.js" />
     <Content Include="components\moment\moment.min.js" />
@@ -208,6 +209,7 @@
     <Content Include="components\numeral\numeral.min.js" />
     <Content Include="components\simple-uploader\css\simple-uploader.css" />
     <Content Include="components\simple-uploader\js\simple-uploader.js" />
+    <Content Include="components\URI\URI.js" />
     <Content Include="components\zxcvbn\zxcvbn-async.min.js" />
     <Content Include="components\zxcvbn\zxcvbn.min.js" />
     <Content Include="configuration\readme.txt" />
@@ -360,7 +362,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52558</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
