@@ -5,6 +5,7 @@ using System.Web;
 
 namespace RD.LMS.Models
 {
+    [Serializable]
     public class LMSUser : IDataModel
     {
         #region properties
