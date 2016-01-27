@@ -50,6 +50,16 @@ namespace RD.LMS.Models
 
         public string name
            { get; set; }
+
+        public static JSonUserModel GetLoggedOut()
+        {
+            JSonUserModel model = new JSonUserModel()
+            {
+                sessionType = "logged-out",
+                user = null
+            };
+            return model;
+        }
     }
 
 }

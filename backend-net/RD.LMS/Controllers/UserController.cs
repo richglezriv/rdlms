@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.SessionState;
 
 namespace RD.LMS.Controllers
 {
@@ -55,6 +56,7 @@ namespace RD.LMS.Controllers
                 }
 
                 model.data = user;
+                CreateSessionId();
             }
             catch (Exception ex)
             {
@@ -64,6 +66,14 @@ namespace RD.LMS.Controllers
             }
 
             return Json(model);
+        }
+
+        private void CreateSessionId()
+        {
+            Boolean redirected, cookieAdded;
+            SessionIDManager manager = new SessionIDManager();
+            string newId = manager.CreateSessionID(System.Web.HttpContext.Current);
+            manager.SaveSessionID(System.Web.HttpContext.Current, newId, out redirected, out cookieAdded);
         }
 
         private void ReviewTryouts()
@@ -217,26 +227,38 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        public ActionResult UserSessionState()
+        public ActionResult UserSessionState(string data)
         {
             Models.JSonModel model = new JSonModel();
+            Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+            
             if (Session[Utilities.USER] != null){
                 LMSUser user = (LMSUser)Session[Utilities.USER];
-                model.data = new JSonUserModel()
+                if (toFetch != null && toFetch.Count > 0)
                 {
-                    sessionType = user.GetSessionType(),
-                    user = user
-                };
-                model.status = "success";
+                    if (toFetch["csrftoken"].ToString().Equals(user.csrftoken))
+                    {
+                        model.data = new JSonUserModel()
+                        {
+                            sessionType = user.GetSessionType(),
+                            user = user
+                        };
+                        model.status = "success";
+                    }
+                }
+                else
+                {
+                    model.status = "success";
+                    model.data = JSonUserModel.GetLoggedOut();
+                    return Json(model, JsonRequestBehavior.AllowGet);
+                }
+
+                
             }
             else
             {
                 model.status = "success";
-                model.data = new JSonUserModel()
-                {
-                    sessionType = "logged-out",
-                    user = null
-                };
+                model.data = JSonUserModel.GetLoggedOut();
             }
 
             return Json(model, JsonRequestBehavior.AllowGet);

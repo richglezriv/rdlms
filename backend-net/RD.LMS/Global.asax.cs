@@ -30,6 +30,11 @@ namespace RD.LMS
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            this.Response.Headers["X-FRAME-OPTIONS"] = "DENY";
+        }
+
         protected void Session_End(Object sender, EventArgs E)
         {
             tryouts = GetTryouts();

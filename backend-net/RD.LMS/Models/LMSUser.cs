@@ -9,18 +9,10 @@ namespace RD.LMS.Models
     {
         #region properties
         public Boolean resetPassword { get; set; }
-        
-        public string id
-        {
-            get;
-            set;
-        }
 
-        public string name
-        {
-            get;
-            set;
-        }
+        public string id { get; set; }
+
+        public string name { get; set; }
 
         public String login { get; set; }
 
@@ -55,12 +47,15 @@ namespace RD.LMS.Models
         public DateTime LastLogged { get; set; }
 
         public IDictionary<string, string> fields { get; set; }
+
+        public string csrftoken { get; }
         #endregion
 
         #region constructor
         public LMSUser()
         {
             this.TryOuts = 0;
+            this.csrftoken = Guid.NewGuid().ToString();
         }
         #endregion
 
@@ -75,7 +70,7 @@ namespace RD.LMS.Models
             }
             this.TryOuts += 1;
             SetUser(daoUser);
-            
+
             return "success";
         }
 
@@ -87,12 +82,13 @@ namespace RD.LMS.Models
             this.id = daoUser.Id.ToString();
             this.lastName = daoUser.LastName;
             this.secondLastName = daoUser.SecondLastName;
-            this.email = daoUser.Email;
             this.birthday = daoUser.BirthDay.HasValue ? daoUser.BirthDay.Value.ToString(FORMAT_DATE) : string.Empty;
             this.gender = daoUser.Gender;
             this.occupation = daoUser.Ocupation;
             this.organization = daoUser.Organization;
             this.LastLogged = daoUser.LastLogged.HasValue ? daoUser.LastLogged.Value : new DateTime(1899, 11, 30);
+            this.password = string.Empty;
+            this.email = string.Empty; //daoUser.Email;
         }
 
         internal String Validate()
@@ -117,7 +113,7 @@ namespace RD.LMS.Models
             this.resetPassword = daoUser.LastLogged != null ?
                 daoUser.IsAdmin && Utilities.MonthDiff(daoUser.LastLogged.Value, DateTime.Now.Date) > 3 : false;
             SetUser(daoUser);
-            
+
             return "success";
         }
 
@@ -256,12 +252,12 @@ namespace RD.LMS.Models
                     this.reason = "validation-error";
                     throw new Exception("El email especificado ya existe");
                 }
-                    
+
 
                 Business.UserController.SaveUser(newUSer);
                 Business.NotificationController notify = new Business.NotificationController();
                 notify.SendConfirmationMail(newUSer);
-                
+
             }
             catch (BSoft.MailProvider.MailControlException ex)
             {
@@ -312,7 +308,7 @@ namespace RD.LMS.Models
         }
         #endregion
 
-        
+
     }
 
     public struct UserTryout
