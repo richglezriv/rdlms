@@ -169,7 +169,7 @@ namespace RD.LMS.Controllers
 
                 model.data = toCourse;
 
-                Session.Add(USER_COURSE, course);
+                Session.Add(USER_COURSE, toCourse);
             }
             catch (Exception ex)
             {
@@ -208,6 +208,7 @@ namespace RD.LMS.Controllers
 
         public ActionResult Commit(string data)
         {
+            CourseModel toCourse = (CourseModel)Session[USER_COURSE];
             Entities.UserCourse course = (Entities.UserCourse)Session[USER_COURSE];
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             Models.LMSModel lms = new Models.LMSModel();
@@ -229,39 +230,38 @@ namespace RD.LMS.Controllers
 
         public ActionResult UserSessionState(string data)
         {
-            Models.JSonModel model = new JSonModel();
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
-            
-            if (Session[Utilities.USER] != null){
+            Models.JSonModel model = new JSonModel();
+            if (Session[Utilities.USER] != null) {
                 LMSUser user = (LMSUser)Session[Utilities.USER];
                 if (toFetch != null && toFetch.Count > 0)
                 {
-                    if (toFetch["csrftoken"].ToString().Equals(user.csrftoken))
+                    if (user.csrftoken.Equals(toFetch["csrftoken"].ToString()))
                     {
+                        model.status = "success";
                         model.data = new JSonUserModel()
                         {
                             sessionType = user.GetSessionType(),
                             user = user
                         };
-                        model.status = "success";
                     }
                 }
                 else
                 {
                     model.status = "success";
                     model.data = JSonUserModel.GetLoggedOut();
-                    return Json(model, JsonRequestBehavior.AllowGet);
+                    return Json(model);
                 }
-
-                
             }
             else
             {
                 model.status = "success";
                 model.data = JSonUserModel.GetLoggedOut();
+                return Json(model);
             }
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+                
+            return Json(model);
         }
 
         private List<UserTryout> GetTryouts()

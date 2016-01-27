@@ -25,6 +25,14 @@ namespace RD.Business
                     user = _dao.Validate(login, Utilities.GetStringHashed(password));
                 else if (email != null)
                     user = _dao.ValidateByMail(email, Utilities.GetStringHashed(password));
+                if (user != null)
+                {
+                    user.SerialSession = Guid.NewGuid().ToString();
+                    user.LastLogged = DateTime.Now;
+                    Entities.IDAO control = new RD.Entities.UserDAO(string.Empty, user);
+                    control.Update();
+                }
+
                 return user;
             }
             catch (Exception)
@@ -63,6 +71,40 @@ namespace RD.Business
             }
         }
 
+        public static Entities.User GetUserBySession(string session){
+            RD.Entities.User user = null;
+
+            try
+            {
+                _dao = new RD.Entities.UserDAO(string.Empty);
+                user = _dao.GetBySession(session);
+                if (user != null)
+                {
+                    //if (user.LastLogged.HasValue && !user.LastLogged.Value.Year.Equals(1899))
+                    //{
+                    //    int timeout = user.LastLogged.Value.Subtract(DateTime.Now).Minutes;
+                    //    if (timeout > 60)
+                    //    {
+                    //        user = null;
+                    //    }
+                    //}
+                    //if (user.SerialSession == null)
+                    //{
+                    //    user.SerialSession = Guid.NewGuid().ToString();
+                    //    Entities.IDAO control = new RD.Entities.UserDAO(string.Empty, user);
+                    //    control.Update();
+                    //}
+
+                }
+
+                return user;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public static List<Entities.User> GetUsers(string nameLike)
         {
             List<Entities.User> result = new List<Entities.User>();
@@ -83,7 +125,19 @@ namespace RD.Business
 
             if (user != null)
             {
-                user.IsLogged = state.Equals(SessionState.LoggedIn) ? true : false;
+                switch (state)
+                {
+                    case SessionState.LoggedIn:
+                        user.IsLogged = true;
+                        break;
+                    case SessionState.LoggedOut:
+                        user.IsLogged = false;
+                        user.SerialSession = null;
+                        user.LastLogged = new DateTime(1899, 11, 30);
+                        break;
+                    default:
+                        break;
+                }
                 Entities.IDAO control = new RD.Entities.UserDAO(string.Empty, user);
                 control.Update();
                 

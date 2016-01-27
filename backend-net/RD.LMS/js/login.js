@@ -98,7 +98,8 @@ jQuery(function($){
 			.done(function(r){
 				//r.status='fail'; r.data.reason='credentials-error';
 				if(r.status && r.status == 'success'){
-					document.location.href = r.data.isAdmin ? "admin-courses.html" : "courses.html";
+				    document.location.href = r.data.isAdmin ? "admin-courses.html?InP=" + r.data.sesionSerial :
+                        "courses.html?InP=" + r.data.sesionSerial;
 				}else if(r.status && r.status == "fail" && r.data.reason === 'validation-error'){
 					showErrors(r.data.fields);
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "credentials-error"){

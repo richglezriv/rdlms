@@ -5,11 +5,13 @@ using System.Web;
 
 namespace RD.LMS.Models
 {
+    [Serializable]
     public class LMSUser : IDataModel
     {
+        
         #region properties
         public Boolean resetPassword { get; set; }
-
+        
         public string id { get; set; }
 
         public string name { get; set; }
@@ -41,14 +43,14 @@ namespace RD.LMS.Models
         public short occupation { get; set; }
 
         public short organization { get; set; }
+
+        public string csrftoken { get; }
         /// <summary>
         /// This property is used for password reset
         /// </summary>
         public DateTime LastLogged { get; set; }
 
         public IDictionary<string, string> fields { get; set; }
-
-        public string csrftoken { get; }
         #endregion
 
         #region constructor
@@ -59,7 +61,6 @@ namespace RD.LMS.Models
         }
         #endregion
 
-        #region methods
         internal string BeginSession(int id)
         {
             RD.Entities.User daoUser = RD.Business.UserController.GetUserById(id);
@@ -70,7 +71,7 @@ namespace RD.LMS.Models
             }
             this.TryOuts += 1;
             SetUser(daoUser);
-
+            
             return "success";
         }
 
@@ -87,8 +88,6 @@ namespace RD.LMS.Models
             this.occupation = daoUser.Ocupation;
             this.organization = daoUser.Organization;
             this.LastLogged = daoUser.LastLogged.HasValue ? daoUser.LastLogged.Value : new DateTime(1899, 11, 30);
-            this.password = string.Empty;
-            this.email = string.Empty; //daoUser.Email;
         }
 
         internal String Validate()
@@ -113,8 +112,27 @@ namespace RD.LMS.Models
             this.resetPassword = daoUser.LastLogged != null ?
                 daoUser.IsAdmin && Utilities.MonthDiff(daoUser.LastLogged.Value, DateTime.Now.Date) > 3 : false;
             SetUser(daoUser);
-
+            
             return "success";
+        }
+
+        internal void SetNewGuid() {
+            this.sesionSerial = Guid.NewGuid().ToString();
+        }
+
+        internal string LoadUserSession()
+        {
+            RD.Entities.User daoUser = RD.Business.UserController.GetUserBySession(this.sesionSerial);
+            if (daoUser == null)
+            {
+                this.reason = "logged-out";
+                return "success";
+            }
+            else
+            {
+                SetUser(daoUser);
+                return "success";
+            }
         }
 
         internal void SetReason()
@@ -141,7 +159,7 @@ namespace RD.LMS.Models
 
         internal string GetSessionType()
         {
-            if (this.LastLogged.Date.Equals(DateTime.Now.Date))
+            if (this.LastLogged.Date.Equals(DateTime.Now.Date) && this.sesionSerial == null)
                 return "reset-password";
 
             switch (this.isAdmin)
@@ -252,12 +270,12 @@ namespace RD.LMS.Models
                     this.reason = "validation-error";
                     throw new Exception("El email especificado ya existe");
                 }
-
+                    
 
                 Business.UserController.SaveUser(newUSer);
                 Business.NotificationController notify = new Business.NotificationController();
                 notify.SendConfirmationMail(newUSer);
-
+                
             }
             catch (BSoft.MailProvider.MailControlException ex)
             {
@@ -306,9 +324,7 @@ namespace RD.LMS.Models
                 throw new Exception("El c&oacute;digo no corresponde con el de la imagen");
             }
         }
-        #endregion
-
-
+        
     }
 
     public struct UserTryout

@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/30/2015 19:49:54
+-- Date Created: 12/10/2015 12:29:49
 -- Generated from EDMX file: C:\Users\rgonzalez\Documents\Proyectos\Reaccion Digital\rdlms\backend-net\RD.Entities\RDModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [db_lms_container];
+USE [dbLMSRD];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -80,7 +80,8 @@ CREATE TABLE [dbo].[Users] (
     [Gender] nvarchar(1)  NOT NULL,
     [Ocupation] smallint  NOT NULL,
     [Organization] smallint  NOT NULL,
-    [IsActive] bit  NOT NULL
+    [IsActive] bit  NOT NULL,
+    [SerialSession] nvarchar(max)  NULL
 );
 GO
 
@@ -113,6 +114,26 @@ CREATE TABLE [dbo].[Scorms] (
 );
 GO
 
+-- Creating table 'BnnAppUsers'
+CREATE TABLE [dbo].[BnnAppUsers] (
+    [Id] bigint IDENTITY(1,1) NOT NULL,
+    [StateId] bigint  NOT NULL,
+    [FbId] varchar(500)  NULL,
+    [Audience] int  NOT NULL,
+    [IsInterested] int  NOT NULL,
+    [UserName] varchar(200)  NOT NULL,
+    [Name] varchar(100)  NOT NULL,
+    [LastNames] varchar(100)  NOT NULL,
+    [Mail] varchar(50)  NOT NULL,
+    [Password] varchar(64)  NULL,
+    [Extension] varchar(10)  NULL,
+    [ChildrenCount] int  NOT NULL,
+    [LocationCount] int  NOT NULL,
+    [LockedAt] datetime  NULL,
+    [FechaRegistro] datetime  NULL,
+    [FechaAviso] datetime  NULL
+);
+GO
 
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
@@ -139,6 +160,12 @@ GO
 -- Creating primary key on [Id] in table 'Scorms'
 ALTER TABLE [dbo].[Scorms]
 ADD CONSTRAINT [PK_Scorms]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'BnnAppUsers'
+ALTER TABLE [dbo].[BnnAppUsers]
+ADD CONSTRAINT [PK_BnnAppUsers]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -193,17 +220,4 @@ GO
 
 -- --------------------------------------------------
 -- Script has ended
--- --------------------------------------------------
-
--- --------------------------------------------------
--- Creation of admin users
--- --------------------------------------------------
-SET IDENTITY_INSERT [dbo].[Users] ON
-INSERT INTO [dbo].[Users] ([Id], [Login], [Password], [FirstName], [LastName], [IsAdmin], [IsLogged], [LastLogged], [Email], [SecondLastName], [BirthDay], [Gender], [Ocupation], [Organization], [IsActive]) VALUES 
-(0, N'admin', N'2b1ccaba879cc9c0a30789094845612f0540e047', N'Jimena', N'Monroy', 1, 0, '1899-11-30 00:00:00', N'jimena.monroy@mx.nestle.com', N' ', '1899-11-30 00:00:00', N'F', 5, 4, 1)
-INSERT INTO [dbo].[Users] ([Id], [Login], [Password], [FirstName], [LastName], [IsAdmin], [IsLogged], [LastLogged], [Email], [SecondLastName], [BirthDay], [Gender], [Ocupation], [Organization], [IsActive]) VALUES 
-(1, N'adminDos', N'2b1ccaba879cc9c0a30789094845612f0540e047', N'Jose', N'Lopez', 1, 0, '1899-11-30 00:00:00', N'jose.lopez12@mx.nestle.com', N' ', '1899-11-30 00:00:00', N'M', 5, 4, 1)
-SET IDENTITY_INSERT [dbo].[Users] OFF
--- --------------------------------------------------
--- END Creation of admin users
 -- --------------------------------------------------
