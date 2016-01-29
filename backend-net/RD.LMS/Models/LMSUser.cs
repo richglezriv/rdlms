@@ -88,6 +88,8 @@ namespace RD.LMS.Models
             this.occupation = daoUser.Ocupation;
             this.organization = daoUser.Organization;
             this.LastLogged = daoUser.LastLogged.HasValue ? daoUser.LastLogged.Value : new DateTime(1899, 11, 30);
+            this.email = string.Empty;
+            this.password = string.Empty;
         }
 
         internal String Validate()
@@ -116,25 +118,6 @@ namespace RD.LMS.Models
             return "success";
         }
 
-        internal void SetNewGuid() {
-            this.sesionSerial = Guid.NewGuid().ToString();
-        }
-
-        internal string LoadUserSession()
-        {
-            RD.Entities.User daoUser = RD.Business.UserController.GetUserBySession(this.sesionSerial);
-            if (daoUser == null)
-            {
-                this.reason = "logged-out";
-                return "success";
-            }
-            else
-            {
-                SetUser(daoUser);
-                return "success";
-            }
-        }
-
         internal void SetReason()
         {
             this.reason = "too-many-tries";
@@ -159,7 +142,7 @@ namespace RD.LMS.Models
 
         internal string GetSessionType()
         {
-            if (this.LastLogged.Date.Equals(DateTime.Now.Date) && this.sesionSerial == null)
+            if (this.LastLogged.Date.Equals(DateTime.Now.Date))
                 return "reset-password";
 
             switch (this.isAdmin)

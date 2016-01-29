@@ -45,7 +45,7 @@ RDLMS = (function($){
 	    var uri = new URI(window.location.href);
 		$.ajax({
 			url: settings.session.user,
-			dataType: "json", method: 'POST', data: { data: JSON.stringify(uri.search(true)) },
+			dataType: "json", method: 'POST',
 			cache: false // No necessary but just in case (IE)
 		})
 			.done(onLMSUserLoaded)
@@ -68,12 +68,6 @@ RDLMS = (function($){
 				type: response.data.sessionType,
 				user: response.data.user
 			};
-			if (response.data.user != null) {
-			    var uri = new URI(window.location.href);
-			    uri.query('InP=' + response.data.user.sesionSerial);
-			    //window.history.pushState();
-			    //window.location.search = uri.search();
-			}
 			
 			self.session = session;
 			setBranding(self.settings, self.session);

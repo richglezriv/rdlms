@@ -56,7 +56,7 @@ namespace RD.LMS.Controllers
                 }
 
                 model.data = user;
-                CreateSessionId();
+                //CreateSessionId();
             }
             catch (Exception ex)
             {
@@ -230,28 +230,28 @@ namespace RD.LMS.Controllers
 
         public ActionResult UserSessionState(string data)
         {
-            Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+            //Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             Models.JSonModel model = new JSonModel();
             if (Session[Utilities.USER] != null) {
                 LMSUser user = (LMSUser)Session[Utilities.USER];
-                if (toFetch != null && toFetch.Count > 0)
+                //if (toFetch != null && toFetch.Count > 0)
+                //{
+                //    if (user.csrftoken.Equals(toFetch["csrftoken"].ToString()))
+                //    {
+                model.status = "success";
+                model.data = new JSonUserModel()
                 {
-                    if (user.csrftoken.Equals(toFetch["csrftoken"].ToString()))
-                    {
-                        model.status = "success";
-                        model.data = new JSonUserModel()
-                        {
-                            sessionType = user.GetSessionType(),
-                            user = user
-                        };
-                    }
-                }
-                else
-                {
-                    model.status = "success";
-                    model.data = JSonUserModel.GetLoggedOut();
-                    return Json(model);
-                }
+                    sessionType = user.GetSessionType(),
+                    user = user
+                };
+                //    }
+                //}
+                //else
+                //{
+                //    model.status = "success";
+                //    model.data = JSonUserModel.GetLoggedOut();
+                //    return Json(model);
+                //}
             }
             else
             {
