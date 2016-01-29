@@ -248,10 +248,7 @@ namespace RD.LMS.Models
 
                 if (Business.UserController.GetUserByMail(this.email) != null)
                 {
-                    this.fields = new Dictionary<string, string>();
-                    this.fields.Add("email", "El email especificado ya existe");
-                    this.reason = "validation-error";
-                    throw new Exception("El email especificado ya existe");
+                    RestablishPassword(this.email, true);
                 }
                     
 
@@ -269,7 +266,7 @@ namespace RD.LMS.Models
             }
         }
 
-        internal void RestablishPassword(string userEmail)
+        internal void RestablishPassword(string userEmail, Boolean isDuplicated = false)
         {
             try
             {
@@ -279,11 +276,18 @@ namespace RD.LMS.Models
                     user.LastLogged = DateTime.Now.Date;
                     Business.UserController.SaveUser(user);
                     Business.NotificationController notification = new Business.NotificationController();
-                    notification.SendPasswordRecoveryMail(user);
+                    if (isDuplicated)
+                    {
+                        notification.SendPasswordRecoveryMailByDuplicate(user);
+                    }
+                    else
+                    {
+                        notification.SendPasswordRecoveryMail(user);
+                    }
+
                 }
             }
             catch (Exception) { }
-
         }
 
         internal void ValidateCaptcha(string captcha, System.Collections.Concurrent.ConcurrentDictionary<CaptchaMvc.Models.KeyTimeEntry<string>, CaptchaMvc.Interface.ICaptchaValue> captchaValues)
