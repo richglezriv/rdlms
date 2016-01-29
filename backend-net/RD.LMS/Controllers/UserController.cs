@@ -209,7 +209,7 @@ namespace RD.LMS.Controllers
         public ActionResult Commit(string data)
         {
             CourseModel toCourse = (CourseModel)Session[USER_COURSE];
-            Entities.UserCourse course = (Entities.UserCourse)Session[USER_COURSE];
+            Entities.UserCourse course = Business.UserController.GetCourse(Convert.ToInt32(toCourse.id));
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             Models.LMSModel lms = new Models.LMSModel();
             lms.LoadCourse(course);
