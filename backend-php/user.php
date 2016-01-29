@@ -2,9 +2,12 @@
 
 session_start();
 
+$data = json_decode($_POST['data']);
+$token = $_POST['csrftoken'];
+
 $user = null;
 $type = "logged-out";
-if(isset($_SESSION['user'])){
+if(isset($_SESSION['user']) && $_SESSION['csrftoken'] && $_SESSION['csrftoken'] === $token){
 	$user = $_SESSION['user'];
 	$type = $user['isAdmin'] ? 'admin' : 'student';
 }
@@ -13,7 +16,8 @@ $response = array(
 	'status' => "success",
 	'data' => array(
 		'sessionType' => $type,
-		'user' => $user
+		'user' => $user,
+		'csrftokenMatch' => ($_SESSION['csrftoken'] === $token)
 	)
 );
 

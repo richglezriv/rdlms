@@ -89,12 +89,19 @@ jQuery(function($){
 		$.ajax({
 			url: settings.session.login,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData)
+			}
 		})
 			.done(function(r){
 				//r.status='fail'; r.data.reason='credentials-error';
 				if(r.status && r.status == 'success'){
-					document.location.href = r.data.isAdmin ? "admin-courses.html" : "courses.html";
+					if(!r.data.csrftoken){
+						showFeedback('No se pudo crear una sesión en el servidor. Por favor intenta más tarde.');
+					}else{
+						Cookies.set('__token', r.data.csrftoken);
+						document.location.href = r.data.isAdmin ? "admin-courses.html" : "courses.html";
+					}
 				}else if(r.status && r.status == "fail" && r.data.reason === 'validation-error'){
 					showErrors(r.data.fields);
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "credentials-error"){

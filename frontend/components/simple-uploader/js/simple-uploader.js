@@ -64,6 +64,7 @@ Parameters:
 	  * action: the backend upload script i.e. upload.php
 	  * uploadPath: the upload folder path
 	  - type: file (default) or image. Controls what is shown in the preview (an img or a filename link)
+	  - data: Additional POST data to be sent with the request The same as jQuery.ajax data param.
 */
 
 
@@ -84,6 +85,7 @@ function SimpleUploader(el, opts){
 	var isLoading = false;
 	var type = opts.type || 'file';
 	var uploader = new qq.FileUploaderBasic({
+		params: opts.data || {},
 		messages: messages,
 		showMessage: showFeedback,
 		button: button[0], 

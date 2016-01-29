@@ -1,4 +1,13 @@
-RDLMS = (function($){
+// XFS client protection...
+if(window.self !== window.top && document.referrer.indexOf(document.location.origin) !== 0){ 
+	var XFSMessage = 'Por razones de seguridad, el contenido de esta página no puede ser visto en un frame.';
+	alert(XFSMessage); 
+	window.top.location = document.location;
+	throw new Error(XFSMessage); // prevents further execution
+}
+
+
+window.RDLMS = new (function($){
 
 	// Private vars
 	var self = this,
@@ -10,8 +19,7 @@ RDLMS = (function($){
 	
 	// Public vars
 	self.settings = null;
-
-
+	self.csrftoken = Cookies.get('__token') || null;
 
 
 	function loadLMSSettings(){
@@ -43,9 +51,12 @@ RDLMS = (function($){
 
 	function loadLMSUser(){
 		$.ajax({
-			url: settings.session.user,
+			url: self.settings.session.user,
 			dataType: "json", method: 'POST',
-			cache: false // No necessary but just in case (IE)
+			cache: false, // No necessary but just in case (IE)
+			data: {
+				csrftoken: self.csrftoken
+			}
 		})
 			.done(onLMSUserLoaded)
 			.fail(onLMSUserError)
@@ -155,6 +166,7 @@ RDLMS = (function($){
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){
+					Cookies.remove('__token');
 					document.location.href = self.settings.session.logoutRedirect || 'login.html';
 				}else{
 					console.error('Could not logout.');
@@ -164,6 +176,26 @@ RDLMS = (function($){
 				console.error('Could not logout: Invalid response from server.');
 			})
 			//.always()
+		;
+	}
+
+	function ping(){
+		$.ajax({
+			url: self.settings.session.ping,
+			dataType: "json", method: 'POST',
+			data: {
+				csrftoken: self.csrftoken
+			}
+		})
+			.done(function(response){
+				if(!response.status || response.status !== 'success'){
+					console.error('Server responded with an error when pinging.');
+					// TODO: Logout?
+				}
+			})
+			.fail(function(){
+				console.error('Could not ping server.');
+			})
 		;
 	}
 
@@ -179,6 +211,7 @@ RDLMS = (function($){
 	self.showFeedback = showFeedback;
 	self.handleFailure = handleFailure;
 	self.logout = logout;
+	self.ping = ping;
 	self.delayedRedirect = delayedRedirect;
 	self.isInitialized = function(){ return isInitialized; };
 

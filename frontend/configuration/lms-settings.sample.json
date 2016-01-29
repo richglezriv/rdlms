@@ -31,7 +31,7 @@
 			"find": "/rdlms/backend-php/admin-users.php",
 			"save": "/rdlms/backend-php/tester.php?a=user-save",
 			"delete": "/rdlms/backend-php/tester.php?a=user-delete",
-			"stats": "/rdlms/backend-php/courses.php",
+			"stats": "/rdlms/backend-php/tester.php?a=admin-user-stats",
 			"clearScorm": "/rdlms/backend-php/tester.php?a=clear-scorm",
 			"extraLabels": ["Dirección", "Fecha de nacimiento"]
 		}
@@ -40,6 +40,8 @@
 	"session": {
 		"login": "/rdlms/backend-php/login.php",
 		"logout": "/rdlms/backend-php/logout.php",
+		"ping": "/rdlms/backend-php/tester.php?a=keep-session-alive",
+		"forgot": "/rdlms/backend-php/tester.php?a=forgot-password",
 		"resetPassword": "/rdlms/backend-php/tester.php?a=reset-password",
 		"user": "/rdlms/backend-php/user.php",
 		"logoutRedirect": "login.html"

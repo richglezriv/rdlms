@@ -57,8 +57,18 @@ jQuery(function($){
 
 		// Init
 		add.on('click', function(e){ e.preventDefault(); if(!loading) addCourse(); });
-		uploadThumb = new SimpleUploader('#input-thumbnail', { uploadPath: RDLMS.settings.lms.uploadPath, action: RDLMS.settings.admin.course.uploadThumb, type: 'image' });
-		uploadScorm = new SimpleUploader('#input-scorm', { uploadPath: RDLMS.settings.lms.uploadPath, action: RDLMS.settings.admin.course.uploadScorm, type: 'file' });
+		uploadThumb = new SimpleUploader('#input-thumbnail', { 
+			uploadPath: RDLMS.settings.lms.uploadPath, 
+			action: RDLMS.settings.admin.course.uploadThumb, 
+			type: 'image',
+			data: { csrftoken: RDLMS.csrftoken }
+		});
+		uploadScorm = new SimpleUploader('#input-scorm', {
+			uploadPath: RDLMS.settings.lms.uploadPath, 
+			action: RDLMS.settings.admin.course.uploadScorm, 
+			type: 'file',
+			data: { csrftoken: RDLMS.csrftoken }
+		});
 		
 		// Fetch courses
 		settings = RDLMS.settings;
@@ -71,7 +81,10 @@ jQuery(function($){
 		startLoading();
 		$.ajax({
 			url: settings.admin.course.list,
-			dataType: 'json', method: 'POST'
+			dataType: 'json', method: 'POST',
+			data: {
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){
@@ -143,7 +156,10 @@ jQuery(function($){
 			$.ajax({
 				url: settings.admin.course.delete,
 				dataType: "json", method: 'POST',
-				data: {data: JSON.stringify(jsonData)}
+				data: {
+					data: JSON.stringify(jsonData),
+					csrftoken: RDLMS.csrftoken
+				}
 			})
 				.done(function(r){
 					if(!r.status || r.status != 'success') cancelDeleteCourse(c);
@@ -225,7 +241,10 @@ jQuery(function($){
 		$.ajax({
 			url: settings.admin.course.save,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData), 
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(r){
 				if(r.status && r.status == 'success'){
@@ -316,7 +335,10 @@ jQuery(function($){
 		$.ajax({
 			url: settings.admin.course.stats,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData), 
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(response){
 				if(response.status && response.status == 'success'){

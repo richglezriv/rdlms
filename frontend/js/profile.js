@@ -91,7 +91,10 @@ jQuery(function($){
 		$.ajax({
 			url: settings.lms.profile,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData),
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(r){
 				if(r.status && r.status == 'success'){

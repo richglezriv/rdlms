@@ -68,13 +68,17 @@ $response = array(
 	)
 );
 
+$csrftoken = uniqid();
+
 if(isset($students[$data['email']]) && $data['password'] === 'user'){
 	$_SESSION['tries'] = 0;
 	$_SESSION['user'] = $students[$data['email']];
+	$_SESSION['csrftoken'] = $csrftoken;
 	$response = array(
 		'status' => "success",
 		'data' => array(
-			'isAdmin' => false
+			'isAdmin' => false,
+			'csrftoken' => $csrftoken
 		)
 	);
 }
@@ -82,10 +86,12 @@ if(isset($students[$data['email']]) && $data['password'] === 'user'){
 if(isset($admins[$data['email']]) && $data['password'] === 'admin'){
 	$_SESSION['tries'] = 0;
 	$_SESSION['user'] = $admins[$data['email']];
+	$_SESSION['csrftoken'] = $csrftoken;
 	$response = array(
 		'status' => "success",
 		'data' => array(
-			'isAdmin' => true
+			'isAdmin' => true,
+			'csrftoken' => $csrftoken
 		)
 	);
 }
