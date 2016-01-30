@@ -200,7 +200,6 @@
           <Property Name="Ocupation" Type="Int16" Nullable="false" />
           <Property Name="Organization" Type="Int16" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="SerialSession" Type="String" Nullable="true" MaxLength="Max" />
         </EntityType>
         <EntityType Name="UserCourse">
           <Key>
@@ -328,7 +327,6 @@
           <ScalarProperty Name="Ocupation" ColumnName="Ocupation" />
           <ScalarProperty Name="Organization" ColumnName="Organization" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="SerialSession" ColumnName="SerialSession" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

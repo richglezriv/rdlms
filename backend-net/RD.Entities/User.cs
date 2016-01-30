@@ -36,7 +36,6 @@ namespace RD.Entities
         public short Ocupation { get; set; }
         public short Organization { get; set; }
         public bool IsActive { get; set; }
-        public string SerialSession { get; set; }
     
         public virtual ICollection<UserCourse> UserCourses { get; set; }
     }

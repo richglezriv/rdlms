@@ -44,7 +44,7 @@ namespace RD.LMS.Models
 
         public short organization { get; set; }
 
-        public string csrftoken { get; }
+        public string csrftoken { get; set; }
         /// <summary>
         /// This property is used for password reset
         /// </summary>
@@ -249,6 +249,7 @@ namespace RD.LMS.Models
                 if (Business.UserController.GetUserByMail(this.email) != null)
                 {
                     RestablishPassword(this.email, true);
+                    return;
                 }
                     
 

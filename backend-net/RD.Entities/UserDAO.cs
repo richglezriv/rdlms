@@ -66,14 +66,6 @@ namespace RD.Entities
 
         }
 
-        public User GetBySession(String session)
-        {
-            RDModelContainer model = Context.SetContext(_password).model;
-
-            return model.Users.SingleOrDefault(u => u.SerialSession.Equals(session));
-
-        }
-
         public List<User> GetBy(String mailLike)
         {
             RDModelContainer model = Context.SetContext(_password).model;
@@ -114,7 +106,6 @@ namespace RD.Entities
             result.Gender = _persist.Gender;
             result.Ocupation = _persist.Ocupation;
             result.Organization = _persist.Organization;
-            result.SerialSession = _persist.SerialSession;
 
             model.SaveChanges();
         }
