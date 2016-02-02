@@ -88,13 +88,21 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        public ActionResult FindUsers(String data) {
+        public ActionResult FindUsers(String data, String csrftoken)
+        {
 
             JSonModelCollection model = new JSonModelCollection();
 
             Models.JSonModel mSession = Utilities.IsSessionActive(Session[Utilities.USER]);
             if (mSession != null)
                 return Json(mSession);
+            Models.LMSUser user = Session[Utilities.USER] as Models.LMSUser;
+            if (user.csrftoken != csrftoken)
+            {
+                model.status = Utilities.SESSION_EXPIRED;
+                return Json(model);
+            }
+                
 
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             try

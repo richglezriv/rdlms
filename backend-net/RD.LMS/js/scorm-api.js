@@ -21,7 +21,7 @@
 
 	window.ScormApi = function(options){
 		var commitURL = options.commitURL;
-		var cmiData = options.cmiData;
+		var cmiData = $.parseJSON(options.cmiData); //options.cmiData;
 		var commitExtraData = options.commitExtraData || {};
 
 		// `commitExtraData` will be merged with the data sent by the commit.
@@ -150,7 +150,7 @@
 			
 			$.ajax({
 				url: commitURL,	method: 'POST',
-				data: commitExtraData
+				data: { data: JSON.stringify(commitExtraData) }
 			})
 				.done(function(response){
 					console.log('Successfully commited data!');

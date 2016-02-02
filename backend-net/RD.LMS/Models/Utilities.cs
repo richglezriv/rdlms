@@ -12,6 +12,7 @@ namespace RD.LMS.Models
         public static readonly String USER = "USER_LMS";
         public static readonly String FAIL = "fail";
         public static readonly String SUCCESS = "success";
+        public static readonly String SESSION_EXPIRED = "session-expired";
 
         public static int MonthDiff(DateTime dateB, DateTime dateE){
 
