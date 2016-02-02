@@ -338,6 +338,7 @@
     <Content Include="Views\External\Confirmation.cshtml" />
     <Content Include="Views\Captcha\Index.cshtml" />
     <Content Include="Views\Captcha\_PartialCaptcha.cshtml" />
+    <None Include="Properties\PublishProfiles\RemoteProfile.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RD.Business\RD.Business.csproj">
