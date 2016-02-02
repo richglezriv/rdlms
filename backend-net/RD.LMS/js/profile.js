@@ -91,7 +91,10 @@ jQuery(function($){
 		$.ajax({
 			url: settings.lms.profile,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData),
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(r){
 				if(r.status && r.status == 'success'){
@@ -171,8 +174,7 @@ jQuery(function($){
 			organization: $.trim($('#input-organization').val()),
 			oldPassword: $('#input-oldPassword').val(),
 			newPassword: $('#input-newPassword').val(),
-			newPasswordCheck: $('#input-newPasswordCheck').val(),
-			birthday: $('#input-birthday').val()
+			newPasswordCheck: $('#input-newPasswordCheck').val()
 		};
 		return data;
 	}

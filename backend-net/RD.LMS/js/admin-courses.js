@@ -57,8 +57,18 @@ jQuery(function($){
 
 		// Init
 		add.on('click', function(e){ e.preventDefault(); if(!loading) addCourse(); });
-		uploadThumb = new SimpleUploader('#input-thumbnail', { uploadPath: RDLMS.settings.lms.uploadPath, action: RDLMS.settings.admin.course.uploadThumb, type: 'image' });
-		uploadScorm = new SimpleUploader('#input-scorm', { uploadPath: RDLMS.settings.lms.uploadPath, action: RDLMS.settings.admin.course.uploadScorm, type: 'file' });
+		uploadThumb = new SimpleUploader('#input-thumbnail', { 
+			uploadPath: RDLMS.settings.lms.uploadPath, 
+			action: RDLMS.settings.admin.course.uploadThumb, 
+			type: 'image',
+			data: { csrftoken: RDLMS.csrftoken }
+		});
+		uploadScorm = new SimpleUploader('#input-scorm', {
+			uploadPath: RDLMS.settings.lms.uploadPath, 
+			action: RDLMS.settings.admin.course.uploadScorm, 
+			type: 'file',
+			data: { csrftoken: RDLMS.csrftoken }
+		});
 		
 		// Fetch courses
 		settings = RDLMS.settings;
@@ -71,7 +81,10 @@ jQuery(function($){
 		startLoading();
 		$.ajax({
 			url: settings.admin.course.list,
-			dataType: 'json', method: 'POST'
+			dataType: 'json', method: 'POST',
+			data: {
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){
@@ -143,7 +156,10 @@ jQuery(function($){
 			$.ajax({
 				url: settings.admin.course.delete,
 				dataType: "json", method: 'POST',
-				data: {data: JSON.stringify(jsonData)}
+				data: {
+					data: JSON.stringify(jsonData),
+					csrftoken: RDLMS.csrftoken
+				}
 			})
 				.done(function(r){
 					if(!r.status || r.status != 'success') cancelDeleteCourse(c);
@@ -210,19 +226,25 @@ jQuery(function($){
 		if(loading) return;
 		startLoading();
 		
-		var jsonData = {
-			name: modal.find('#input-name').val(),
-			description: modal.find('#input-description').val(),
-			thumbnail: uploadThumb.val(),
-			scorm: uploadScorm.val(),
-			conditions: modal.find('#input-conditions').val() || []
-		};
+		var jsonData = getFormData();
+
+		var validationErrors = validateData(jsonData);
+		if(validationErrors){
+			showFeedback('Algunos de los datos que especificaste son inválidos. Por favor revisa los campos marcados.');
+			stopLoading();
+			showErrors(validationErrors);
+			return false;
+		}
+
 		if(modal.data('id')) jsonData.courseId = modal.data('id');
 		
 		$.ajax({
 			url: settings.admin.course.save,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData), 
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(r){
 				if(r.status && r.status == 'success'){
@@ -233,7 +255,7 @@ jQuery(function($){
 					showFeedback('Algunos de los datos que especificaste son inválidos. Por favor revisa los campos marcados.');
 					showErrors(r.status.data);
 				}else{
-				    showFeedback('Ocurrió un error al intentar guardar. Por favor intenta más tarde.' + r.status);
+					showFeedback('Ocurrió un error al intentar guardar. Por favor intenta más tarde.');
 				}
 			})
 			.fail(function(){
@@ -262,6 +284,43 @@ jQuery(function($){
 		modal.find('.error-feedback').remove();
 	}
 
+	function getFormData(){
+		var data = {
+			name: modal.find('#input-name').val(),
+			description: modal.find('#input-description').val(),
+			thumbnail: uploadThumb.val(),
+			scorm: uploadScorm.val(),
+			conditions: modal.find('#input-conditions').val() || []
+		};
+		return data;
+	}
+
+	function validateData(data){
+		var errors = {};
+		var patterns = {
+			notEmpty: /[^\s]+/,
+			name: /^[^0-9!\@\#\$\%\*\+=\\\/\?<>\{\}\[\]:;]{2,60}$/i,
+			email: /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
+			birthday: /^((19[0-9]{2})|(20[0-2][0-9]))\-((0\d)|(1[0-2]))\-(([0-2]\d)|(3[0-1]))$/, //1900-2029
+			gender: /^[mf]$/i,
+			integer: /^\d+$/,
+			bool: /^[01]$/,
+			password: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
+		};
+		
+		if(!(patterns.notEmpty).test(data.name)){
+			errors.name = 'El nombre proporcionado es inválido.';
+		}
+		if(!(patterns.notEmpty).test(data.description)){
+			errors.description = 'La descripción proporcionada es inválida.';
+		}
+		if(!(patterns.notEmpty).test(data.scorm)){
+			errors.scorm = 'Por favor agrega un paquete SCORM para continuar.';
+		}
+
+		return $.isEmptyObject(errors) ? null : errors;
+	}
+
 
 
 
@@ -276,7 +335,10 @@ jQuery(function($){
 		$.ajax({
 			url: settings.admin.course.stats,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData), 
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(response){
 				if(response.status && response.status == 'success'){

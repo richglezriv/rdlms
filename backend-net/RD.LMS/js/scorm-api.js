@@ -21,8 +21,13 @@
 
 	window.ScormApi = function(options){
 		var commitURL = options.commitURL;
-		var cmiData = $.parseJSON(options.cmiData);//options.cmiData; RAGR: temp patch
-	    //var cmiData = options.cmiData;
+		var cmiData = options.cmiData;
+		var commitExtraData = options.commitExtraData || {};
+
+		// `commitExtraData` will be merged with the data sent by the commit.
+		// this is usefull when trying to send additional per-request data
+		// to the LMS, for example a CSRF Token.
+		// Avoid sending a key named "data" as this will be rewritten.
 
 		var onChange = typeof(options.onChange === 'function') ? options.onChange : null;
 		var onCommit = typeof(options.onCommit === 'function') ? options.onCommit : null;
@@ -141,9 +146,11 @@
 			lastError = "0";
 			if(!isInitialized || isFinished){ lastError = "301"; return "false"; }
 			var cleanData = getSanitizedCmiData(cmiData);
+			commitExtraData.data = cleanData;
+			
 			$.ajax({
 				url: commitURL,	method: 'POST',
-				data: { data: JSON.stringify(cleanData) }
+				data: commitExtraData
 			})
 				.done(function(response){
 					console.log('Successfully commited data!');

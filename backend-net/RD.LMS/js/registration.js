@@ -164,7 +164,7 @@ jQuery(function($){
 			organization: $.trim($('#input-organization').val()),
 			password: $('#input-password').val(),
 			passwordCheck: $('#input-passwordCheck').val(),
-			captcha: $('#input-CaptchaInputText').val(),
+			captcha: $('#input-captcha').val(),
 			terms: ~~$('#input-terms:checked').val()
 		};
 		return data;

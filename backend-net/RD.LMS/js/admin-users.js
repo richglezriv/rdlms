@@ -73,7 +73,10 @@ jQuery(function($){
 		$.ajax({
 			url: settings.admin.user.find,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData),
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){
@@ -82,7 +85,7 @@ jQuery(function($){
 					if(users.length){
 						$.each(users, function(i, user){
 							list.append(renderUser(
-								user.id,
+								user.userId,
 								user.name,
 								user.lastName,
 								user.secondLastName,
@@ -140,7 +143,10 @@ jQuery(function($){
 			$.ajax({
 				url: settings.admin.user.clearScorm,
 				dataType: "json", method: 'POST',
-				data: {data: JSON.stringify(jsonData)}
+				data: {
+					data: JSON.stringify(jsonData),
+					csrftoken: RDLMS.csrftoken
+				}
 			})
 				.done(function(r){
 					if(r.status && r.status == 'success'){
@@ -168,7 +174,10 @@ jQuery(function($){
 			$.ajax({
 				url: settings.admin.user.delete,
 				dataType: "json", method: 'POST',
-				data: {data: JSON.stringify(jsonData)}
+				data: {
+					data: JSON.stringify(jsonData),
+					csrftoken: RDLMS.csrftoken
+				}
 			})
 				.done(function(r){
 					if(!r.status || r.status != 'success') cancelDeleteUser(u);
@@ -231,7 +240,10 @@ jQuery(function($){
 		$.ajax({
 			url: settings.admin.user.save,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData),
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(r){
 				if(r.status && r.status == 'success'){
@@ -281,7 +293,10 @@ jQuery(function($){
 		$.ajax({
 			url: settings.admin.user.stats,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData),
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(response){
 				if(response.status && response.status == 'success'){

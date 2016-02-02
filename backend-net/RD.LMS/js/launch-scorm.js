@@ -23,7 +23,10 @@
 		$.ajax({
 			url: fetchURL,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData),
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(onSCOSettingsLoaded)
 			.fail(onSCOSettingsError)
@@ -48,7 +51,10 @@
 			iframe.attr('src', scosrc);
 			window.API = new ScormApi({
 				commitURL: commitURL,
-				cmiData: response.data.dataModel
+				cmiData: response.data.dataModel,
+				commitExtraData: {  // Additional POST variables that will be sent to the LMS
+					csrftoken: RDLMS.csrftoken
+				}
 			});
 			
 			// Placed this code on <body onbeforeunload=""> for compatibility
