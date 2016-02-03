@@ -88,7 +88,7 @@ namespace RD.LMS.Models
             this.occupation = daoUser.Ocupation;
             this.organization = daoUser.Organization;
             this.LastLogged = daoUser.LastLogged.HasValue ? daoUser.LastLogged.Value : new DateTime(1899, 11, 30);
-            this.email = string.Empty;
+            this.email = daoUser.Email;
             this.password = string.Empty;
         }
 
@@ -251,12 +251,12 @@ namespace RD.LMS.Models
                     RestablishPassword(this.email, true);
                     return;
                 }
-                    
-
-                Business.UserController.SaveUser(newUSer);
-                Business.NotificationController notify = new Business.NotificationController();
-                notify.SendConfirmationMail(newUSer);
-                
+                else
+                {
+                    Business.UserController.SaveUser(newUSer);
+                    Business.NotificationController notify = new Business.NotificationController();
+                    notify.SendConfirmationMail(newUSer);
+                }
             }
             catch (BSoft.MailProvider.MailControlException ex)
             {

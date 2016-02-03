@@ -56,7 +56,6 @@
     <Property Name="Ocupation" Type="smallint" Nullable="false" />
     <Property Name="Organization" Type="smallint" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
-    <Property Name="SerialSession" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
   <EntityType Name="UserCourses">
     <Key>
@@ -190,7 +189,7 @@
           <Property Name="Password" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="FirstName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="LastName" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="SecondLastName" Type="String" Nullable="false" />
+          <Property Name="SecondLastName" Type="String" Nullable="false" MaxLength="Max" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" DefaultValue="False" />
           <Property Name="IsLogged" Type="Boolean" Nullable="false" DefaultValue="False" />
           <Property Name="LastLogged" Type="DateTime" Nullable="true" Precision="3" />

@@ -34,7 +34,8 @@
         "user": "User/UserSessionState",
         "logoutRedirect": "login.html",
         "resetPassword": "Home/ReestablishPassword",
-        "forgot": "Home/ForgotPassword"
+        "forgot": "Home/ForgotPassword",
+        "ping":  "User/Ping"
     },
     "branding": {
 		"headerLoggedIn": "branding/header-logged-in.html",

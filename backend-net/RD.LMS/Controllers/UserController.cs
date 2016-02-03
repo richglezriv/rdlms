@@ -17,18 +17,19 @@ namespace RD.LMS.Controllers
 
         public ActionResult Login(string data)
         {
+            
             Models.JSonModel model = new Models.JSonModel();
             Newtonsoft.Json.Linq.JObject json = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
-
+            
             LMSUser user = new LMSUser()
             {
                 email = json["email"].ToString(),
                 password = json["password"].ToString(),
                 TryOuts = Convert.ToInt32(Session["TRYOUTS"])
             };
-
             try
             {
+
                 tryouts = GetTryouts();
                 ReviewTryouts();
 
@@ -40,6 +41,7 @@ namespace RD.LMS.Controllers
                 else
                 {
                     model.status = user.Validate();
+                    //CreateSessionId();
                     Session.Add("TRYOUTS", user.TryOuts);
 
                     if (model.status.Equals(Utilities.SUCCESS))
@@ -52,16 +54,17 @@ namespace RD.LMS.Controllers
                             tryouts.Add(new UserTryout() { login = user.email, lastTry = DateTime.Now });
                         this.HttpContext.Application[TRYOUTS] = tryouts;
                     }
-                    
+
                 }
 
                 model.data = user;
-                //CreateSessionId();
             }
             catch (Exception ex)
             {
                 model.status = "fail";
-                user.SetReason("exception " + ex.Message + ex.InnerException.Message);
+                //string message = ex.Message;
+                //message += ex.InnerException != null ? ex.InnerException.Message : string.Empty;
+                //user.SetReason(String.Format("exception {0}", message));
                 model.data = user;
             }
 
@@ -261,6 +264,14 @@ namespace RD.LMS.Controllers
             }
 
                 
+            return Json(model);
+        }
+
+        public ActionResult Ping()
+        {
+            Models.JSonModel model = new JSonModel();
+            model.status = "success";
+
             return Json(model);
         }
 

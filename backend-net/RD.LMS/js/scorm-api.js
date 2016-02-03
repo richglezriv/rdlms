@@ -150,7 +150,10 @@
 			
 			$.ajax({
 				url: commitURL,	method: 'POST',
-				data: { data: JSON.stringify(commitExtraData) }
+				data: {
+				    data: JSON.stringify(cleanData),
+				    csrftoken: commitExtraData.csrftoken
+				}
 			})
 				.done(function(response){
 					console.log('Successfully commited data!');

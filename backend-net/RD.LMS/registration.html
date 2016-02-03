@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -144,25 +144,7 @@
 
 		<div class="row">
 			<div class="col-sm-6">
-				<div class="form-group">
-					<label for="input-captcha">Ingresa el texto de la imagen</label>
-
-					<div class="form-group">
-						<div class="captcha panel panel-default">
-							<div id="recaptcha_image" style="width: 300px; height: 57px;">
-								<img id="recaptcha_challenge_image" alt="reCAPTCHA challenge image" height="57" src="http://exchange.telstra.com.au/wp-content/uploads/2014/09/CAPTCHA.jpg">
-							</div>
-						</div>
-					</div>
-					
-					<div class="input-group">
-						<input type="text" id="input-captcha" class="form-control" />
-						<a class="btn btn-default input-group-addon" href="javascript:Recaptcha.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
-						<!-- <a class="btn btn-default input-group-addon recaptcha_only_if_image" href="javascript:Recaptcha.switch_type('audio')"><span class="glyphicon glyphicon-volume-up"></span></a> -->
-						<!-- <a class="btn btn-default input-group-addon recaptcha_only_if_audio" href="javascript:Recaptcha.switch_type('image')"><span class="glyphicon glyphicon-picture"></span></a> -->
-						<!-- <a class="btn btn-default input-group-addon" href="javascript:Recaptcha.showhelp()"><span class="glyphicon glyphicon-info-sign"></span></a> -->
-					</div>
-				</div>
+                <div class="form-group" id="captcha-form"></div>
 			</div>
 		</div>
 
@@ -213,5 +195,14 @@
 	<script src="components/zxcvbn/zxcvbn.min.js"></script>
 	<script src="js/rdlms.js"></script>
 	<script src="js/registration.js"></script>
+    <script>
+
+    var posting = $.post('/Captcha/');
+    posting.done(function (data) {
+        $('#captcha-form').html(data);
+    });
+
+
+    </script>
 </body>
 </html>

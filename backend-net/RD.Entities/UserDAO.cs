@@ -106,7 +106,7 @@ namespace RD.Entities
             result.Gender = _persist.Gender;
             result.Ocupation = _persist.Ocupation;
             result.Organization = _persist.Organization;
-
+            
             model.SaveChanges();
         }
 

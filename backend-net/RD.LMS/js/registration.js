@@ -8,7 +8,8 @@ jQuery(function($){
 		saveBtn = $('#registration-submit'),
 		pwd = $('#input-password'),
 		pwdBar = $('#pwd-bar'),
-		already = $('#already')
+		already = $('#already'),
+        logoutRedirect = 'login.html'
 	;
 
 	// Utils ______________________________________________________________________
@@ -55,7 +56,7 @@ jQuery(function($){
 			}
 		});
 
-		already.attr('href', self.settings.logoutRedirect || 'login.html');
+		already.attr('href', 'login.html');
 		
 		// Fetch courses
 		settings = RDLMS.settings;
@@ -164,7 +165,7 @@ jQuery(function($){
 			organization: $.trim($('#input-organization').val()),
 			password: $('#input-password').val(),
 			passwordCheck: $('#input-passwordCheck').val(),
-			captcha: $('#input-captcha').val(),
+			captcha: $('#input-CaptchaInputText').val(),
 			terms: ~~$('#input-terms:checked').val()
 		};
 		return data;

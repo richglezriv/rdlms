@@ -190,9 +190,13 @@ namespace RD.LMS.Controllers
                 user.Register();
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 model.status = "fail";
+                //string message = ex.Message;
+                //message += ex.InnerException != null ? ex.InnerException.Message : string.Empty;
+                //message += ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : string.Empty;
+                //user.SetReason(message);
                 model.data = user;
             }
 
