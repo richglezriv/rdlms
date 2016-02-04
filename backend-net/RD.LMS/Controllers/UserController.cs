@@ -41,7 +41,6 @@ namespace RD.LMS.Controllers
                 else
                 {
                     model.status = user.Validate();
-                    //CreateSessionId();
                     Session.Add("TRYOUTS", user.TryOuts);
 
                     if (model.status.Equals(Utilities.SUCCESS))
@@ -73,10 +72,15 @@ namespace RD.LMS.Controllers
 
         private void CreateSessionId()
         {
+            HttpContext context = System.Web.HttpContext.Current;
             Boolean redirected, cookieAdded;
             SessionIDManager manager = new SessionIDManager();
-            string newId = manager.CreateSessionID(System.Web.HttpContext.Current);
-            manager.SaveSessionID(System.Web.HttpContext.Current, newId, out redirected, out cookieAdded);
+            System.Diagnostics.Debug.WriteLine("first pass " + manager.GetSessionID(context));
+            string newId = manager.CreateSessionID(context);
+            System.Diagnostics.Debug.WriteLine("what should be " + newId);
+            manager.RemoveSessionID(context);
+            manager.SaveSessionID(context, newId, out redirected, out cookieAdded);
+            System.Diagnostics.Debug.WriteLine("second pass " + manager.GetSessionID(context));
         }
 
         private void ReviewTryouts()
@@ -107,19 +111,18 @@ namespace RD.LMS.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Get()
+        public ActionResult Get(String csrftoken)
         {
-            Models.JSonModelCollection model = new Models.JSonModelCollection();
-            Models.JSonModel mSession = Utilities.IsSessionActive(Session[Utilities.USER]);
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
 
-            if (mSession != null)
-                return Json(mSession , JsonRequestBehavior.AllowGet);
+            Models.JSonModelCollection model = new Models.JSonModelCollection();
              
             List<Models.UserCourseModel> courses = Models.UserCourseModel.Get(((Models.LMSUser)Session[Utilities.USER]).id);
 
             model.data = courses.ToList<IDataModel>();
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
 
         public ActionResult Registration()
@@ -140,8 +143,10 @@ namespace RD.LMS.Controllers
 
         public ActionResult GetUser() { throw new NotImplementedException(); }
 
-        public ActionResult Fetch(string data)
+        public ActionResult Fetch(string data, string csrftoken)
         {
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
 
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             Models.LMSModel lms = new Models.LMSModel();
@@ -209,8 +214,11 @@ namespace RD.LMS.Controllers
 
         }
 
-        public ActionResult Commit(string data)
+        public ActionResult Commit(string data, string csrftoken)
         {
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
+
             CourseModel toCourse = (CourseModel)Session[USER_COURSE];
             Entities.UserCourse course = Business.UserController.GetCourse(Convert.ToInt32(toCourse.id));
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
@@ -231,40 +239,41 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        public ActionResult UserSessionState(string data)
+        private JsonResult StateLoggedOut()
         {
-            //Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             Models.JSonModel model = new JSonModel();
-            if (Session[Utilities.USER] != null) {
+            model.status = "success";
+            model.data = JSonUserModel.GetLoggedOut();
+            return Json(model);
+        }
+
+        public ActionResult UserSessionState(string csrftoken = null)
+        {
+            Models.JSonModel model = new JSonModel();
+            if (Session[Utilities.USER] != null)
+            {
                 LMSUser user = (LMSUser)Session[Utilities.USER];
-                //if (toFetch != null && toFetch.Count > 0)
-                //{
-                //    if (user.csrftoken.Equals(toFetch["csrftoken"].ToString()))
-                //    {
-                model.status = "success";
-                model.data = new JSonUserModel()
+                if (Utilities.IsValidToken(csrftoken, user))
                 {
-                    sessionType = user.GetSessionType(),
-                    user = user
-                };
-                //    }
-                //}
-                //else
-                //{
-                //    model.status = "success";
-                //    model.data = JSonUserModel.GetLoggedOut();
-                //    return Json(model);
-                //}
+                    model.status = "success";
+                    model.data = new JSonUserModel()
+                    {
+                        sessionType = user.GetSessionType(),
+                        user = user
+                    };
+                    return Json(model);
+                }
+                else
+                {
+                    CreateSessionId();
+                    return Utilities.StateLoggedOut();
+                }
             }
             else
             {
-                model.status = "success";
-                model.data = JSonUserModel.GetLoggedOut();
-                return Json(model);
+                CreateSessionId();
+                return StateLoggedOut();
             }
-
-                
-            return Json(model);
         }
 
         public ActionResult Ping()

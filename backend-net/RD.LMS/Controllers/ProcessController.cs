@@ -10,8 +10,11 @@ namespace RD.LMS.Controllers
 {
     public class ProcessController : Controller
     {
-        public ActionResult UploadThumbnail(String qqfile)
+        public ActionResult UploadThumbnail(String qqfile, string csrftoken)
         {
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
+
             List<String> thumbs = Session[Utilities.THUMBS] == null ? new List<string>() : (List<String>)Session[Utilities.THUMBS];
             JSonModel model = new JSonModel() { status = "success" };
             HttpRequestBase hfc = Request;
@@ -46,8 +49,11 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        public ActionResult UploadScorm(string qqfile)
+        public ActionResult UploadScorm(string qqfile, string csrftoken)
         {
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
+
             List<String> scorms = Session[Utilities.SCORMS] == null ? new List<string>() : (List<String>)Session[Utilities.SCORMS];
             JSonModel model = new JSonModel();
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace RD.LMS.Models
 {
@@ -40,6 +41,35 @@ namespace RD.LMS.Models
             return null;
         }
 
+        public static JsonResult StateLoggedOut()
+        {
+            JsonResult result = new JsonResult();
+            Models.JSonModel model = new JSonModel();
+            model.status = "success";
+            model.data = JSonUserModel.GetLoggedOut();
+            result.Data = model;
+            return  result;
+        }
 
+        public static JsonResult StateSessionExpired()
+        {
+            JsonResult result = new JsonResult();
+            Models.JSonModel model = new JSonModel();
+            model.status = "fail";
+            model.data = MessageData.GetSessionExpired();
+            result.Data = model;
+            HttpContext.Current.Session.Clear();
+            HttpContext.Current.Session.Abandon();
+            return  result;
+        }
+
+        public static Boolean IsValidToken(string token, LMSUser user)
+        {
+            if (token == null || user == null)
+                return false;
+
+            return user.csrftoken.Equals(token);
+                
+        }
     }
 }

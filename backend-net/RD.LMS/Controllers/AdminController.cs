@@ -11,8 +11,11 @@ namespace RD.LMS.Controllers
     public class AdminController : Controller
     {
 
-        public ActionResult Get()
+        public ActionResult Get(string csrftoken)
         {
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
+
             RD.LMS.Models.JSonModelCollection model = new RD.LMS.Models.JSonModelCollection();
 
             Models.JSonModel mSession = Utilities.IsSessionActive(Session[Utilities.USER]);
@@ -24,7 +27,11 @@ namespace RD.LMS.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Save(String data) {
+        public ActionResult Save(String data, string csrftoken) {
+
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
+
             JSonModel model = new JSonModel();
             CourseModel course = new CourseModel();
             try
@@ -66,8 +73,11 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        public ActionResult Stats(string data)
+        public ActionResult Stats(string data, string csrftoken)
         {
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
+
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             string id = toFetch["courseId"].ToString();
             RD.LMS.Models.JSonModel model = new RD.LMS.Models.JSonModel();
@@ -77,8 +87,11 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        public ActionResult Delete(string data)
+        public ActionResult Delete(string data, string csrftoken)
         {
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
+
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             int id =  int.Parse(toFetch["courseId"].ToString());
             RD.LMS.Models.JSonModel model = new RD.LMS.Models.JSonModel();
@@ -120,8 +133,11 @@ namespace RD.LMS.Controllers
 
         }
 
-        public ActionResult DeleteUser(String data)
+        public ActionResult DeleteUser(String data, string csrftoken)
         {
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
+
             Models.JSonModel model = new JSonModel();
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             Models.UserModel cUser = new UserModel();
@@ -136,8 +152,11 @@ namespace RD.LMS.Controllers
 
         }
 
-        public ActionResult SaveUser(String data)
+        public ActionResult SaveUser(String data, String csrftoken)
         {
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
+
             Models.JSonModel model = new JSonModel();
             Models.LMSUser user = (LMSUser)Session[Utilities.USER];
 
@@ -213,8 +232,11 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        public ActionResult ClearUserScorm(String data)
+        public ActionResult ClearUserScorm(String data, string csrftoken)
         {
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
+
             Models.JSonModel model = new JSonModel();
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             Models.UserCourseModel userCourse = new UserCourseModel();

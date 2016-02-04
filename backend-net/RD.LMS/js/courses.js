@@ -104,7 +104,7 @@ jQuery(function($){
 					}
 				}else if(response.status && response.status === 'fail' && response.data.reason){
 					var failResult = RDLMS.handleFailure(response.data.reason);
-					if(!handleFailure) showFeedback('No fue posible cargar la lista de cursos. Ocurrió una falla con el servidor');
+					if (!failResult) showFeedback('No fue posible cargar la lista de cursos. Ocurrió una falla con el servidor');
 					console.error(response.data.reason);
 				}else{
 					showFeedback('No fue posible cargar la lista de cursos. Ocurrió un error al comunicarse con el servidor');

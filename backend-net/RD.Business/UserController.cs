@@ -27,7 +27,7 @@ namespace RD.Business
                     user = _dao.ValidateByMail(email, Utilities.GetStringHashed(password));
                 if (user != null)
                 {
-                    //user.LastLogged = new DateTime(1899, 11, 30);
+                    user.LastLogged = new DateTime(1899, 11, 30);
                     Entities.IDAO control = new RD.Entities.UserDAO(string.Empty, user);
                     control.Update();
                 }

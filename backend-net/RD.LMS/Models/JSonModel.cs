@@ -37,6 +37,15 @@ namespace RD.LMS.Models
         public string message { get; set; }
 
         public String reason { get; set; }
+
+        public static MessageData GetSessionExpired()
+        {
+            MessageData model = new MessageData()
+            {
+                reason = "session-expired",
+            };
+            return model;
+        }
     }
 
     public class JSonUserModel : IDataModel
@@ -60,6 +69,7 @@ namespace RD.LMS.Models
             };
             return model;
         }
+
     }
 
 }

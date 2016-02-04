@@ -192,7 +192,7 @@
           <Property Name="SecondLastName" Type="String" Nullable="false" MaxLength="Max" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" DefaultValue="False" />
           <Property Name="IsLogged" Type="Boolean" Nullable="false" DefaultValue="False" />
-          <Property Name="LastLogged" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="LastLogged" Type="DateTime" Nullable="true" />
           <Property Name="Email" Type="String" Nullable="false" />
           <Property Name="BirthDay" Type="DateTime" Nullable="true" />
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" />
