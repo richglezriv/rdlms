@@ -79,6 +79,17 @@ namespace RD.LMS.Models
             return json;
         }
 
+        public IDictionary<String, String> GenerateJSon()
+        {
+            IDictionary<string, string> fields = new Dictionary<String, String>();
+
+            foreach (System.Reflection.PropertyInfo p in this.GetType().GetProperties())
+            {
+                fields.Add(GetScormName(p.Name), p.GetValue(this).ToString());
+            }
+
+            return fields;
+        }
         public LMSModel()
         {
             this.myDictionary.Add("Children", "cmi.core._children");

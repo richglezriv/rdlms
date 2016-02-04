@@ -23,8 +23,8 @@ namespace RD.LMS.Controllers
             
             LMSUser user = new LMSUser()
             {
-                email = json["email"].ToString(),
-                password = json["password"].ToString(),
+                email = json["email"].ToString().Trim(),
+                password = json["password"].ToString().Trim(),
                 TryOuts = Convert.ToInt32(Session["TRYOUTS"])
             };
             try
@@ -276,8 +276,11 @@ namespace RD.LMS.Controllers
             }
         }
 
-        public ActionResult Ping()
+        public ActionResult Ping(string csrftoken)
         {
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
+
             Models.JSonModel model = new JSonModel();
             model.status = "success";
 

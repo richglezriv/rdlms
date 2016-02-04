@@ -103,20 +103,10 @@ namespace RD.LMS.Controllers
 
         public ActionResult FindUsers(String data, String csrftoken)
         {
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
 
             JSonModelCollection model = new JSonModelCollection();
-
-            Models.JSonModel mSession = Utilities.IsSessionActive(Session[Utilities.USER]);
-            if (mSession != null)
-                return Json(mSession);
-            Models.LMSUser user = Session[Utilities.USER] as Models.LMSUser;
-            if (user.csrftoken != csrftoken)
-            {
-                model.status = Utilities.SESSION_EXPIRED;
-                return Json(model);
-            }
-                
-
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             try
             {
@@ -128,9 +118,7 @@ namespace RD.LMS.Controllers
             {
                 model.status = "fail";   
             }
-
             return Json(model);
-
         }
 
         public ActionResult DeleteUser(String data, string csrftoken)
