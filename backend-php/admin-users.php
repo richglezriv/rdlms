@@ -9,7 +9,7 @@ $q = $data['query'];
 
 $users = array(
 	array(
-		"userId" => "100",
+		"id" => "100",
 		"name" => "Victor",
 		"lastName" => "Márquez",
 		"secondLastName" => "Ortiz",
@@ -17,7 +17,7 @@ $users = array(
 		"extra" => array()
 	),
 	array(
-		"userId" => "200",
+		"id" => "200",
 		"name" => "Ricardo",
 		"lastName" => "Adams",
 		"secondLastName" => "Smith",
@@ -25,7 +25,7 @@ $users = array(
 		"extra" => array()
 	),
 	array(
-		"userId" => "300",
+		"id" => "300",
 		"name" => "Edgar",
 		"lastName" => "Johnson",
 		"secondLastName" => "Lopez",

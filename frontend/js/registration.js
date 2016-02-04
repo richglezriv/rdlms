@@ -55,7 +55,7 @@ jQuery(function($){
 			}
 		});
 
-		already.attr('href', self.settings.logoutRedirect || 'login.html');
+		already.attr('href', self.settings.session.logoutRedirect || 'login.html');
 		
 		// Fetch courses
 		settings = RDLMS.settings;

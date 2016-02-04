@@ -2,6 +2,7 @@
 	"sco": {
 		"fetch": "/rdlms/backend-php/sco-fetch.php",
 		"commit": "/rdlms/backend-php/sco-commit.php",
+		"encodeCommitData": true,
 		"basePath": "/rdlms/frontend/scorm-packages/"
 	},
 

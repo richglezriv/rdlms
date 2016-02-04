@@ -14,7 +14,7 @@ $data = json_decode($json, true);
 $students = array(
 
 	'victor' => array(
-		'userId' => 222,
+		'id' => 222,
 		'isAdmin' => false,
 		'name' => "Víctor",
 		'lastName' => "Márquez",
@@ -27,7 +27,7 @@ $students = array(
 	),
 
 	'edgar' => array(
-		'userId' => 333,
+		'id' => 333,
 		'isAdmin' => false,
 		'name' => "Edgar",
 		'lastName' => "Rosas",
@@ -44,7 +44,7 @@ $students = array(
 $admins = array(
 
 	'admin' => array(
-		'userId' => 111,
+		'id' => 111,
 		'isAdmin' => true,
 		'name' => "Ricardo",
 		'lastName' => "González",
