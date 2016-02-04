@@ -8,7 +8,8 @@ jQuery(function($){
 		loginForm = $('#login-form').hide(),
 		forgotForm = $('#forgot-form').hide(),
 		registrationForm = $('#registration-form').hide(),
-		forgotBtns = $('.forgot-btn')
+		forgotBtns = $('.forgot-btn'),
+        currentForm = null
 	;
 
 
@@ -27,10 +28,10 @@ jQuery(function($){
 
 	function showFeedback(msg){
 		//alert(msg);
-		loginForm.find('.alert').remove();
-		var alert = $('<div class="alert alert-warning alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="glyphicon glyphicon-exclamation-sign"></i> <span class="message"></span></div>');
-		loginForm.children().first().prepend(alert);
-		alert.find('.message').text(msg);
+	    currentForm.find('.alert').remove();
+	    var alert = $('<div class="alert alert-warning alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="glyphicon glyphicon-exclamation-sign"></i> <span class="message"></span></div>');
+	    currentForm.children().first().prepend(alert);
+	    alert.find('.message').text(msg);
 	}
 
 	function startLoading(){
@@ -65,10 +66,12 @@ jQuery(function($){
 			if(hash == '#forgot'){
 				loginForm.hide();
 				forgotForm.show();
+				currentForm = forgotForm;
 			}
 			if(hash == '#login'){
 				loginForm.show();
 				forgotForm.hide();
+				currentForm = loginForm;
 			}
 		});
 	}
@@ -131,7 +134,7 @@ jQuery(function($){
 		startLoading();
 		
 		var jsonData = {
-			username: $('#input-email').val()
+		    username: $('#input-email-forgot').val()
 		};
 		$.ajax({
 			url: settings.session.forgot,
