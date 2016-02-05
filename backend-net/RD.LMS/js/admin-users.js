@@ -152,6 +152,11 @@ jQuery(function($){
 					if(r.status && r.status == 'success'){
 						//showFeedback('El avance del usuario fue borrado con éxito.');
 						showStats(uid);
+
+					}else if(response.status && response.status === 'fail' && response.data.reason){
+						var failResult = RDLMS.handleFailure(response.data.reason);
+						if(!handleFailure) showFeedback('No se pudo borrar el avance del usuario, por favor intenta más tarde.');
+						console.error(response.data.reason);
 					}else{
 						showFeedback('No se pudo borrar el avance del usuario, por favor intenta más tarde.');
 					}
@@ -246,14 +251,7 @@ jQuery(function($){
 			}
 		})
 			.done(function(r){
-				if(r.status && r.status == 'success'){
-					// TODO
-				}else if(r.status && r.status == 'fail'){
-					showFeedback('Algunos de los datos que especificaste son inválidos. Por favor revisa los campos marcados.');
-					showErrors(r.status.data);
-				}else{
-					showFeedback('Ocurrió un error al intentar guardar. Por favor intenta más tarde.');
-				}
+				// TODO
 			})
 			.fail(function(){
 				showFeedback('Ocurrió un error al intentar guardar. Por favor intenta más tarde.');
