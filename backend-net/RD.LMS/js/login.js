@@ -109,12 +109,10 @@ jQuery(function($){
 						Cookies.set('__token', r.data.csrftoken);
 						document.location.href = r.data.isAdmin ? "admin-courses.html" : "courses.html";
 					}
-				}else if(r.status && r.status == "fail" && r.data.reason === 'validation-error'){
-					showErrors(r.data.fields);
-				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "credentials-error"){
-					showLoginFeedback('Nombre de usuario o contraseña incorrectos');
-				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "too-many-tries"){
-					showLoginFeedback('Demasiados intentos fallidos. Tu acceso se ha bloqueado por una hora.');
+				}else if(r.status && r.status == "fail" && r.data && r.data.reason){
+					if(r.data.reason == "too-many-tries") showLoginFeedback('Demasiados intentos fallidos. Tu acceso se ha bloqueado por una hora.');
+					if(r.data.reason == 'validation-error') showErrors(r.data.fields);
+					else showLoginFeedback('Hay un error en tu usuario o contraseña, o tu cuenta no ha sido activada. Por favor, intenta de nuevo o haz clic en la liga de activación que enviamos a tu correo cuando te registraste.');
 				}else{
 					showLoginFeedback('No se pudo establecer conexión con el servidor. Por favor, intenta más tarde.');
 				}
