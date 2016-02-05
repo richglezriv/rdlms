@@ -55,10 +55,8 @@ jQuery(function($){
 			}
 		});
 
-		already.attr('href', self.settings.session.logoutRedirect || 'login.html');
-		
-		// Fetch courses
 		settings = RDLMS.settings;
+		already.attr('href', settings.session.logoutRedirect || 'login.html');
 	}
 	
 
@@ -85,7 +83,7 @@ jQuery(function($){
 				if(r.status && r.status == 'success'){
 					stopLoading();
 					showFeedback('Gracias, tu registro ha sido guardado con éxito. Muy pronto recibirás un correo electrónico con los siguientes pasos para continuar con el proceso.');
-					document.location.href = self.settings.logoutRedirect || 'login.html';
+					document.location.href = settings.session.logoutRedirect || 'login.html';
 				}else if(r.status && r.status == 'fail' && r.data.reason == 'validation-error'){
 					showFeedback('Algunos de los datos que especificaste son inválidos. Por favor revisa los campos marcados.');
 					showErrors(r.data.fields);
