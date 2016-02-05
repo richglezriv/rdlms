@@ -8,8 +8,7 @@ jQuery(function($){
 		loginForm = $('#login-form').hide(),
 		forgotForm = $('#forgot-form').hide(),
 		registrationForm = $('#registration-form').hide(),
-		forgotBtns = $('.forgot-btn'),
-        currentForm = null
+		forgotBtns = $('.forgot-btn')
 	;
 
 
@@ -26,12 +25,19 @@ jQuery(function($){
 
 	// GUI helpers ________________________________________________________________
 
-	function showFeedback(msg){
+	function showLoginFeedback(msg){
 		//alert(msg);
-	    currentForm.find('.alert').remove();
-	    var alert = $('<div class="alert alert-warning alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="glyphicon glyphicon-exclamation-sign"></i> <span class="message"></span></div>');
-	    currentForm.children().first().prepend(alert);
-	    alert.find('.message').text(msg);
+		loginForm.find('.alert').remove();
+		var alert = $('<div class="alert alert-warning alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="glyphicon glyphicon-exclamation-sign"></i> <span class="message"></span></div>');
+		loginForm.children().first().prepend(alert);
+		alert.find('.message').text(msg);
+	}
+	function showForgotFeedback(msg){
+		//alert(msg);
+		forgotForm.find('.alert').remove();
+		var alert = $('<div class="alert alert-warning alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="glyphicon glyphicon-exclamation-sign"></i> <span class="message"></span></div>');
+		forgotForm.children().first().prepend(alert);
+		alert.find('.message').text(msg);
 	}
 
 	function startLoading(){
@@ -66,12 +72,10 @@ jQuery(function($){
 			if(hash == '#forgot'){
 				loginForm.hide();
 				forgotForm.show();
-				currentForm = forgotForm;
 			}
 			if(hash == '#login'){
 				loginForm.show();
 				forgotForm.hide();
-				currentForm = loginForm;
 			}
 		});
 	}
@@ -100,7 +104,7 @@ jQuery(function($){
 				//r.status='fail'; r.data.reason='credentials-error';
 				if(r.status && r.status == 'success'){
 					if(!r.data.csrftoken){
-						showFeedback('No se pudo crear una sesión en el servidor. Por favor intenta más tarde.');
+						showLoginFeedback('No se pudo crear una sesión en el servidor. Por favor intenta más tarde.');
 					}else{
 						Cookies.set('__token', r.data.csrftoken);
 						document.location.href = r.data.isAdmin ? "admin-courses.html" : "courses.html";
@@ -108,15 +112,15 @@ jQuery(function($){
 				}else if(r.status && r.status == "fail" && r.data.reason === 'validation-error'){
 					showErrors(r.data.fields);
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "credentials-error"){
-					showFeedback('Nombre de usuario o contraseña incorrectos');
+					showLoginFeedback('Nombre de usuario o contraseña incorrectos');
 				}else if(r.status && r.status == "fail" && r.data && r.data.reason == "too-many-tries"){
-					showFeedback('Demasiados intentos fallidos. Tu acceso se ha bloqueado por una hora.');
+					showLoginFeedback('Demasiados intentos fallidos. Tu acceso se ha bloqueado por una hora.');
 				}else{
-					showFeedback('No se pudo establecer conexión con el servidor. Por favor, intenta más tarde.');
+					showLoginFeedback('No se pudo establecer conexión con el servidor. Por favor, intenta más tarde.');
 				}
 			})
 			.fail(function(){
-				showFeedback('No se pudo establecer conexión con el servidor. Por favor, intenta más tarde.');
+				showLoginFeedback('No se pudo establecer conexión con el servidor. Por favor, intenta más tarde.');
 			})
 			.always(function(r){
 				console.log(r);
@@ -147,13 +151,13 @@ jQuery(function($){
 					if(r.status === 'fail' && r.data.reason === 'validation-error'){
 						showErrors(r.data.fields);
 					}
-					showFeedback('Te hemos enviado un correo con los siguientes pasos.');
+					showForgotFeedback('Te hemos enviado un correo con los siguientes pasos.');
 				}else{
-					showFeedback('Ocurrió un error al intentar procesar tu solicitud, por favor intenta mas tarde.');
+					showForgotFeedback('Ocurrió un error al intentar procesar tu solicitud, por favor intenta mas tarde.');
 				}
 			})
 			.fail(function(){
-				showFeedback('No se pudo establecer conexión con el servidor. Por favor, intenta más tarde.');
+				showForgotFeedback('No se pudo establecer conexión con el servidor. Por favor, intenta más tarde.');
 			})
 			.always(function(r){
 				console.log(r);
@@ -184,7 +188,13 @@ jQuery(function($){
 
 	// Init everything _____________________________________________________________
 
-	RDLMS.showFeedback = showFeedback;
+	RDLMS.showFeedback = function(msg){
+		// Si recibimos un mensaje en general del servidor, lo mistramos
+		// en ambos formularios.
+		showLoginFeedback(msg);
+		showForgotFeedback(msg);
+	};
+
 	RDLMS.init(onLMSInitialized);
 
 

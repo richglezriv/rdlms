@@ -8,8 +8,7 @@ jQuery(function($){
 		saveBtn = $('#registration-submit'),
 		pwd = $('#input-password'),
 		pwdBar = $('#pwd-bar'),
-		already = $('#already'),
-        logoutRedirect = 'login.html'
+		already = $('#already')
 	;
 
 	// Utils ______________________________________________________________________
@@ -56,7 +55,7 @@ jQuery(function($){
 			}
 		});
 
-		already.attr('href', 'login.html');
+		already.attr('href', self.settings.session.logoutRedirect || 'login.html');
 		
 		// Fetch courses
 		settings = RDLMS.settings;

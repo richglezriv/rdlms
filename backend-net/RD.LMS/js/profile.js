@@ -169,13 +169,13 @@ jQuery(function($){
 			name: $.trim($('#input-name').val()),
 			lastName: $.trim($('#input-lastName').val()),
 			secondLastName: $.trim($('#input-secondLastName').val()),
+			birthday: $('#input-birthday').val(),
 			gender: $.trim($('#input-gender').val()),
 			occupation: $.trim($('#input-occupation').val()),
 			organization: $.trim($('#input-organization').val()),
 			oldPassword: $('#input-oldPassword').val(),
 			newPassword: $('#input-newPassword').val(),
-			newPasswordCheck: $('#input-newPasswordCheck').val(),
-			birthday: $('#input-birthday').val()
+			newPasswordCheck: $('#input-newPasswordCheck').val()
 		};
 		return data;
 	}

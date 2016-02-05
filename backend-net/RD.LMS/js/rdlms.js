@@ -25,7 +25,8 @@ window.RDLMS = new (function($){
 	function loadLMSSettings(){
 		$.ajax({
 			url: "configuration/lms-settings.json",
-			dataType: "json", method: 'GET'
+			dataType: "json", method: 'GET',
+			cache: false
 		})
 			.done(onLMSSettingsLoaded)
 			.fail(onLMSSettingsError)

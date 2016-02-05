@@ -195,14 +195,8 @@
 	<script src="components/zxcvbn/zxcvbn.min.js"></script>
 	<script src="js/rdlms.js"></script>
 	<script src="js/registration.js"></script>
-    <script>
-
-    var posting = $.post('/Captcha/');
-    posting.done(function (data) {
-        $('#captcha-form').html(data);
-    });
-
-
-    </script>
+	
+	<!-- Inject captcha -->
+	<script>$.post('/Captcha/').done(function(data){ $('#captcha-form').html(data); });</script>
 </body>
 </html>

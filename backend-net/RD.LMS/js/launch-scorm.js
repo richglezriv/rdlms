@@ -52,6 +52,7 @@
 			window.API = new ScormApi({
 				commitURL: commitURL,
 				cmiData: response.data.dataModel,
+				encodedCmiData: RDLMS.settings.sco.encodeCommitData,
 				commitExtraData: {  // Additional POST variables that will be sent to the LMS
 					csrftoken: RDLMS.csrftoken
 				}
