@@ -194,16 +194,16 @@ namespace RD.LMS.Controllers
                 user.name = toFetch["name"].ToString();
                 user.lastName = toFetch["lastName"].ToString();
                 user.secondLastName = toFetch["secondLastName"].ToString();
-                user.Register();
+                //user.Register();
 
             }
             catch (Exception ex)
             {
                 model.status = "fail";
-                //string message = ex.Message;
-                //message += ex.InnerException != null ? ex.InnerException.Message : string.Empty;
-                //message += ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : string.Empty;
-                //user.SetReason(message);
+                string message = ex.Message;
+                message += ex.InnerException != null ? ex.InnerException.Message : string.Empty;
+                message += ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : string.Empty;
+                user.SetReason(message);
                 model.data = user;
             }
 

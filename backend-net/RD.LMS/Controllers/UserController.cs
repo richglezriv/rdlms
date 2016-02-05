@@ -106,7 +106,9 @@ namespace RD.LMS.Controllers
             }
             catch (Exception) { }
 
+            Session.Clear();
             Session.Abandon();
+            CreateSessionId();
             
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -271,7 +273,6 @@ namespace RD.LMS.Controllers
             }
             else
             {
-                CreateSessionId();
                 return StateLoggedOut();
             }
         }
