@@ -96,11 +96,12 @@ window.RDLMS = new (function($){
 		var hash = location.hash;
 		if(hash === '#lms-logout'){
 			logout();
+			location.hash = '';
 		}
 		if(hash === '#lms-profile'){
 			location.href = 'profile.html';
+			location.hash = '';
 		}
-		location.hash = '';
 	}
 
 
