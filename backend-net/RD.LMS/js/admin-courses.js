@@ -251,9 +251,16 @@ jQuery(function($){
 					modal.modal('hide');
 					stopLoading();
 					fetchCourses();
-				}else if(r.status && r.status == 'fail'){
-					showFeedback('Algunos de los datos que especificaste son inválidos. Por favor revisa los campos marcados.');
-					showErrors(r.status.data);
+
+				}else if(response.status && response.status === 'fail' && response.data.reason){
+					if(response.data.reason == 'validation-error'){
+						showFeedback('Algunos de los datos que especificaste son inválidos. Por favor revisa los campos marcados.');
+						showErrors(r.status.data.fields);
+					}else{
+						var failResult = RDLMS.handleFailure(response.data.reason);
+						if(!handleFailure) showFeedback('Ocurrió un error al intentar guardar. Por favor intenta más tarde.');
+						console.error(response.data.reason);
+					}
 				}else{
 					showFeedback('Ocurrió un error al intentar guardar. Por favor intenta más tarde.');
 				}

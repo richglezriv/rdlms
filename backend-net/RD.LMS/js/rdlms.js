@@ -141,6 +141,7 @@ window.RDLMS = new (function($){
 	function handleFailure(code){
 		//alert(code);
 		if(code === 'session-expired'){
+			Cookies.remove('__token');
 			showFeedback('Tu sesión ha expirado');
 			//alert('Redirecting to login...');
 			document.location.href = self.settings.session.logoutRedirect || 'login.html';
