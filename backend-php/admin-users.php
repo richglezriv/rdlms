@@ -1,11 +1,15 @@
 <?php 
 
+session_start();
+if(!isset($_SESSION['user'])){ die(json_encode(array('status'=>'fail','data'=>array('reason'=>'session-expired')))); }
+if(!$_SESSION['user']['isAdmin']){ die(json_encode(array('status'=>'fail','data'=>array('reason'=>'admins-only')))); }
+
 $data = json_decode($_POST['data'], true);
 $q = $data['query'];
 
 $users = array(
 	array(
-		"userId" => "100",
+		"id" => "100",
 		"name" => "Victor",
 		"lastName" => "Márquez",
 		"secondLastName" => "Ortiz",
@@ -13,7 +17,7 @@ $users = array(
 		"extra" => array()
 	),
 	array(
-		"userId" => "200",
+		"id" => "200",
 		"name" => "Ricardo",
 		"lastName" => "Adams",
 		"secondLastName" => "Smith",
@@ -21,7 +25,7 @@ $users = array(
 		"extra" => array()
 	),
 	array(
-		"userId" => "300",
+		"id" => "300",
 		"name" => "Edgar",
 		"lastName" => "Johnson",
 		"secondLastName" => "Lopez",
