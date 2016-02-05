@@ -2,25 +2,21 @@
 	"sco": {
 		"fetch": "/rdlms/backend-php/sco-fetch.php",
 		"commit": "/rdlms/backend-php/sco-commit.php",
+		"encodeCommitData": true,
 		"basePath": "/rdlms/frontend/scorm-packages/"
 	},
 
 	"lms": {
 		"courses": "/rdlms/backend-php/courses.php",
 		"registration": "/rdlms/backend-php/registration.php",
-		"profile": "/rdlms/backend-php/profile.php",
+		"profile": "/rdlms/backend-php/tester.php?a=save-profile",
 		"uploadPath": "/rdlms/frontend/uploads/"
 	},
 
 	"branding": {
-		"headerImage": "/rdlms/frontend/branding/nutrir-full.png",
-		"headerCaption": "",
-		"headerCaptionColor": "#fff",
-		"headerBackgroundColor": "#F3A344",
-		"headerHeight": 80,
-		"headerHideAccount": true,
-		"courseListTitle": "Módulos",
-		"courseListIntro": "Haz clic en el módulo que deseas revisar."
+		"headerLoggedIn": "/rdlms/frontend/branding/header-logged-in.html",
+		"headerLoggedOut": "/rdlms/frontend/branding/header-logged-out.html",
+		"footer": "/rdlms/frontend/branding/footer.html"
 	},
 
 	"admin": {
@@ -36,7 +32,7 @@
 			"find": "/rdlms/backend-php/admin-users.php",
 			"save": "/rdlms/backend-php/tester.php?a=user-save",
 			"delete": "/rdlms/backend-php/tester.php?a=user-delete",
-			"stats": "/rdlms/backend-php/courses.php",
+			"stats": "/rdlms/backend-php/tester.php?a=admin-user-stats",
 			"clearScorm": "/rdlms/backend-php/tester.php?a=clear-scorm",
 			"extraLabels": ["Dirección", "Fecha de nacimiento"]
 		}
@@ -45,6 +41,9 @@
 	"session": {
 		"login": "/rdlms/backend-php/login.php",
 		"logout": "/rdlms/backend-php/logout.php",
+		"ping": "/rdlms/backend-php/tester.php?a=keep-session-alive",
+		"forgot": "/rdlms/backend-php/tester.php?a=forgot-password",
+		"resetPassword": "/rdlms/backend-php/tester.php?a=reset-password",
 		"user": "/rdlms/backend-php/user.php",
 		"logoutRedirect": "login.html"
 	}

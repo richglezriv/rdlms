@@ -8,8 +8,6 @@ jQuery(function($){
 		currentSCO = null
 	;
 
-	$('a[href="#logout"]').on('click', function(e){ e.preventDefault(); RDLMS.logout(); });
-
 	var statusMap = {
 		"passed": ['Aprobado', 'success'],
 		"failed": ['Reprobado', 'danger'],
@@ -52,7 +50,14 @@ jQuery(function($){
 
 	// Courses loading ____________________________________________________________
 
-	function onLMSInitialized(){
+	function onLMSInitialized(session){
+		//alert('courses '+session.type);
+		if(session.type != 'student'){
+			if(session.type == 'admin') RDLMS.handleFailure('students-only');
+			else RDLMS.handleFailure('session-expired');
+			return false;
+		}
+
 		fetchCourses(RDLMS.settings);
 		
 		//win.on('unload', function(e){
@@ -72,7 +77,10 @@ jQuery(function($){
 		if(loading) return;
 		$.ajax({
 			url: settings.lms.courses,
-			dataType: 'json', method: 'POST'
+			dataType: 'json', method: 'POST',
+			data: {
+				csrftoken: RDLMS.csrftoken
+			}
 			
 		})
 			.done(function(response){
@@ -140,15 +148,35 @@ jQuery(function($){
 						fetchCourses(RDLMS.settings);
 					}, 1000);
 					$("#in-course").modal('hide');
+					Session.cancelKeepAlive();
 				};
 			}, 1500);
 			$("#in-course").modal({backdrop: 'static', keyboard: false});
 			window.scowin = currentSCO;
+			Session.keepAlive(120);
 		}else{
 			showFeedback('Sólo puedes ver un curso a la vez.');
 		}
 	}
 
+
+	var Session = new (function(){
+		var self = this, times = 0, minutesInterval = 5, intervalId;
+		self.keepAlive = function(minutes){
+			self.cancelKeepAlive();
+			times = Math.ceil(minutes/minutesInterval);
+			ping();
+			intervalId = setInterval(function(){ ping(); }, 1000 * 60 * minutesInterval);
+		};
+		self.cancelKeepAlive = function(){
+			clearInterval(intervalId);
+			times = 0;
+		};
+		function ping(){
+			RDLMS.ping();
+			if(--times <= 0) self.cancelKeepAlive();
+		}
+	})();
 
 
 

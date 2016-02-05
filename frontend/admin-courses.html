@@ -3,8 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="shortcut icon" href="http://www.uxns.com.mx/sites/all/themes/u4hk/images/favicon.ico">
 	<title>Cursos - LMS</title>
 	<link rel="stylesheet" href="components/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="components/simple-uploader/css/simple-uploader.css">
 	<link rel="stylesheet" href="css/frontend.css">
 	<script>browser={'sucks':false};(function(){var method;var noop=function noop(){};var methods=['assert','clear','count','debug','dir','dirxml','error','exception','group','groupCollapsed','groupEnd','info','log','markTimeline','profile','profileEnd','table','time','timeEnd','timeStamp','trace','warn'];var length = methods.length;var console=(window.console=window.console||{});while(length--){method=methods[length];if(!console[method]){console[method]=noop;}}}());</script>
@@ -29,8 +31,8 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="username"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="admin-profile.html">Editar perfil</a></li>
-							<li><a href="#logout">Cerrar sesión</a></li>
+							<li><a href="profile.html">Editar perfil</a></li>
+							<li><a href="#lms-logout">Cerrar sesión</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -205,6 +207,7 @@
 				
 
 	<!-- Scripts -->
+	<script src="components/js-cookie/js-cookie.min.js"></script>
 	<script src="components/jquery/jquery.min.js"></script>
 	<script src="components/bootstrap/js/bootstrap.min.js"></script>
 	<script src="components/fileuploader/js/fileuploader.js"></script>

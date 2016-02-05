@@ -13,9 +13,6 @@ jQuery(function($){
 		searchForm = $('#user-search').hide()
 	;
 
-	$('a[href="#logout"]').on('click', function(e){ e.preventDefault(); RDLMS.logout(); });
-
-
 
 	// Utils ______________________________________________________________________
 
@@ -49,7 +46,14 @@ jQuery(function($){
 
 	// Users loading ____________________________________________________________
 
-	function onLMSInitialized(){
+	function onLMSInitialized(session){
+		//alert('admin-courses: ' + session.type);
+		if(session.type != 'admin'){
+			if(session.type == 'student') RDLMS.handleFailure('admins-only');
+			else RDLMS.handleFailure('session-expired');
+			return false;
+		}
+		
 		//add.on('click', function(e){ e.preventDefault(); if(!loading) addUser(); });
 
 		// Fetch users
@@ -69,7 +73,10 @@ jQuery(function($){
 		$.ajax({
 			url: settings.admin.user.find,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData),
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(response){
 				if(response.status && response.status === 'success'){
@@ -78,7 +85,7 @@ jQuery(function($){
 					if(users.length){
 						$.each(users, function(i, user){
 							list.append(renderUser(
-								user.userId,
+								user.id,
 								user.name,
 								user.lastName,
 								user.secondLastName,
@@ -136,7 +143,10 @@ jQuery(function($){
 			$.ajax({
 				url: settings.admin.user.clearScorm,
 				dataType: "json", method: 'POST',
-				data: {data: JSON.stringify(jsonData)}
+				data: {
+					data: JSON.stringify(jsonData),
+					csrftoken: RDLMS.csrftoken
+				}
 			})
 				.done(function(r){
 					if(r.status && r.status == 'success'){
@@ -164,7 +174,10 @@ jQuery(function($){
 			$.ajax({
 				url: settings.admin.user.delete,
 				dataType: "json", method: 'POST',
-				data: {data: JSON.stringify(jsonData)}
+				data: {
+					data: JSON.stringify(jsonData),
+					csrftoken: RDLMS.csrftoken
+				}
 			})
 				.done(function(r){
 					if(!r.status || r.status != 'success') cancelDeleteUser(u);
@@ -227,7 +240,10 @@ jQuery(function($){
 		$.ajax({
 			url: settings.admin.user.save,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData),
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(r){
 				if(r.status && r.status == 'success'){
@@ -277,7 +293,10 @@ jQuery(function($){
 		$.ajax({
 			url: settings.admin.user.stats,
 			dataType: "json", method: 'POST',
-			data: {data: JSON.stringify(jsonData)}
+			data: {
+				data: JSON.stringify(jsonData),
+				csrftoken: RDLMS.csrftoken
+			}
 		})
 			.done(function(response){
 				if(response.status && response.status == 'success'){

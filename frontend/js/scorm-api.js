@@ -21,7 +21,14 @@
 
 	window.ScormApi = function(options){
 		var commitURL = options.commitURL;
-		var cmiData = options.cmiData;
+		var encodedCmiData = !!options.encodedCmiData;
+		var cmiData = (encodedCmiData) ? JSON.parse(options.cmiData) : options.cmiData;
+		var commitExtraData = options.commitExtraData || {};
+
+		// `commitExtraData` will be merged with the data sent by the commit.
+		// this is usefull when trying to send additional per-request data
+		// to the LMS, for example a CSRF Token.
+		// Avoid sending a key named "data" as this will be rewritten.
 
 		var onChange = typeof(options.onChange === 'function') ? options.onChange : null;
 		var onCommit = typeof(options.onCommit === 'function') ? options.onCommit : null;
@@ -139,20 +146,29 @@
 		function commit() {
 			lastError = "0";
 			if(!isInitialized || isFinished){ lastError = "301"; return "false"; }
-			var cleanData = getSanitizedCmiData(cmiData);
+			var cleanCmiData = getSanitizedCmiData(cmiData);
+			
+			// Prepare the data to be sent with the request
+			var ajaxPostData = $.extend({}, commitExtraData, {data: cleanCmiData});
+			
+			if(encodedCmiData){
+				// If the server expects the data to be double encoded...
+				ajaxPostData.data = JSON.stringify(ajaxPostData.data);
+			}
+
 			$.ajax({
 				url: commitURL,	method: 'POST',
-				data: {data: cleanData}
+				data: ajaxPostData
 			})
 				.done(function(response){
 					console.log('Successfully commited data!');
 					if(onCommit) onCommit();
-					//console.log(cleanData);
+					//console.log(cleanCmiData);
 					//console.log(response);
 				})
 				.fail(function(){
 					console.error('Could not commit data!');
-					//console.log(cleanData);
+					//console.log(cleanCmiData);
 				})
 			;
 			if(false) {
