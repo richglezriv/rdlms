@@ -2,44 +2,49 @@
     "sco": {
         "fetch": "User/Fetch",
         "commit": "User/Commit",
+        "encodeCommitData": true,
         "basePath": "scorm-packages/"
     },
+
     "lms": {
         "courses": "User/Get",
         "registration": "Admin/RegisterUser",
         "profile": "Admin/SaveUser",
         "uploadPath": "scorm-images/"
     },
+
+    "branding": {
+        "headerLoggedIn": "branding/header-logged-in.html",
+        "headerLoggedOut": "branding/header-logged-out.html",
+        "footer": "branding/footer.html"
+    },
+
     "admin": {
         "course": {
-            "uploadThumb": "Process/UploadThumbnail",
-            "uploadScorm": "Process/UploadScorm",
             "list": "Admin/Get",
             "save": "Admin/Save",
             "delete": "Admin/Delete",
-            "stats": "Admin/Stats"
+            "stats": "Admin/Stats",
+            "uploadThumb": "Process/UploadThumbnail",
+            "uploadScorm": "Process/UploadScorm"
         },
         "user": {
             "find": "Admin/FindUsers",
             "save": "Admin/SaveUser",
             "delete": "Admin/DeleteUser",
             "stats": "Admin/GetUserStats",
-            "clearScorm": "Admin/ClearUserScorm"
+            "clearScorm": "Admin/ClearUserScorm",
+            "extraLabels": []
         }
     },
+
     "session": {
         "login": "User/Login",
         "logout": "User/Logout",
-        "validate": "User/UserSessionState",
-        "user": "User/UserSessionState",
-        "logoutRedirect": "login.html",
-        "resetPassword": "Home/ReestablishPassword",
+        "ping":  "User/Ping",
         "forgot": "Home/ForgotPassword",
-        "ping":  "User/Ping"
-    },
-    "branding": {
-		"headerLoggedIn": "branding/header-logged-in.html",
-		"headerLoggedOut": "branding/header-logged-out.html",
-		"footer": "branding/footer.html"
-	}
+        "resetPassword": "Home/ReestablishPassword",
+        "user": "User/UserSessionState",
+        "logoutRedirect": "login.html"
+    }
 }
