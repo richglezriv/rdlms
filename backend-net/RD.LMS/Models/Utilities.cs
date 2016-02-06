@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.SessionState;
 
 namespace RD.LMS.Models
 {
@@ -60,6 +61,7 @@ namespace RD.LMS.Models
             result.Data = model;
             HttpContext.Current.Session.Clear();
             HttpContext.Current.Session.Abandon();
+            CreateSessionId();
             return  result;
         }
 
@@ -70,6 +72,16 @@ namespace RD.LMS.Models
 
             return user.csrftoken.Equals(token);
                 
+        }
+
+        public static void CreateSessionId()
+        {
+            HttpContext context = System.Web.HttpContext.Current;
+            Boolean redirected, cookieAdded;
+            SessionIDManager manager = new SessionIDManager();
+            string newId = manager.CreateSessionID(context);
+            manager.RemoveSessionID(context);
+            manager.SaveSessionID(context, newId, out redirected, out cookieAdded);
         }
     }
 }

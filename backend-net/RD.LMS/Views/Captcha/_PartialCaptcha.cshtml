@@ -1,45 +1,56 @@
 ﻿@model CaptchaMvc.Models.DefaultBuildInfoModel
+
+<label for="input-CaptchaInputText">Ingresa el c&oacute;digo que se ve en la imagen</label>
+
 <div class="form-group">
-    <label for="input-passwordCheck">Ingresa el c&oacute;digo que se ve en la imagen</label>
-</div>
-<img id="@Model.ImageElementId" src="@Model.ImageUrl" />
-@Html.Hidden(Model.TokenElementId, Model.TokenValue)
-<br />
-@{
-    Model.RefreshButtonText = "generar nuevo c&oacute;digo";
-    string id = Guid.NewGuid().ToString("N");
-    string functionName = string.Format("______{0}________()", Guid.NewGuid().ToString("N"));
-    <script type="text/javascript">
+    <div class="captcha panel panel-default">
+        <div id="recaptcha_image" style="width: 200px; height: 70px;">
+            <img id="@Model.ImageElementId" src="@Model.ImageUrl" />
+            @Html.Hidden(Model.TokenElementId, Model.TokenValue)
+        </div>
+    </div>
+        <div class="input-group">
+            @{
+                
+                string id = Guid.NewGuid().ToString("N");
+                string functionName = string.Format("______{0}________()", Guid.NewGuid().ToString("N"));
+                <script type="text/javascript">
 
-        $(function () {
-            $('#@id').show();
-    });
+                    $(function () {
+                        $('#@id').show();
+                    });
 
 
-    function @functionName {
-            $('#@id').hide();
-        $.post("@Model.RefreshUrl", { @Model.TokenParameterName: $('#@Model.TokenElementId').val() },
-            function () {
-                $('#@id').show();
-            });
-        return false;
-    }
-    </script>
-
-    <a href="#@Model.ImageElementId" id="@id" onclick="@functionName" style="display: none;">generar nuevo c&oacute;digo</a>
-}
-
-@if (Model.IsRequired)
-{
-    @Html.TextBox(string.Format("input-{0}",Model.InputElementId), null, new Dictionary<string, object>
+                    function @functionName {
+                            $('#@id').hide();
+                        $.post("@Model.RefreshUrl", { @Model.TokenParameterName: $('#@Model.TokenElementId').val() },
+                            function () {
+                                $('#@id').show();
+                            });
+                        return false;
+                    }
+                </script>
+                
+            }
+            @if (Model.IsRequired)
+            {
+                @Html.TextBox(string.Format("input-{0}", Model.InputElementId), null, new Dictionary<string, object>
                                                   {
                                                       {"data-val", "true"},
                                                       {"data-val-required", Model.RequiredMessage},
                                                       {"class","form-control"}
                                                   })
-}
-else
-{
-    @Html.TextBox(string.Format("input-{0}", Model.InputElementId), null, new { @class = "form-control" })
-}
-@Html.ValidationMessage(Model.InputElementId)
+            }
+            else
+            {
+                @Html.TextBox(string.Format("input-{0}", Model.InputElementId), null, new { @class = "form-control" })
+            }
+            @Html.ValidationMessage(Model.InputElementId)
+            <a href="#captcha panel panel-default" class="btn btn-default input-group-addon" id="@id" onclick="@functionName" style="display: none;" title="Generar nuevo c&oacute;digo"><span class="glyphicon glyphicon-refresh"></span></a>
+        </div>
+    </div>
+
+
+
+
+

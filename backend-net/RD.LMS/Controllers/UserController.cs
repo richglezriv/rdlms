@@ -70,19 +70,6 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        private void CreateSessionId()
-        {
-            HttpContext context = System.Web.HttpContext.Current;
-            Boolean redirected, cookieAdded;
-            SessionIDManager manager = new SessionIDManager();
-            System.Diagnostics.Debug.WriteLine("first pass " + manager.GetSessionID(context));
-            string newId = manager.CreateSessionID(context);
-            System.Diagnostics.Debug.WriteLine("what should be " + newId);
-            manager.RemoveSessionID(context);
-            manager.SaveSessionID(context, newId, out redirected, out cookieAdded);
-            System.Diagnostics.Debug.WriteLine("second pass " + manager.GetSessionID(context));
-        }
-
         private void ReviewTryouts()
         {
             for (int i = tryouts.Count - 1; i >= 0; i--)
@@ -108,7 +95,7 @@ namespace RD.LMS.Controllers
 
             Session.Clear();
             Session.Abandon();
-            CreateSessionId();
+            Utilities.CreateSessionId();
             
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -255,7 +242,7 @@ namespace RD.LMS.Controllers
             if (Session[Utilities.USER] != null)
             {
                 LMSUser user = (LMSUser)Session[Utilities.USER];
-                if (Utilities.IsValidToken(csrftoken, user))
+                if (Utilities.IsValidToken(csrftoken, user) || user.GetSessionType().Equals("reset-password"))
                 {
                     model.status = "success";
                     model.data = new JSonUserModel()
@@ -267,7 +254,7 @@ namespace RD.LMS.Controllers
                 }
                 else
                 {
-                    CreateSessionId();
+                    Utilities.CreateSessionId();
                     return Utilities.StateLoggedOut();
                 }
             }

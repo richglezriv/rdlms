@@ -27,18 +27,27 @@ namespace RD.LMS.Models
         public String thumbnail { get; set; }
 
         public String description { get; set; }
-
-        public String conditions { get; set; }
+        /// <summary>
+        /// Fron end variable
+        /// </summary>
+        public IEnumerable<string> conditions { get; set; }
+        /// <summary>
+        /// Entity object
+        /// </summary>
+        public String predecessors { get; set; }
+        
         #endregion
 
         #region methods
         public void LoadValues(Newtonsoft.Json.Linq.JObject json)
         {
-            foreach (System.Reflection.PropertyInfo p in this.GetType().GetProperties())
+            foreach (System.Reflection.PropertyInfo p in this.GetType().GetProperties().Where(r=>!r.Name.Equals("conditions")))
             {
                 if (p.Name.Equals("id") && json["courseId"] != null)
                     this.GetType().GetProperty(p.Name).SetValue(this,json["courseId"].ToString());
-                else
+                else if (p.Name.Equals("predecessors") && json["conditions"] != null)
+                    this.GetType().GetProperty(p.Name).SetValue(this,json["conditions"].ToString());
+                else 
                     this.GetType().GetProperty(p.Name).SetValue(this, json[p.Name] != null ? json[p.Name].ToString() : null);
             }
 
@@ -65,7 +74,8 @@ namespace RD.LMS.Models
                         scorm = item.ScormPackage,
                         status = "active",
                         thumbnail = item.Thumbnail,
-                        conditions = item.ParentCourses
+                        predecessors = item.ParentCourses,
+                        conditions = CreatePredecessorsArray(item.ParentCourses)
                     });
                 }
             }
@@ -74,9 +84,15 @@ namespace RD.LMS.Models
             return result;
         }
 
+        private static IEnumerable<string> CreatePredecessorsArray(string array)
+        {
+            string predecessors = array.Replace("[", string.Empty).Replace("]", string.Empty).Trim();
+            return predecessors.Split('"');
+        }
+
         public void LoadCourse(Entities.UserCourse userCourse)
         {
-            this.conditions = userCourse.Course.ParentCourses;
+            this.predecessors = userCourse.Course.ParentCourses;
             this.description = userCourse.Course.Description;
             this.id = userCourse.Id.ToString();
             this.name = userCourse.Course.Name;
@@ -102,7 +118,7 @@ namespace RD.LMS.Models
                     Description = this.description,
                     Id = id,
                     Name = this.name,
-                    ParentCourses = this.conditions,
+                    ParentCourses = this.predecessors,
                     ScoIndex = this.scoIndex,
                     ScormPackage = this.scorm,
                     Thumbnail = this.thumbnail,
