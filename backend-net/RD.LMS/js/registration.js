@@ -174,6 +174,8 @@ jQuery(function($){
 		$.each(errors, function(k, v){
 			input = $('#input-' + k);
 			input.parent().addClass('has-error');
+			if(input.is(':checkbox') && input.parent().is('label')) input = input.parent().parent();
+			if(input.parent.is('.input-group')) input = input.parent();
 			input.after('<p class="help-block error-feedback"><i class="glyphicon glyphicon-exclamation-sign"></i> ' + v + '<p>');
 		});
 	}

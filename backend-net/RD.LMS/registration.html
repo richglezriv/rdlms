@@ -197,6 +197,9 @@
 	<script src="js/registration.js"></script>
 	
 	<!-- Inject captcha -->
-	<script>$.post('/Captcha/').done(function(data){ $('#captcha-form').html(data); });</script>
+	<script>
+		$.post('/Captcha/').done(function(data){ $('#captcha-form').html(data); });
+		$('#captcha-form a').attr('href','#captcha-reload')
+	</script>
 </body>
 </html>
