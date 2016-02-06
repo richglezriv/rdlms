@@ -34,6 +34,10 @@ namespace RD.LMS.Controllers
 
             JSonModel model = new JSonModel();
             CourseModel course = new CourseModel();
+            string uploadsPath = System.Configuration.ConfigurationManager.AppSettings["UploadPath"];
+            string scormPath = System.Configuration.ConfigurationManager.AppSettings["ScormPath"];
+            string scormImages = System.Configuration.ConfigurationManager.AppSettings["ScormImages"];
+
             try
             {
                 //TODO Read settings from json file
@@ -41,11 +45,11 @@ namespace RD.LMS.Controllers
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             course.LoadValues(toFetch);
             //course thumbnail
-            string source = Server.MapPath("~/uploads/") + course.thumbnail;
+            string source = Server.MapPath(uploadsPath) + course.thumbnail;
             source = source.Replace("home", "FileUp");
             //string extension = course.thumbnail.Remove(0, course.thumbnail.Length - 4);
             //course.thumbnail = course.name + extension;
-            string destination = Server.MapPath("~/scorm-images/") + course.thumbnail;
+            string destination = Server.MapPath(scormImages) + course.thumbnail;
             //copy file
             if (System.IO.File.Exists(source))
             {
@@ -53,14 +57,14 @@ namespace RD.LMS.Controllers
             }
             
             //scorm course zip
-            source = Server.MapPath("~/uploads/" + course.scorm).Replace("home", "FileUp"); ;
-            destination = Server.MapPath("~/scorm-packages/") + course.scorm;
+            source = Server.MapPath(uploadsPath + course.scorm).Replace("home", "FileUp"); ;
+            destination = Server.MapPath(scormPath) + course.scorm;
             if (System.IO.File.Exists(source))
             {
                 System.IO.File.Copy(source, destination, true);
                 System.IO.File.Delete(source);
                 ProcessController.UnzipFile(destination);
-                course.SetManifest(Server.MapPath("~/scorm-packages/"));
+                course.SetManifest(Server.MapPath(scormPath));
             }
 
             course.Save();
@@ -210,8 +214,11 @@ namespace RD.LMS.Controllers
             return Json(model);
         }
 
-        public ActionResult GetUserStats(String data)
+        public ActionResult GetUserStats(String data, string csrftoken)
         {
+            if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
+                return Utilities.StateSessionExpired();
+
             Models.JSonModelCollection model = new Models.JSonModelCollection();
             Newtonsoft.Json.Linq.JObject toFetch = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             List<Models.UserCourseModel> courses = Models.UserCourseModel.Get(toFetch["userId"].ToString());

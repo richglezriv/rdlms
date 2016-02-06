@@ -10,6 +10,8 @@ namespace RD.LMS.Controllers
 {
     public class ProcessController : Controller
     {
+        string uploadsPath = System.Configuration.ConfigurationManager.AppSettings["UploadPath"];
+
         public ActionResult UploadThumbnail(String qqfile, string csrftoken)
         {
             if (!Utilities.IsValidToken(csrftoken, Session[Utilities.USER] as LMSUser))
@@ -18,7 +20,7 @@ namespace RD.LMS.Controllers
             List<String> thumbs = Session[Utilities.THUMBS] == null ? new List<string>() : (List<String>)Session[Utilities.THUMBS];
             JSonModel model = new JSonModel() { status = "success" };
             HttpRequestBase hfc = Request;
-            string path = Server.MapPath("~/uploads/" + qqfile).Replace("home", "FileUp");
+            string path = Server.MapPath(uploadsPath + qqfile).Replace("home", "FileUp");
             
             try
             {
@@ -61,7 +63,7 @@ namespace RD.LMS.Controllers
             {
                 HttpRequestBase hfc = Request;
                 System.IO.Stream stream = hfc.InputStream;
-                string path = Server.MapPath("~/uploads/" + qqfile).Replace("home", "FileUp"); ;
+                string path = Server.MapPath(uploadsPath + qqfile).Replace("home", "FileUp"); ;
                 System.IO.FileStream newFile = System.IO.File.Create(path);
                 stream.CopyTo(newFile);
 
