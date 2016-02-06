@@ -75,7 +75,7 @@ jQuery(function($){
 				if(r.status && r.status == 'success'){
 					stopLoading();
 					showFeedback('Tu contraseña ha sido cambiada con éxito.');
-					document.location.href = self.settings.logoutRedirect || 'login.html';
+					document.location.href = self.session.logoutRedirect || 'login.html';
 				}else if(r.status && r.status == 'fail' && r.data.reason == 'validation-error'){
 					showFeedback('Algunos de los datos que especificaste son inválidos. Por favor revisa los campos marcados.');
 					showErrors(r.data.fields);
