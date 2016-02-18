@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -146,6 +146,11 @@
 			</div>
 		</div>
 
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group" id="captcha-form"></div>
+            </div>
+        </div>
 
 		<div class="row">
 			<div class="col-sm-6">
@@ -175,5 +180,10 @@
 	<script src="components/zxcvbn/zxcvbn.min.js"></script>
 	<script src="js/rdlms.js"></script>
 	<script src="js/profile.js"></script>
+    <!-- Inject captcha -->
+    <script>
+		$.post('/Captcha/').done(function(data){ $('#captcha-form').html(data); });
+		$('#captcha-form a').attr('href','#captcha-reload')
+    </script>
 </body>
 </html>
