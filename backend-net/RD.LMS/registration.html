@@ -199,7 +199,7 @@
 	<!-- Inject captcha -->
 	<script>
 		$.post('/Captcha/').done(function(data){ $('#captcha-form').html(data); });
-		$('#captcha-form a').attr('href','#captcha-reload')
+		setTimeout(function(){ jQuery('#captcha-form a').attr('href','#captcha-reload'); }, 2000);
 	</script>
 </body>
 </html>

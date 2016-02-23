@@ -135,7 +135,7 @@
 						<li>Al menos un caracter en minúscula.</li>
 						<li>Al menos un dígito numérico.</li>
 						<li>Al menos un caracter especial (por ejemplo: @ # $ % !).</li>
-                        <li>No debe contener la palabra "Password" o "Contraseña". <br><br></li> 
+						<li>No debe contener la palabra "Password" o "Contraseña". <br><br></li> 
 					</ul>
 				</small>
 
@@ -146,11 +146,11 @@
 			</div>
 		</div>
 
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group" id="captcha-form"></div>
-            </div>
-        </div>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group" id="captcha-form"></div>
+			</div>
+		</div>
 
 		<div class="row">
 			<div class="col-sm-6">
@@ -180,10 +180,11 @@
 	<script src="components/zxcvbn/zxcvbn.min.js"></script>
 	<script src="js/rdlms.js"></script>
 	<script src="js/profile.js"></script>
-    <!-- Inject captcha -->
-    <script>
+	
+	<!-- Inject captcha -->
+	<script>
 		$.post('/Captcha/').done(function(data){ $('#captcha-form').html(data); });
-		$('#captcha-form a').attr('href','#captcha-reload')
-    </script>
+		setTimeout(function(){ jQuery('#captcha-form a').attr('href','#captcha-reload'); }, 2000);
+	</script>
 </body>
 </html>
