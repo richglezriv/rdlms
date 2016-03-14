@@ -11,7 +11,7 @@ namespace RD.Business
     {
         public void SendConfirmationMail(Entities.User user)
         {
-            String acctConfirmation = "Confirmacion de cuenta";
+            String acctConfirmation = "Confirmar cuenta";
             String confirmUri = GetConfirmationUri(user);
             String body = GetConfirmationEmailBody(confirmUri);
             
@@ -65,7 +65,7 @@ namespace RD.Business
                                         <div class='clearfix colelem' id='u130-22'>
                                          <p>Te damos la bienvenida a nuestra plataforma de cursos en l&iacute;nea.</p>
                                          <p>Para terminar con tu proceso de registro debes de seguir esta liga para activar tu cuenta nueva:</p><p>&nbsp;</p>");
-            builder.Append(String.Format("<p id='u130-7'><a href='{0}'>activacion de cuenta</a></p><p>&nbsp;</p>", confirmUri));
+            builder.Append(String.Format("<p id='u130-7'><a href='{0}'>activar cuenta</a></p><p>&nbsp;</p>", confirmUri));
             builder.AppendLine(@"<p>(Si al dar click no te conecta a nuestro sitio te pedimos copiar la direcci&oacute;n a tu navegador e intentar de manera directa)</p><p>" + confirmUri + @"</p><p>&nbsp;</p>
                                          <p>Gracias por tu participaci&oacute;n.</p><p>&nbsp;</p>
                                         <p id='u130-17'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Atentamente,</p>
