@@ -30,5 +30,6 @@ namespace RD.Entities
         public virtual DbSet<UserCourse> UserCourses { get; set; }
         public virtual DbSet<Scorm> Scorms { get; set; }
         public virtual DbSet<BnnAppUser> BnnAppUsers { get; set; }
+        public virtual DbSet<ApplicationLog> ApplicationLogs { get; set; }
     }
 }

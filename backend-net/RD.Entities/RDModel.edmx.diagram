@@ -13,6 +13,8 @@
         <EntityTypeShape EntityType="RDModel.Scorm" Width="1.5" PointX="7.375" PointY="0.75" />
         <AssociationConnector Association="RDModel.ScormUserCourse" />
         <EntityTypeShape EntityType="RDModel.BnnAppUser" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="RDModel.ApplicationLog" Width="1.5" PointX="6.875" PointY="6.375" />
+        <AssociationConnector Association="RDModel.ApplicationLogUser" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppLogController.cs" />
     <Compile Include="CourseController.cs" />
     <Compile Include="NotificationController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

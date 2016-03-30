@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 02/02/2016 22:06:55
--- Generated from EDMX file: C:\Users\rgonzalez\Documents\Proyectos\Reaccion Digital\rdlms\backend-net\RD.Entities\RDModel.edmx
+-- Date Created: 03/30/2016 13:51:29
+-- Generated from EDMX file: I:\Src\RD\backend-net\RD.Entities\RDModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -134,6 +134,19 @@ CREATE TABLE [dbo].[BnnAppUsers] (
 );
 GO
 
+-- Creating table 'ApplicationLogs'
+CREATE TABLE [dbo].[ApplicationLogs] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [LogDate] datetime  NOT NULL,
+    [Transaction] nvarchar(max)  NOT NULL,
+    [SessionId] nvarchar(max)  NOT NULL,
+    [ClientIpAddress] nvarchar(max)  NOT NULL,
+    [ReturnCode] nvarchar(max)  NOT NULL,
+    [ErrorCode] nvarchar(max)  NOT NULL,
+    [UserId] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -165,6 +178,12 @@ GO
 -- Creating primary key on [Id] in table 'BnnAppUsers'
 ALTER TABLE [dbo].[BnnAppUsers]
 ADD CONSTRAINT [PK_BnnAppUsers]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'ApplicationLogs'
+ALTER TABLE [dbo].[ApplicationLogs]
+ADD CONSTRAINT [PK_ApplicationLogs]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -215,6 +234,21 @@ GO
 CREATE INDEX [IX_FK_ScormUserCourse]
 ON [dbo].[UserCourses]
     ([ScormId]);
+GO
+
+-- Creating foreign key on [UserId] in table 'ApplicationLogs'
+ALTER TABLE [dbo].[ApplicationLogs]
+ADD CONSTRAINT [FK_ApplicationLogUser]
+    FOREIGN KEY ([UserId])
+    REFERENCES [dbo].[Users]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ApplicationLogUser'
+CREATE INDEX [IX_FK_ApplicationLogUser]
+ON [dbo].[ApplicationLogs]
+    ([UserId]);
 GO
 
 -- --------------------------------------------------

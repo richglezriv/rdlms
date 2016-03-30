@@ -63,6 +63,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationLog.cs">
+      <DependentUpon>RDModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppLogDAO.cs" />
     <Compile Include="BnnAppUser.cs">
       <DependentUpon>RDModel.tt</DependentUpon>
     </Compile>

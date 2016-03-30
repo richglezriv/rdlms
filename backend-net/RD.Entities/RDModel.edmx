@@ -11,6 +11,7 @@
     <EntitySet Name="UserCourses" EntityType="RDModel.Store.UserCourses" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Scorms" EntityType="RDModel.Store.Scorms" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="BnnAppUsers" EntityType="RDModel.Store.BnnAppUsers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ApplicationLogs" EntityType="RDModel.Store.ApplicationLogs" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserUserCourse" Association="RDModel.Store.UserUserCourse">
       <End Role="User" EntitySet="Users" />
       <End Role="UserCourse" EntitySet="UserCourses" />
@@ -22,6 +23,10 @@
     <AssociationSet Name="ScormUserCourse" Association="RDModel.Store.ScormUserCourse">
       <End Role="Scorm" EntitySet="Scorms" />
       <End Role="UserCourse" EntitySet="UserCourses" />
+    </AssociationSet>
+    <AssociationSet Name="ApplicationLogUser" Association="RDModel.Store.ApplicationLogUser">
+      <End Role="ApplicationLog" EntitySet="ApplicationLogs" />
+      <End Role="User" EntitySet="Users" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Courses">
@@ -107,6 +112,19 @@
     <Property Name="FechaRegistro" Type="datetime" Nullable="true" />
     <Property Name="FechaAviso" Type="datetime" Nullable="true" />
   </EntityType>
+  <EntityType Name="ApplicationLogs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LogDate" Type="datetime" Nullable="false" />
+    <Property Name="Transaction" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SessionId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ClientIpAddress" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ReturnCode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ErrorCode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
   <Association Name="UserUserCourse">
     <End Role="User" Type="RDModel.Store.Users" Multiplicity="1" />
     <End Role="UserCourse" Type="RDModel.Store.UserCourses" Multiplicity="*" />
@@ -143,6 +161,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="ApplicationLogUser">
+    <End Role="ApplicationLog" Type="RDModel.Store.ApplicationLogs" Multiplicity="*" />
+    <End Role="User" Type="RDModel.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ApplicationLog">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -165,6 +195,11 @@
             <End Role="UserCourse" EntitySet="UserCourses" />
           </AssociationSet>
           <EntitySet Name="BnnAppUsers" EntityType="RDModel.BnnAppUser" />
+          <EntitySet Name="ApplicationLogs" EntityType="RDModel.ApplicationLog" />
+          <AssociationSet Name="ApplicationLogUser" Association="RDModel.ApplicationLogUser">
+            <End Role="ApplicationLog" EntitySet="ApplicationLogs" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Course">
           <Key>
@@ -288,6 +323,32 @@
           <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
           <Property Name="FechaAviso" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="ApplicationLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogDate" Type="DateTime" Nullable="false" />
+          <Property Name="Transaction" Type="String" Nullable="false" />
+          <Property Name="SessionId" Type="String" Nullable="false" />
+          <Property Name="ClientIpAddress" Type="String" Nullable="false" />
+          <Property Name="ReturnCode" Type="String" Nullable="false" />
+          <Property Name="ErrorCode" Type="String" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="RDModel.ApplicationLogUser" FromRole="ApplicationLog" ToRole="User" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="ApplicationLogUser">
+          <End Type="RDModel.ApplicationLog" Role="ApplicationLog" Multiplicity="*" />
+          <End Type="RDModel.User" Role="User" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ApplicationLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -379,6 +440,20 @@
           <ScalarProperty Name="LockedAt" ColumnName="LockedAt" />
           <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
           <ScalarProperty Name="FechaAviso" ColumnName="FechaAviso" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ApplicationLogs">
+      <EntityTypeMapping TypeName="IsTypeOf(RDModel.ApplicationLog)">
+        <MappingFragment StoreEntitySet="ApplicationLogs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+          <ScalarProperty Name="Transaction" ColumnName="Transaction" />
+          <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+          <ScalarProperty Name="ClientIpAddress" ColumnName="ClientIpAddress" />
+          <ScalarProperty Name="ReturnCode" ColumnName="ReturnCode" />
+          <ScalarProperty Name="ErrorCode" ColumnName="ErrorCode" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
