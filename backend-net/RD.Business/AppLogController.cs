@@ -19,14 +19,15 @@ namespace RD.Business
       public void RegisterLog(AppLogFacade logFacade)
       {
          ApplicationLog log = new ApplicationLog();
-         log.UserId = this._user.Id;
          log.LogDate = DateTime.Now;
          log.ClientIpAddress = logFacade.IpAddress;
          log.ErrorCode = logFacade.ErrorCode;
          log.ReturnCode = logFacade.ReturnCode;
          log.SessionId = logFacade.SessionId;
          log.Transaction = logFacade.Transaction;
-
+         log.UserId = this._user.Id;
+         AppLogDAO dao = new AppLogDAO(string.Empty, log);
+         dao.Save();
       }
 
 

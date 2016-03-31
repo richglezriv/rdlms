@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RD.Entities
 {
-   class AppLogDAO : IDAO
+   public class AppLogDAO : IDAO
    {
       private ApplicationLog _log;
       private String _password;
