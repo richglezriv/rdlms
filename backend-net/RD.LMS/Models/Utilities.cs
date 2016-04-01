@@ -31,18 +31,6 @@ namespace RD.LMS.Models
          return 0;
       }
 
-      public static JSonModel IsSessionActive(Object session)
-      {
-         if (session == null)
-            return new JSonModel() { status = "fail", data = new MessageData("session-expired") };
-         //else if (((LMSUser)session).isAdmin)
-         //    return new JSonModel() { status = "fail", data = new MessageData("admins-only") };
-         //else if (!((LMSUser)session).isAdmin)
-         //    return new JSonModel() { status = "fail", data = new MessageData("users-only") };
-
-         return null;
-      }
-
       public static JsonResult StateLoggedOut()
       {
          JsonResult result = new JsonResult();
@@ -98,13 +86,13 @@ namespace RD.LMS.Models
             facade.SessionId = context.Session.SessionID;
             facade.Transaction = transaction;
             Entities.User user = new Entities.User();
-            user.Id = Convert.ToInt32(lmsUser.id);
+            user.Id = lmsUser != null ? Convert.ToInt32(lmsUser.id) : 0;
             Business.AppLogController control = new Business.AppLogController(user);
             control.RegisterLog(facade);
          }
          catch (Exception) { }
-
-
       }
    }
+
+   
 }

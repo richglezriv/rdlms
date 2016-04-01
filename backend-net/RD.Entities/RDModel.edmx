@@ -10,7 +10,6 @@
     <EntitySet Name="Users" EntityType="RDModel.Store.Users" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserCourses" EntityType="RDModel.Store.UserCourses" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Scorms" EntityType="RDModel.Store.Scorms" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="BnnAppUsers" EntityType="RDModel.Store.BnnAppUsers" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ApplicationLogs" EntityType="RDModel.Store.ApplicationLogs" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserUserCourse" Association="RDModel.Store.UserUserCourse">
       <End Role="User" EntitySet="Users" />
@@ -23,10 +22,6 @@
     <AssociationSet Name="ScormUserCourse" Association="RDModel.Store.ScormUserCourse">
       <End Role="Scorm" EntitySet="Scorms" />
       <End Role="UserCourse" EntitySet="UserCourses" />
-    </AssociationSet>
-    <AssociationSet Name="ApplicationLogUser" Association="RDModel.Store.ApplicationLogUser">
-      <End Role="ApplicationLog" EntitySet="ApplicationLogs" />
-      <End Role="User" EntitySet="Users" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Courses">
@@ -91,27 +86,6 @@
     <Property Name="Exit" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Version" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
-  <EntityType Name="BnnAppUsers">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="StateId" Type="bigint" Nullable="false" />
-    <Property Name="FbId" Type="varchar" Nullable="true" MaxLength="500" />
-    <Property Name="Audience" Type="int" Nullable="false" />
-    <Property Name="IsInterested" Type="int" Nullable="false" />
-    <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="200" />
-    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="LastNames" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="Mail" Type="varchar" Nullable="false" MaxLength="50" />
-    <Property Name="Password" Type="varchar" Nullable="true" MaxLength="64" />
-    <Property Name="Extension" Type="varchar" Nullable="true" MaxLength="10" />
-    <Property Name="ChildrenCount" Type="int" Nullable="false" />
-    <Property Name="LocationCount" Type="int" Nullable="false" />
-    <Property Name="LockedAt" Type="datetime" Nullable="true" />
-    <Property Name="FechaRegistro" Type="datetime" Nullable="true" />
-    <Property Name="FechaAviso" Type="datetime" Nullable="true" />
-  </EntityType>
   <EntityType Name="ApplicationLogs">
     <Key>
       <PropertyRef Name="Id" />
@@ -121,8 +95,8 @@
     <Property Name="Transaction" Type="nvarchar(max)" Nullable="false" />
     <Property Name="SessionId" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ClientIpAddress" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ReturnCode" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ErrorCode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ReturnCode" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ErrorCode" Type="nvarchar(max)" Nullable="true" />
     <Property Name="UserId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="UserUserCourse">
@@ -161,18 +135,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="ApplicationLogUser">
-    <End Role="ApplicationLog" Type="RDModel.Store.ApplicationLogs" Multiplicity="*" />
-    <End Role="User" Type="RDModel.Store.Users" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ApplicationLog">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -194,12 +156,7 @@
             <End Role="Scorm" EntitySet="Scorms" />
             <End Role="UserCourse" EntitySet="UserCourses" />
           </AssociationSet>
-          <EntitySet Name="BnnAppUsers" EntityType="RDModel.BnnAppUser" />
           <EntitySet Name="ApplicationLogs" EntityType="RDModel.ApplicationLog" />
-          <AssociationSet Name="ApplicationLogUser" Association="RDModel.ApplicationLogUser">
-            <End Role="ApplicationLog" EntitySet="ApplicationLogs" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Course">
           <Key>
@@ -302,27 +259,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="BnnAppUser">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StateId" Type="Int64" Nullable="false" />
-          <Property Name="FbId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Audience" Type="Int32" Nullable="false" />
-          <Property Name="IsInterested" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LastNames" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Mail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Extension" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ChildrenCount" Type="Int32" Nullable="false" />
-          <Property Name="LocationCount" Type="Int32" Nullable="false" />
-          <Property Name="LockedAt" Type="DateTime" Precision="3" />
-          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
-          <Property Name="FechaAviso" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="ApplicationLog">
           <Key>
             <PropertyRef Name="Id" />
@@ -332,23 +268,10 @@
           <Property Name="Transaction" Type="String" Nullable="false" />
           <Property Name="SessionId" Type="String" Nullable="false" />
           <Property Name="ClientIpAddress" Type="String" Nullable="false" />
-          <Property Name="ReturnCode" Type="String" Nullable="false" />
-          <Property Name="ErrorCode" Type="String" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="RDModel.ApplicationLogUser" FromRole="ApplicationLog" ToRole="User" />
+          <Property Name="ReturnCode" Type="String" Nullable="true" />
+          <Property Name="ErrorCode" Type="String" Nullable="true" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="ApplicationLogUser">
-          <End Type="RDModel.ApplicationLog" Role="ApplicationLog" Multiplicity="*" />
-          <End Type="RDModel.User" Role="User" Multiplicity="1" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ApplicationLog">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -418,28 +341,6 @@
           <ScalarProperty Name="Entry" ColumnName="Entry" />
           <ScalarProperty Name="Exit" ColumnName="Exit" />
           <ScalarProperty Name="Version" ColumnName="Version" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="BnnAppUsers">
-      <EntityTypeMapping TypeName="IsTypeOf(RDModel.BnnAppUser)">
-        <MappingFragment StoreEntitySet="BnnAppUsers">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="StateId" ColumnName="StateId" />
-          <ScalarProperty Name="FbId" ColumnName="FbId" />
-          <ScalarProperty Name="Audience" ColumnName="Audience" />
-          <ScalarProperty Name="IsInterested" ColumnName="IsInterested" />
-          <ScalarProperty Name="UserName" ColumnName="UserName" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="LastNames" ColumnName="LastNames" />
-          <ScalarProperty Name="Mail" ColumnName="Mail" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Extension" ColumnName="Extension" />
-          <ScalarProperty Name="ChildrenCount" ColumnName="ChildrenCount" />
-          <ScalarProperty Name="LocationCount" ColumnName="LocationCount" />
-          <ScalarProperty Name="LockedAt" ColumnName="LockedAt" />
-          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-          <ScalarProperty Name="FechaAviso" ColumnName="FechaAviso" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

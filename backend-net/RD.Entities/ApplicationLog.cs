@@ -22,7 +22,5 @@ namespace RD.Entities
         public string ReturnCode { get; set; }
         public string ErrorCode { get; set; }
         public int UserId { get; set; }
-    
-        public virtual User User { get; set; }
     }
 }

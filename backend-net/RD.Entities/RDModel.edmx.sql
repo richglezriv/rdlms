@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/30/2016 13:51:29
--- Generated from EDMX file: I:\Src\RD\backend-net\RD.Entities\RDModel.edmx
+-- Date Created: 03/31/2016 20:55:05
+-- Generated from EDMX file: F:\Src\RD\backend-net\RD.Entities\RDModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -43,8 +43,8 @@ GO
 IF OBJECT_ID(N'[dbo].[Scorms]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Scorms];
 GO
-IF OBJECT_ID(N'[dbo].[BnnAppUsers]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[BnnAppUsers];
+IF OBJECT_ID(N'[dbo].[ApplicationLogs]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ApplicationLogs];
 GO
 
 -- --------------------------------------------------
@@ -113,27 +113,6 @@ CREATE TABLE [dbo].[Scorms] (
 );
 GO
 
--- Creating table 'BnnAppUsers'
-CREATE TABLE [dbo].[BnnAppUsers] (
-    [Id] bigint IDENTITY(1,1) NOT NULL,
-    [StateId] bigint  NOT NULL,
-    [FbId] varchar(500)  NULL,
-    [Audience] int  NOT NULL,
-    [IsInterested] int  NOT NULL,
-    [UserName] varchar(200)  NOT NULL,
-    [Name] varchar(100)  NOT NULL,
-    [LastNames] varchar(100)  NOT NULL,
-    [Mail] varchar(50)  NOT NULL,
-    [Password] varchar(64)  NULL,
-    [Extension] varchar(10)  NULL,
-    [ChildrenCount] int  NOT NULL,
-    [LocationCount] int  NOT NULL,
-    [LockedAt] datetime  NULL,
-    [FechaRegistro] datetime  NULL,
-    [FechaAviso] datetime  NULL
-);
-GO
-
 -- Creating table 'ApplicationLogs'
 CREATE TABLE [dbo].[ApplicationLogs] (
     [Id] int IDENTITY(1,1) NOT NULL,
@@ -141,8 +120,8 @@ CREATE TABLE [dbo].[ApplicationLogs] (
     [Transaction] nvarchar(max)  NOT NULL,
     [SessionId] nvarchar(max)  NOT NULL,
     [ClientIpAddress] nvarchar(max)  NOT NULL,
-    [ReturnCode] nvarchar(max)  NOT NULL,
-    [ErrorCode] nvarchar(max)  NOT NULL,
+    [ReturnCode] nvarchar(max)  NULL,
+    [ErrorCode] nvarchar(max)  NULL,
     [UserId] int  NOT NULL
 );
 GO
@@ -172,12 +151,6 @@ GO
 -- Creating primary key on [Id] in table 'Scorms'
 ALTER TABLE [dbo].[Scorms]
 ADD CONSTRAINT [PK_Scorms]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
--- Creating primary key on [Id] in table 'BnnAppUsers'
-ALTER TABLE [dbo].[BnnAppUsers]
-ADD CONSTRAINT [PK_BnnAppUsers]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -234,21 +207,6 @@ GO
 CREATE INDEX [IX_FK_ScormUserCourse]
 ON [dbo].[UserCourses]
     ([ScormId]);
-GO
-
--- Creating foreign key on [UserId] in table 'ApplicationLogs'
-ALTER TABLE [dbo].[ApplicationLogs]
-ADD CONSTRAINT [FK_ApplicationLogUser]
-    FOREIGN KEY ([UserId])
-    REFERENCES [dbo].[Users]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_ApplicationLogUser'
-CREATE INDEX [IX_FK_ApplicationLogUser]
-ON [dbo].[ApplicationLogs]
-    ([UserId]);
 GO
 
 -- --------------------------------------------------

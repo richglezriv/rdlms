@@ -14,6 +14,7 @@ namespace RD.LMS.Controllers
       private const string TRYOUTS = "USER_TRYOUTS";
       private string USER_COURSE = "USER_COURSE";
       private Boolean _sessionActive;
+      private string _errorCode;
 
       public ActionResult Login(string data)
       {
@@ -64,9 +65,10 @@ namespace RD.LMS.Controllers
             //string message = ex.Message;
             //message += ex.InnerException != null ? ex.InnerException.Message : string.Empty;
             //user.SetReason(String.Format("exception {0}", message));
+            _errorCode = ex.Message;
             model.data = user;
          }
-
+         Utilities.LogTransaction("Login", _errorCode, model.status);
          return Json(model);
       }
 
@@ -91,11 +93,14 @@ namespace RD.LMS.Controllers
                user.LogOut();
             }
          }
-         catch (Exception) { }
+         catch (Exception ex) {
+            _errorCode = ex.Message;
+         }
 
          Session.Clear();
          Session.Abandon();
          Utilities.CreateSessionId();
+         Utilities.LogTransaction("Logout", _errorCode, model.status);
 
          return Json(model, JsonRequestBehavior.AllowGet);
       }

@@ -67,10 +67,6 @@
       <DependentUpon>RDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="AppLogDAO.cs" />
-    <Compile Include="BnnAppUser.cs">
-      <DependentUpon>RDModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BnnAppUserDAO.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Course.cs">
       <DependentUpon>RDModel.tt</DependentUpon>

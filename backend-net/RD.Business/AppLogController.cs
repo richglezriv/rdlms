@@ -18,19 +18,24 @@ namespace RD.Business
 
       public void RegisterLog(AppLogFacade logFacade)
       {
-         ApplicationLog log = new ApplicationLog();
-         log.LogDate = DateTime.Now;
-         log.ClientIpAddress = logFacade.IpAddress;
-         log.ErrorCode = logFacade.ErrorCode;
-         log.ReturnCode = logFacade.ReturnCode;
-         log.SessionId = logFacade.SessionId;
-         log.Transaction = logFacade.Transaction;
-         log.UserId = this._user.Id;
-         AppLogDAO dao = new AppLogDAO(string.Empty, log);
-         dao.Save();
+         try
+         {
+            ApplicationLog log = new ApplicationLog();
+            log.LogDate = DateTime.Now;
+            log.ClientIpAddress = logFacade.IpAddress;
+            log.ErrorCode = logFacade.ErrorCode;
+            log.ReturnCode = logFacade.ReturnCode;
+            log.SessionId = logFacade.SessionId;
+            log.Transaction = logFacade.Transaction;
+            log.UserId = this._user.Id;
+            AppLogDAO dao = new AppLogDAO(string.Empty, log);
+            dao.Save();
+         }
+         catch (Exception ex)
+         {
+            throw;
+         }
       }
-
-
    }
 
    public class AppLogFacade

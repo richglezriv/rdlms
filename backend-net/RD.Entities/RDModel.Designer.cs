@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'I:\Src\RD\backend-net\RD.Entities\RDModel.edmx'. 
+﻿// T4 code generation is enabled for model 'F:\Src\RD\backend-net\RD.Entities\RDModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
