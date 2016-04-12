@@ -96,11 +96,11 @@ namespace RD.LMS.Controllers
          catch (Exception ex) {
             _errorCode = ex.Message;
          }
-
+         Utilities.LogTransaction("Logout", _errorCode, model.status);
          Session.Clear();
          Session.Abandon();
          Utilities.CreateSessionId();
-         Utilities.LogTransaction("Logout", _errorCode, model.status);
+         
 
          return Json(model, JsonRequestBehavior.AllowGet);
       }
